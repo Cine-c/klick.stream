@@ -39,4 +39,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap reference
-Sitemap: https://www.cinenovatv.com/sitemap.xml
+Sitemap: https://www.klick.stream/sitemap.xml

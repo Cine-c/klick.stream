@@ -1,6 +1,6 @@
 {
-  "name": "CineNovaTV",
-  "short_name": "CineNovaTV",
+  "name": "klickstream",
+  "short_name": "klickstream",
   "description": "Your source for movie trailers, reviews, and the latest film news.",
   "start_url": "/",
   "display": "browser",

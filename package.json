@@ -1,7 +1,7 @@
 {
-  "name": "cinenovatv_website",
+  "name": "klickstream_website",
   "version": "1.0.0",
-  "description": "CineNovaTv website",
+  "description": "klickstream website",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

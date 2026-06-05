@@ -1,5 +1,5 @@
 services:
-  cinenovatv:
+  klickstream:
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   # Development service (use this for local development)
-  cinenovatv-dev:
+  klickstream-dev:
     image: node:20-alpine
     working_dir: /app
     volumes:
