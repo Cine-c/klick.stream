@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export function middleware(request) {
+export function proxy(request) {
   const host = request.headers.get('host') || '';
   const proto = request.headers.get('x-forwarded-proto') || request.nextUrl.protocol.replace(':', '');
 
