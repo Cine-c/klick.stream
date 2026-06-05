@@ -7,7 +7,7 @@ assets = { directory = ".open-next/assets", binding = "ASSETS" }
 
 routes = [
   { pattern = "*klick.stream/*", zone_name = "klick.stream" },
-  { pattern = "www*.klick.stream/*", zone_name = "klick.stream" },
+  { pattern = "www.klick.stream/*", zone_name = "klick.stream" },
 ]
 
 [vars]
