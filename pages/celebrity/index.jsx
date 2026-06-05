@@ -61,7 +61,7 @@ export default function CelebritiesIndex({ celebrities }) {
   return (
     <>
       <SEOHead
-        title="Actor Profiles — Filmographies & Career News | CineNovaTV"
+        title="Actor Profiles — Filmographies & Career News | Klick.stream"
         description="Explore detailed profiles for 100+ Hollywood actors, actresses, and directors. Filmographies, bios, career highlights, and the latest entertainment news."
         url="/celebrity"
       />

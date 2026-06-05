@@ -5,16 +5,16 @@ export default function AboutPage() {
   return (
     <>
       <SEOHead
-        title="About CineNovaTV — Free Movie Discovery Platform"
-        description="CineNovaTV is a free movie discovery platform. Learn how we help millions find what to watch with trailers, streaming info, and curated recommendations."
+        title="About Klick.stream — Free Movie Discovery Platform"
+        description="Klick.stream is a free movie discovery platform. Learn how we help millions find what to watch with trailers, streaming info, and curated recommendations."
         url="/about"
       />
 
       <div className="static-page">
         <div className="about-card">
-          <h1>About CineNovaTV</h1>
+          <h1>About Klick.stream</h1>
           <p>
-            CineNovaTV is your go-to source for movie trailers, reviews, and the
+            Klick.stream is your go-to source for movie trailers, reviews, and the
             latest film news. We use data from TMDb with full attribution and aim
             to provide unique, high-quality content and an engaging user experience.
           </p>
@@ -47,7 +47,7 @@ export default function AboutPage() {
             Support Our Work
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
-            If you enjoy CineNovaTV, consider supporting us so we can keep
+            If you enjoy Klick.stream, consider supporting us so we can keep
             bringing you great movie content.
           </p>
           <SupportButton />

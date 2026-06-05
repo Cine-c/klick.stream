@@ -16,11 +16,11 @@ export default function Footer() {
           <p>Your guide to the world of cinema. Discover where to watch, what&apos;s trending, and what&apos;s worth your time — across every platform.</p>
           <div className="footer-social" style={{ display: 'flex', gap: '16px', marginTop: '1.25rem' }}>
             <a
-              href="https://x.com/CineNovaTV"
+              href="https://x.com/Klick.stream"
               target="_blank"
               rel="noopener noreferrer"
               className="footer-social-link"
-              aria-label="Follow CineNovaTV on X"
+              aria-label="Follow Klick.stream on X"
             >
               <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {currentYear} CineNovaTV. All rights reserved.</p>
+        <p>&copy; {currentYear} Klick.stream. All rights reserved.</p>
       </div>
     </footer>
   );

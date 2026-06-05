@@ -7,18 +7,18 @@ export default function BestThrillerMovies2026() {
   return (
     <>
       <SEOHead
-        title="Best Thriller Movies of 2026 So Far — Ranked by CineNovaTV"
+        title="Best Thriller Movies of 2026 So Far — Ranked by Klick.stream"
         description="The top thriller movies released in 2026 so far, ranked. Psychological suspense, crime thrillers, and edge-of-seat action — with where to watch each one."
         url="/articles/best-thriller-movies-2026"
         type="article"
-        article={{ publishedTime: '2026-04-14T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-14T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Thriller Movies of 2026 So Far',
           description: 'The top thriller movies released in 2026 so far, ranked.',
           publishedAt: '2026-04-14T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'best-thriller-movies-2026',
         }}
       />

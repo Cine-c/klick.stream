@@ -7,18 +7,18 @@ export default function BestHorrorMovies2026() {
   return (
     <>
       <SEOHead
-        title="Best Horror Movies of 2026 So Far — Ranked & Reviewed | CineNovaTV"
+        title="Best Horror Movies of 2026 So Far — Ranked & Reviewed | Klick.stream"
         description="The scariest and best-reviewed horror movies of 2026, ranked. Slashers, supernatural chills, and elevated horror — with where to stream each one."
         url="/articles/best-horror-movies-2026"
         type="article"
-        article={{ publishedTime: '2026-04-21T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-21T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Horror Movies of 2026 So Far',
           description: 'The scariest and best-reviewed horror movies of 2026, ranked.',
           publishedAt: '2026-04-21T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'best-horror-movies-2026',
         }}
       />

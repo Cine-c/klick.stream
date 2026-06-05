@@ -11,14 +11,14 @@ export default function WhereToWatchPeakyBlindersImmortalMan() {
         description="Find out where to watch Peaky Blinders: The Immortal Man online or in theatres. Streaming platforms, ticket links, and release date details for the 2026 film."
         url="/articles/where-to-watch-peaky-blinders-immortal-man"
         type="article"
-        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Where to Watch Peaky Blinders: The Immortal Man (2026)',
           description: 'Find out where to watch Peaky Blinders: The Immortal Man online or in theatres.',
           publishedAt: '2026-04-01T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'where-to-watch-peaky-blinders-immortal-man',
         }}
       />

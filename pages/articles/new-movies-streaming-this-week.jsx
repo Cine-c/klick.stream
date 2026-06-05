@@ -7,18 +7,18 @@ export default function NewMoviesStreamingThisWeek() {
   return (
     <>
       <SEOHead
-        title="New Movies Streaming This Week (April 2026) | CineNovaTV"
+        title="New Movies Streaming This Week (April 2026) | Klick.stream"
         description="Every new movie hitting streaming platforms this week — Netflix, Prime Video, Disney+, Apple TV+, and more. Updated every Monday with fresh picks."
         url="/articles/new-movies-streaming-this-week"
         type="article"
-        article={{ publishedTime: '2026-04-07T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-07T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'New Movies Streaming This Week (April 2026)',
           description: 'Every new movie hitting streaming platforms this week.',
           publishedAt: '2026-04-07T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'new-movies-streaming-this-week',
         }}
       />

@@ -4,7 +4,7 @@ export default function Oscars2026() {
   return (
     <>
       <SEOHead
-        title="98th Academy Awards: All the Winners — CineNovaTV"
+        title="98th Academy Awards: All the Winners — Klick.stream"
         description="The complete winners list from the 98th Academy Awards. One Battle After Another dominates. Sinners makes history. All your Oscars 2026 results."
         url="/oscars-2026"
       />

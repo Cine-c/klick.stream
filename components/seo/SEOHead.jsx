@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 export default function SEOHead({
-  title = 'CineNovaTV',
+  title = 'Klick.stream',
   description = 'Your source for movie trailers, reviews, and the latest film news.',
   image = '/og-image.jpg',
   url,
@@ -9,12 +9,12 @@ export default function SEOHead({
   article = null,
   noindex = false,
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cinenovatv.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.Klick.stream.com';
   const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
   const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
-  const fullTitle = title === 'CineNovaTV' || title.includes('CineNovaTV')
+  const fullTitle = title === 'Klick.stream' || title.includes('Klick.stream')
     ? title
-    : `${title} | CineNovaTV`;
+    : `${title} | Klick.stream`;
 
   return (
     <Head>
@@ -31,12 +31,12 @@ export default function SEOHead({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:url" content={fullUrl} />
-      <meta property="og:site_name" content="CineNovaTV" />
+      <meta property="og:site_name" content="Klick.stream" />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@cinenovatv" />
+      <meta name="twitter:site" content="@Klick.stream" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImage} />

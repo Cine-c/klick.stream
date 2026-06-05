@@ -63,8 +63,8 @@ export default function LoginPage() {
   return (
     <>
       <SEOHead
-        title={`${tab === 'signin' ? 'Sign In' : 'Sign Up'} - CineNovaTV`}
-        description="Sign in to your CineNovaTV account to manage your premium subscription."
+        title={`${tab === 'signin' ? 'Sign In' : 'Sign Up'} - Klick.stream`}
+        description="Sign in to your Klick.stream account to manage your premium subscription."
         url="/login"
       />
 

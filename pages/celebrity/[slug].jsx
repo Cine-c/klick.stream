@@ -105,8 +105,8 @@ export default function CelebrityPage({ celebrity }) {
   }
 
   const categoryLabel = CATEGORY_LABELS[celebrity.category] || celebrity.category;
-  const seoTitle = `${celebrity.name} — Movies, Career & Latest News | CineNovaTV`;
-  const seoDescription = `Explore ${celebrity.name}'s complete filmography, career highlights, and latest news. Bio, top movies, and exclusive video content on CineNovaTV.`;
+  const seoTitle = `${celebrity.name} — Movies, Career & Latest News | Klick.stream`;
+  const seoDescription = `Explore ${celebrity.name}'s complete filmography, career highlights, and latest news. Bio, top movies, and exclusive video content on Klick.stream.`;
 
   return (
     <>

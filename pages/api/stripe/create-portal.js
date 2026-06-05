@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
 
     const stripe = getStripe();
-    const origin = req.headers.origin || 'https://cinenovatv.com';
+    const origin = req.headers.origin || 'https://Klick.stream.com';
     const session = await stripe.billingPortal.sessions.create({
       customer: userDoc.stripeCustomerId,
       return_url: `${origin}/account`,

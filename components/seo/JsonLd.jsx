@@ -1,19 +1,19 @@
 import Head from 'next/head';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cinenovatv.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.Klick.stream.com';
 
 export function OrganizationJsonLd() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'CineNovaTV',
+    name: 'Klick.stream',
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
     sameAs: [
-      'https://x.com/CineNovaTV',
-      'https://www.instagram.com/cinenovatv',
-      'https://www.youtube.com/@cinenovatv',
-      'https://www.tiktok.com/@cinenovatv',
+      'https://x.com/Klick.stream',
+      'https://www.instagram.com/Klick.stream',
+      'https://www.youtube.com/@Klick.stream',
+      'https://www.tiktok.com/@Klick.stream',
     ],
     description:
       'Movie discovery platform. Browse 50,000+ films and series, watch trailers, and find where to stream across 40+ platforms.',
@@ -33,7 +33,7 @@ export function WebSiteJsonLd() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'CineNovaTV',
+    name: 'Klick.stream',
     url: siteUrl,
     potentialAction: {
       '@type': 'SearchAction',
@@ -112,11 +112,11 @@ export function BlogPostingJsonLd({ post }) {
     dateModified: post.updatedAt || post.publishedAt,
     author: {
       '@type': 'Person',
-      name: post.author || 'CineNovaTV',
+      name: post.author || 'Klick.stream',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'CineNovaTV',
+      name: 'Klick.stream',
       logo: {
         '@type': 'ImageObject',
         url: `${siteUrl}/logo.png`,

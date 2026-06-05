@@ -7,18 +7,18 @@ export default function AustinButlerMoviesFilmography() {
   return (
     <>
       <SEOHead
-        title="Austin Butler Movies — Complete Filmography & Career Guide | CineNovaTV"
+        title="Austin Butler Movies — Complete Filmography & Career Guide | Klick.stream"
         description="Every Austin Butler movie ranked and reviewed. From Elvis to Dune: Part Two to Caught Stealing — explore his complete filmography and career trajectory."
         url="/articles/austin-butler-movies-filmography"
         type="article"
-        article={{ publishedTime: '2026-04-17T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-17T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Austin Butler Movies — Complete Filmography & Career Guide',
           description: 'Every Austin Butler movie ranked and reviewed.',
           publishedAt: '2026-04-17T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'austin-butler-movies-filmography',
         }}
       />

@@ -7,18 +7,18 @@ export default function BestMoviesNetflixApril2026() {
   return (
     <>
       <SEOHead
-        title="Best Movies on Netflix Right Now (April 2026) | CineNovaTV"
+        title="Best Movies on Netflix Right Now (April 2026) | Klick.stream"
         description="The 15 best movies streaming on Netflix in April 2026, hand-picked by our editors. New arrivals, hidden gems, and critic favourites — updated weekly."
         url="/articles/best-movies-netflix-april-2026"
         type="article"
-        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Movies on Netflix Right Now (April 2026)',
           description: 'The 15 best movies streaming on Netflix in April 2026.',
           publishedAt: '2026-04-01T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'best-movies-netflix-april-2026',
         }}
       />

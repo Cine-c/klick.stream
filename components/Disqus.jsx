@@ -30,7 +30,7 @@ export default function Disqus({ identifier, title, url }) {
     };
 
     const script = document.createElement('script');
-    script.src = 'https://cinenovatv.disqus.com/embed.js';
+    script.src = 'https://Klick.stream.disqus.com/embed.js';
     script.setAttribute('data-timestamp', +new Date());
     script.async = true;
     document.body.appendChild(script);

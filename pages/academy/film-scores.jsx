@@ -16,7 +16,7 @@ export default function FilmScores() {
           <div className="academy-hero-content">
             <div className="academy-genre-tag">Music &middot; Composition &middot; Emotion &middot; Education</div>
             <h1><span>Film</span> Scores</h1>
-            <div className="academy-hero-sub">CineNovaTV &nbsp;&middot;&nbsp; Film Academy Series</div>
+            <div className="academy-hero-sub">Klick.stream &nbsp;&middot;&nbsp; Film Academy Series</div>
             <p className="academy-hero-tagline">You don&rsquo;t just hear it. You feel it in your chest.</p>
           </div>
         </header>

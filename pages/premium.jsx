@@ -7,7 +7,7 @@ import { useAdFree } from '../components/useAdFree';
 
 const FEATURES = [
   { icon: '🚫', title: 'Ad-Free Experience', desc: 'Browse without any ads or interruptions' },
-  { icon: '💜', title: 'Support Creators', desc: 'Help us keep CineNovaTV running and growing' },
+  { icon: '💜', title: 'Support Creators', desc: 'Help us keep Klick.stream running and growing' },
   { icon: '⚡', title: 'Faster Loading', desc: 'Pages load quicker without ad scripts' },
   { icon: '🎬', title: 'Early Access', desc: 'Be the first to try new features and content' },
 ];
@@ -141,8 +141,8 @@ export default function PremiumPage() {
   return (
     <>
       <SEOHead
-        title="Premium - CineNovaTV"
-        description="Go ad-free and support CineNovaTV. Enjoy a faster, cleaner browsing experience."
+        title="Premium - Klick.stream"
+        description="Go ad-free and support Klick.stream. Enjoy a faster, cleaner browsing experience."
         url="/premium"
       />
 
@@ -150,7 +150,7 @@ export default function PremiumPage() {
         {/* Hero */}
         <section className="premium-hero">
           <span className="premium-badge">Premium</span>
-          <h1>Enjoy CineNovaTV Ad-Free</h1>
+          <h1>Enjoy Klick.stream Ad-Free</h1>
           <p>
             Support independent film journalism and get a faster, cleaner experience.
           </p>

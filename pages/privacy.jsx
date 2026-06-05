@@ -5,14 +5,14 @@ export default function PrivacyPage() {
     <>
       <SEOHead
         title="Privacy Policy"
-        description="Learn about how CineNovaTV collects, uses, and protects your personal information."
+        description="Learn about how Klick.stream collects, uses, and protects your personal information."
         url="/privacy"
       />
 
       <div className="static-page">
         <h1>Privacy Policy</h1>
         <p>
-          At CineNovaTV, your privacy is important to us. This page explains what
+          At Klick.stream, your privacy is important to us. This page explains what
           information we collect, how we use it, and your rights regarding your data.
         </p>
 
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
 
         <p>
           For more details, contact us at{' '}
-          <a href="mailto:privacy@cinenovatv.com">privacy@cinenovatv.com</a>.
+          <a href="mailto:privacy@Klick.stream.com">privacy@Klick.stream.com</a>.
         </p>
       </div>
     </>

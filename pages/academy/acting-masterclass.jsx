@@ -16,7 +16,7 @@ export default function ActingMasterclass() {
           <div className="academy-hero-content">
             <div className="academy-genre-tag">Performance &middot; Craft &middot; Technique &middot; Education</div>
             <h1><span>Acting</span> Masterclass</h1>
-            <div className="academy-hero-sub">CineNovaTV &nbsp;&middot;&nbsp; Film Academy Series</div>
+            <div className="academy-hero-sub">Klick.stream &nbsp;&middot;&nbsp; Film Academy Series</div>
             <p className="academy-hero-tagline">The truth of a moment. Captured forever on film.</p>
           </div>
         </header>

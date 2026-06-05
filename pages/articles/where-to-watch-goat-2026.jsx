@@ -11,14 +11,14 @@ export default function WhereToWatchGoat2026() {
         description="Find where to watch The G.O.A.T. (2026) starring Dwayne Johnson. Streaming availability, theatrical release dates, and ticket information."
         url="/articles/where-to-watch-goat-2026"
         type="article"
-        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Where to Watch The G.O.A.T. (2026)',
           description: 'Find where to watch The G.O.A.T. (2026) starring Dwayne Johnson.',
           publishedAt: '2026-04-03T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'where-to-watch-goat-2026',
         }}
       />

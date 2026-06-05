@@ -50,8 +50,8 @@ export default function BlogIndex({ posts, categories }) {
   return (
     <>
       <SEOHead
-        title="Movie News, Reviews & Streaming Guides | CineNovaTV Blog"
-        description="Read the latest movie news, honest reviews, and streaming guides. Actor spotlights, film analysis, and weekly what-to-watch picks from CineNovaTV."
+        title="Movie News, Reviews & Streaming Guides | Klick.stream Blog"
+        description="Read the latest movie news, honest reviews, and streaming guides. Actor spotlights, film analysis, and weekly what-to-watch picks from Klick.stream."
         url="/blog"
       />
       <ItemListJsonLd items={posts.slice(0, 10)} type="BlogPosting" />
@@ -59,7 +59,7 @@ export default function BlogIndex({ posts, categories }) {
       <div className="blog-header">
         <h1 className="blog-header-title">Blog</h1>
         <p className="blog-header-subtitle">
-          Movie news, reviews, and entertainment articles from the CineNovaTV team.
+          Movie news, reviews, and entertainment articles from the Klick.stream team.
         </p>
       </div>
 

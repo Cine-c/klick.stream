@@ -372,7 +372,7 @@ export default function Admin() {
 
   return (
     <>
-      <SEOHead title="Admin Dashboard - CineNovaTV" url="/ndochez" />
+      <SEOHead title="Admin Dashboard - Klick.stream" url="/ndochez" />
 
       <div className="admin-page">
         {!user ? (
@@ -391,7 +391,7 @@ export default function Admin() {
                   <input
                     id="email"
                     type="email"
-                    placeholder="admin@cinenovatv.com"
+                    placeholder="admin@Klick.stream.com"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

@@ -11,14 +11,14 @@ export default function Scream72026Review() {
         description="Our spoiler-free review of Scream 7 (2026). Does Kevin Williamson's return as director revitalise the slasher franchise? Ratings, cast, and verdict inside."
         url="/articles/scream-7-2026-review"
         type="article"
-        article={{ publishedTime: '2026-04-10T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-10T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Scream 7 (2026) Review',
           description: "Does Kevin Williamson's return as director revitalise the slasher franchise?",
           publishedAt: '2026-04-10T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'scream-7-2026-review',
         }}
       />

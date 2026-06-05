@@ -7,18 +7,18 @@ export default function BestMoviesPrimeVideoApril2026() {
   return (
     <>
       <SEOHead
-        title="Best Movies on Prime Video Right Now (April 2026) | CineNovaTV"
-        description="The best movies streaming on Amazon Prime Video in April 2026. New originals, recent theatrical hits, and hidden gems — curated by CineNovaTV editors."
+        title="Best Movies on Prime Video Right Now (April 2026) | Klick.stream"
+        description="The best movies streaming on Amazon Prime Video in April 2026. New originals, recent theatrical hits, and hidden gems — curated by Klick.stream editors."
         url="/articles/best-movies-prime-video-april-2026"
         type="article"
-        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'CineNovaTV' }}
+        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'Klick.stream' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Movies on Prime Video Right Now (April 2026)',
           description: 'The best movies streaming on Amazon Prime Video in April 2026.',
           publishedAt: '2026-04-03T08:00:00Z',
-          author: 'CineNovaTV',
+          author: 'Klick.stream',
           slug: 'best-movies-prime-video-april-2026',
         }}
       />

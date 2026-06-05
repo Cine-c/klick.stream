@@ -16,7 +16,7 @@ export default function Cinematography() {
           <div className="academy-hero-content">
             <div className="academy-genre-tag">Visual Language &middot; Light &middot; Composition &middot; Education</div>
             <h1><span>Cinematography</span></h1>
-            <div className="academy-hero-sub">CineNovaTV &nbsp;&middot;&nbsp; Film Academy Series</div>
+            <div className="academy-hero-sub">Klick.stream &nbsp;&middot;&nbsp; Film Academy Series</div>
             <p className="academy-hero-tagline">Every frame is a decision. Every shadow tells a story.</p>
           </div>
         </header>

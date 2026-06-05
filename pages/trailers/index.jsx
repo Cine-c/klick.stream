@@ -236,7 +236,7 @@ export default function TrailersPage({ initialMovies, genres, totalResults, init
   return (
     <>
       <SEOHead
-        title="Latest Movie Trailers 2026 | CineNovaTV"
+        title="Latest Movie Trailers 2026 | Klick.stream"
         description="Watch brand-new trailers for every 2026 release. Browse trending, now playing, and upcoming films — updated daily with HD trailers and teasers."
         url="/trailers"
       />

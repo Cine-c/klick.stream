@@ -5,8 +5,8 @@ export default function Custom404() {
   return (
     <>
       <SEOHead
-        title="Page Not Found — CineNovaTV"
-        description="The page you're looking for doesn't exist. Browse trending movies, trailers, and streaming info on CineNovaTV."
+        title="Page Not Found — Klick.stream"
+        description="The page you're looking for doesn't exist. Browse trending movies, trailers, and streaming info on Klick.stream."
         noindex
       />
 

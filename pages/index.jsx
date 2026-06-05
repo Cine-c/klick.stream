@@ -87,7 +87,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   return (
     <div ref={revealRef} className="homepage-full">
       <SEOHead
-        title="CineNovaTV — Discover Movies, Trailers & Where to Stream"
+        title="Klick.stream — Discover Movies, Trailers & Where to Stream"
         description="Your free movie guide. Browse 50 000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily."
         url="/"
       />
@@ -95,29 +95,29 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
       <FAQPageJsonLd
         faqs={[
           {
-            question: 'What is CineNovaTV?',
+            question: 'What is Klick.stream?',
             answer:
-              'CineNovaTV is a free movie discovery platform. Browse 50,000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily.',
+              'Klick.stream is a free movie discovery platform. Browse 50,000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily.',
           },
           {
-            question: 'Is CineNovaTV free to use?',
+            question: 'Is Klick.stream free to use?',
             answer:
-              'Yes, CineNovaTV is completely free. Browse films, watch trailers, and find where to stream them without creating an account.',
+              'Yes, Klick.stream is completely free. Browse films, watch trailers, and find where to stream them without creating an account.',
           },
           {
-            question: 'How many streaming platforms does CineNovaTV cover?',
+            question: 'How many streaming platforms does Klick.stream cover?',
             answer:
-              'CineNovaTV covers 40+ streaming platforms including Netflix, Prime Video, Apple TV+, Disney+, Hulu, HBO Max, and more — updated daily with new releases and availability changes.',
+              'Klick.stream covers 40+ streaming platforms including Netflix, Prime Video, Apple TV+, Disney+, Hulu, HBO Max, and more — updated daily with new releases and availability changes.',
           },
           {
             question: 'Where can I find what to watch tonight?',
             answer:
-              'CineNovaTV shows you what is streaming across Netflix, Prime Video, Apple TV+, Disney+, and 35+ other platforms. Use the Discover page to filter by genre, rating, and platform.',
+              'Klick.stream shows you what is streaming across Netflix, Prime Video, Apple TV+, Disney+, and 35+ other platforms. Use the Discover page to filter by genre, rating, and platform.',
           },
         ]}
       />
 
-      <h1 className="sr-only">CineNovaTV — Discover Movies, Trailers &amp; Where to Stream</h1>
+      <h1 className="sr-only">Klick.stream — Discover Movies, Trailers &amp; Where to Stream</h1>
 
       {/* ── HERO BACKDROP ── */}
       <section className="hero-backdrop" ref={heroRef}>

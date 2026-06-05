@@ -16,7 +16,7 @@ export default function EditingMagic() {
           <div className="academy-hero-content">
             <div className="academy-genre-tag">Post-Production &middot; Rhythm &middot; Storytelling &middot; Education</div>
             <h1><span>Editing</span> Magic</h1>
-            <div className="academy-hero-sub">CineNovaTV &nbsp;&middot;&nbsp; Film Academy Series</div>
+            <div className="academy-hero-sub">Klick.stream &nbsp;&middot;&nbsp; Film Academy Series</div>
             <p className="academy-hero-tagline">The cut you never see is the one that changes everything.</p>
           </div>
         </header>

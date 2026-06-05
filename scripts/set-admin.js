@@ -12,7 +12,7 @@ const path = require('path');
 // Load .env from project root
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
-const PROJECT_ID = 'cinenovatv-1e11a';
+const PROJECT_ID = 'Klick.stream-1e11a';
 
 async function getAccessToken() {
   const email = process.env.FIREBASE_SERVICE_ACCOUNT_EMAIL;
@@ -101,7 +101,7 @@ async function main() {
   const userEmail = process.argv[2];
   if (!userEmail) {
     console.error('Usage: node scripts/set-admin.js <email>');
-    console.error('Example: node scripts/set-admin.js admin@cinenovatv.com');
+    console.error('Example: node scripts/set-admin.js admin@Klick.stream.com');
     process.exit(1);
   }
 

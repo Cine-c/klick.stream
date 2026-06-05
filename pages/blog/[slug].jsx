@@ -31,7 +31,7 @@ export default function BlogPost({ post, relatedPosts }) {
     <>
       <SEOHead
         title={post.title}
-        description={post.excerpt || post.description || `Read ${post.title} on CineNovaTV`}
+        description={post.excerpt || post.description || `Read ${post.title} on Klick.stream`}
         image={post.imageUrl}
         url={`/blog/${post.slug}`}
         type="article"
@@ -129,7 +129,7 @@ export default function BlogPost({ post, relatedPosts }) {
         <Disqus
           identifier={`blog-${post.slug}`}
           title={post.title}
-          url={`https://www.cinenovatv.com/blog/${post.slug}`}
+          url={`https://www.Klick.stream.com/blog/${post.slug}`}
         />
       </article>
     </>

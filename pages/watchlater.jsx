@@ -12,7 +12,7 @@ export default function WatchLaterPage() {
   return (
     <>
       <SEOHead
-        title="Watch Later - CineNovaTV"
+        title="Watch Later - Klick.stream"
         description="Your saved movies to watch later."
         url="/watchlater"
       />

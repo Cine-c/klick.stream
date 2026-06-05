@@ -57,7 +57,7 @@ function MovieCard({ movie, providers }) {
   const backdrop = movie.backdrop_path ? TMDB_IMG + movie.backdrop_path : '';
   const providerText = providers && providers.length > 0
     ? 'Stream on: ' + providers.join(', ')
-    : 'Check cinenovatv.com for availability';
+    : 'Check Klick.stream.com for availability';
 
   return (
     <div className="cnv-movie-card">
@@ -327,7 +327,7 @@ export default function Chatbot() {
       const next = !prev;
       if (next && !hasOpened) {
         setHasOpened(true);
-        setMessages([{ type: 'bot', text: "Hey! I'm the CineNovaTV assistant. I can help you discover movies and find where to watch them." }]);
+        setMessages([{ type: 'bot', text: "Hey! I'm the Klick.stream assistant. I can help you discover movies and find where to watch them." }]);
         setQuickActions([
           { label: 'Trending Now', key: 'trending' },
           { label: 'Top Rated', key: 'toprated' },
@@ -367,7 +367,7 @@ export default function Chatbot() {
 
       <div className={`cnv-chat-window${isOpen ? ' open' : ''}`}>
         <div className="cnv-chat-header">
-          <span>CineNovaTV Assistant</span>
+          <span>Klick.stream Assistant</span>
           <button onClick={handleToggle} aria-label="Close chat">&times;</button>
         </div>
 

@@ -91,8 +91,8 @@ export default function AccountPage() {
   return (
     <>
       <SEOHead
-        title="Account - CineNovaTV"
-        description="Manage your CineNovaTV account and subscription."
+        title="Account - Klick.stream"
+        description="Manage your Klick.stream account and subscription."
         url="/account"
       />
 
