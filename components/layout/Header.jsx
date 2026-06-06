@@ -54,7 +54,7 @@ export default function Header() {
       <div className="header-container">
         <div className="logo-group">
           <Link href="/" className="logo">
-            Cine<span className="logo-nova">Nova</span>TV
+            Klick<span className="logo-stream">.stream</span>
           </Link>
           <a
             href={`https://www.amazon.com/?tag=${AMAZON_TAG}`}
