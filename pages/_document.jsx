@@ -31,6 +31,12 @@ gtag('consent','default',{
             __html: `window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];`,
           }}
         />
+        {/* AdSense */}
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8747979755893623"
+  crossOrigin="anonymous"
+/>
         {/* GA gtag.js is loaded via next/script in _app.jsx with afterInteractive strategy */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
