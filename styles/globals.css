@@ -10047,7 +10047,7 @@ a.provider-card:hover {
 
 /* ── Hero Backdrop ── */
 .hero-backdrop {
-  min-height: 100vh;
+  min-height: 68vh;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -10086,7 +10086,7 @@ a.provider-card:hover {
 .hero-content {
   position: relative;
   z-index: 3;
-  padding: 0 60px 100px;
+  padding: 0 60px 60px;
   max-width: 720px;
 }
 
