@@ -1,8 +1,155 @@
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
 import MovieCard from '../components/trailers/MovieCard';
 import { useRouter } from 'next/router';
+
+const HIGHLIGHT_TOPICS = [
+  { label: 'All Highlights', q: 'FIFA World Cup 2026 match highlights' },
+  { label: 'Goals',          q: 'FIFA World Cup 2026 goals compilation' },
+  { label: 'Best Moments',   q: 'FIFA World Cup 2026 best moments' },
+  { label: 'Press Conferences', q: 'FIFA World Cup 2026 press conference' },
+];
+
+function timeAgo(iso) {
+  const diff = Math.floor((Date.now() - new Date(iso)) / 1000);
+  if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return `${Math.floor(diff / 86400)}d ago`;
+}
+
+function HighlightsSection() {
+  const [videos, setVideos]       = useState([]);
+  const [loading, setLoading]     = useState(true);
+  const [missing, setMissing]     = useState(false);
+  const [activeVideo, setActive]  = useState(null);
+  const [activeTopic, setTopic]   = useState(0);
+  const [error, setError]         = useState(null);
+
+  const fetchHighlights = useCallback(async (topicIdx) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const q = encodeURIComponent(HIGHLIGHT_TOPICS[topicIdx].q);
+      const res = await fetch(`/api/worldcup/highlights?q=${q}&maxResults=12`);
+      const data = await res.json();
+      if (data.missing) { setMissing(true); return; }
+      if (data.error)   { setError(data.error); return; }
+      setVideos(data.items || []);
+    } catch {
+      setError('Could not load highlights.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { fetchHighlights(0); }, [fetchHighlights]);
+
+  const handleTopic = (idx) => {
+    setTopic(idx);
+    setVideos([]);
+    fetchHighlights(idx);
+  };
+
+  if (missing) {
+    return (
+      <div className="wcp-highlights-missing">
+        <div className="wcp-missing-icon">🎥</div>
+        <h3>Add your YouTube API key to enable live highlights</h3>
+        <p>
+          Get a free key at{' '}
+          <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer">
+            console.cloud.google.com
+          </a>
+          {' '}then add <code>YOUTUBE_API_KEY=your_key</code> to your <code>.env</code> file and rebuild.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Topic tabs */}
+      <div className="wcp-highlights-tabs">
+        {HIGHLIGHT_TOPICS.map((t, i) => (
+          <button
+            key={t.label}
+            className={`wcp-highlights-tab${activeTopic === i ? ' active' : ''}`}
+            onClick={() => handleTopic(i)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid */}
+      {loading ? (
+        <div className="wcp-highlights-grid">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className="wcp-highlight-skeleton" />
+          ))}
+        </div>
+      ) : error ? (
+        <p className="wcp-highlights-error">{error}</p>
+      ) : videos.length === 0 ? (
+        <p className="wcp-highlights-error">No highlights found right now. Try a different topic.</p>
+      ) : (
+        <div className="wcp-highlights-grid">
+          {videos.map((v) => (
+            <button
+              key={v.id}
+              className="wcp-highlight-card"
+              onClick={() => setActive(v.id)}
+              aria-label={`Play: ${v.title}`}
+            >
+              <div className="wcp-highlight-thumb">
+                {v.thumbnail ? (
+                  <img src={v.thumbnail} alt="" loading="lazy" />
+                ) : (
+                  <div className="wcp-highlight-no-thumb" />
+                )}
+                <div className="wcp-highlight-play">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </div>
+              </div>
+              <div className="wcp-highlight-info">
+                <span className="wcp-highlight-title">{v.title}</span>
+                <span className="wcp-highlight-meta">
+                  {v.channelTitle} · {timeAgo(v.publishedAt)}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Video modal */}
+      {activeVideo && (
+        <div className="wcp-modal-overlay" onClick={() => setActive(null)}>
+          <div className="wcp-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="wcp-modal-close" onClick={() => setActive(null)} aria-label="Close video">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <div className="wcp-modal-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                frameBorder="0"
+                title="World Cup highlight"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 const HOST_CITIES = {
   USA: [
@@ -99,6 +246,18 @@ export default function WorldCupPage({ movies }) {
             </p>
           </div>
         </div>
+
+        {/* ── HIGHLIGHTS ── */}
+        <section className="wcp-section wcp-highlights-section">
+          <div className="wcp-section-inner">
+            <div className="wcp-section-eyebrow">Live from the Tournament</div>
+            <h2 className="wcp-section-title">Match Highlights</h2>
+            <p className="wcp-section-sub">
+              Latest videos from the 2026 World Cup — goals, moments, and post-match reaction.
+            </p>
+            <HighlightsSection />
+          </div>
+        </section>
 
         {/* ── STATS BAR ── */}
         <div className="wcp-stats">
