@@ -30,6 +30,14 @@ const nextConfig = {
   async rewrites() {
     return [
       { source: '/sitemap.xml', destination: '/api/sitemap.xml' },
+      {
+        source: '/__/auth/:path*',
+        destination: 'https://cinenovatv-1e11a.firebaseapp.com/__/auth/:path*',
+      },
+      {
+        source: '/__/firebase/:path*',
+        destination: 'https://cinenovatv-1e11a.firebaseapp.com/__/firebase/:path*',
+      },
     ];
   },
   async redirects() {
