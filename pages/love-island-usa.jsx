@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
@@ -15,9 +16,45 @@ function timeAgo(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
+function useCountdown(targetDateStr) {
+  const [timeLeft, setTimeLeft] = useState(null);
+
+  useEffect(() => {
+    if (!targetDateStr) return;
+    const target = new Date(targetDateStr);
+    target.setHours(21, 0, 0, 0); // 9 PM EST air time
+
+    const tick = () => {
+      const diff = target - Date.now();
+      if (diff <= 0) { setTimeLeft(null); return; }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft({ d, h, m, s });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [targetDateStr]);
+
+  return timeLeft;
+}
+
 function EpisodeCard({ ep, isFuture }) {
   return (
     <div className={`li-ep-card${isFuture ? ' li-ep-future' : ''}`}>
+      {ep.still_path && (
+        <div className="li-ep-thumb">
+          <Image
+            src={`https://image.tmdb.org/t/p/w300${ep.still_path}`}
+            alt={`Episode ${ep.episode_number}`}
+            width={120}
+            height={68}
+            style={{ objectFit: 'cover', borderRadius: '6px', width: '100%', height: '100%' }}
+          />
+        </div>
+      )}
       <div className="li-ep-num">Ep {ep.episode_number}</div>
       <div className="li-ep-info">
         <div className="li-ep-name">{ep.name || `Episode ${ep.episode_number}`}</div>
@@ -34,30 +71,53 @@ function EpisodeCard({ ep, isFuture }) {
           {ep.vote_average > 0 && <span>★ {ep.vote_average.toFixed(1)}</span>}
         </div>
       </div>
-      {ep.still_path && (
-        <div className="li-ep-thumb">
-          <Image
-            src={`https://image.tmdb.org/t/p/w300${ep.still_path}`}
-            alt={`Episode ${ep.episode_number}`}
-            width={120}
-            height={68}
-            style={{ objectFit: 'cover', borderRadius: '6px', width: '100%', height: '100%' }}
-          />
-        </div>
-      )}
+    </div>
+  );
+}
+
+function Countdown({ dateStr }) {
+  const t = useCountdown(dateStr);
+  if (!t) return null;
+  return (
+    <div className="li-countdown">
+      <div className="li-countdown-label">Next episode in</div>
+      <div className="li-countdown-units">
+        {t.d > 0 && <div className="li-countdown-unit"><span>{t.d}</span><small>days</small></div>}
+        <div className="li-countdown-unit"><span>{String(t.h).padStart(2,'0')}</span><small>hrs</small></div>
+        <div className="li-countdown-unit"><span>{String(t.m).padStart(2,'0')}</span><small>min</small></div>
+        <div className="li-countdown-unit"><span>{String(t.s).padStart(2,'0')}</span><small>sec</small></div>
+      </div>
     </div>
   );
 }
 
 export default function LoveIslandUSA({ show, season, islanders }) {
-  const aired = (season?.episodes || []).filter((e) => e.air_date && new Date(e.air_date) <= new Date());
-  const upcoming = (season?.episodes || []).filter((e) => e.air_date && new Date(e.air_date) > new Date());
+  const [tab, setTab] = useState('aired');
+  const [showAllAired, setShowAllAired] = useState(false);
+  const [islandFilter, setIslandFilter] = useState('');
+
+  const now = new Date();
+  const aired = (season?.episodes || []).filter((e) => e.air_date && new Date(e.air_date) <= now);
+  const upcoming = (season?.episodes || []).filter((e) => e.air_date && new Date(e.air_date) > now);
+  const nextEp = upcoming[0] || null;
+
+  const airedToShow = showAllAired ? [...aired].reverse() : [...aired].reverse().slice(0, 8);
+
+  const filteredIslanders = islanders.filter((p) =>
+    !islandFilter || p.name.toLowerCase().includes(islandFilter.toLowerCase())
+  );
+
+  const todayEp = aired.find((e) => {
+    if (!e.air_date) return false;
+    const d = new Date(e.air_date);
+    return d.toDateString() === now.toDateString();
+  });
 
   return (
     <>
       <SEOHead
-        title={`Love Island USA Season ${season?.season_number || 8} — Klick.stream`}
-        description={`Love Island USA Season ${season?.season_number || 8} is NOW streaming on Peacock. Follow all the Islanders, episode recaps, and drama from the villa. Updated daily.`}
+        title={`Love Island USA Season ${season?.season_number || 8} — Live Updates | Klick.stream`}
+        description={`Love Island USA Season ${season?.season_number || 8} is NOW streaming on Peacock. ${aired.length} episodes aired, ${upcoming.length} remaining. Follow all the Islanders, recaps, and villa drama. Updated live.`}
         url="/love-island-usa"
       />
       <script
@@ -67,26 +127,26 @@ export default function LoveIslandUSA({ show, season, islanders }) {
             '@context': 'https://schema.org',
             '@type': 'TVSeries',
             name: 'Love Island USA',
-            description: show?.overview || 'American version of the hit UK dating reality show. Singles live in a stunning villa and must pair up to survive.',
+            description: show?.overview || 'American version of the hit UK dating reality show.',
             url: 'https://klick.stream/love-island-usa',
             numberOfSeasons: show?.number_of_seasons || 8,
             startDate: '2019',
             inLanguage: 'en',
             genre: ['Reality', 'Romance'],
-            productionCompany: { '@type': 'Organization', name: 'ITV Studios America' },
-            ...(season && {
-              containsSeason: {
-                '@type': 'TVSeason',
-                seasonNumber: season.season_number,
-                startDate: season.air_date,
-                numberOfEpisodes: season.episodes?.length,
-              },
-            }),
           }),
         }}
       />
 
       <div className="li-page">
+
+        {/* ── TODAY BANNER ── */}
+        {todayEp && (
+          <div className="li-today-bar">
+            <span className="li-today-dot" />
+            <strong>New episode tonight:</strong>&nbsp;{todayEp.name || `Episode ${todayEp.episode_number}`} — streaming on Peacock
+          </div>
+        )}
+
         {/* ── HERO ── */}
         <section className="li-hero">
           {show?.backdrop_path && (
@@ -127,7 +187,7 @@ export default function LoveIslandUSA({ show, season, islanders }) {
                 Season {season?.season_number || 8} · {season?.air_date?.split('-')[0] || 2026}
               </div>
               {show?.overview && (
-                <p className="li-hero-desc">{show.overview.slice(0, 220)}…</p>
+                <p className="li-hero-desc">{show.overview.slice(0, 200)}…</p>
               )}
               <div className="li-hero-actions">
                 <a href={PEACOCK_URL} target="_blank" rel="noopener noreferrer" className="li-btn-primary">
@@ -141,34 +201,101 @@ export default function LoveIslandUSA({ show, season, islanders }) {
           </div>
         </section>
 
-        {/* ── SEASON STATS ── */}
-        <div className="li-stats">
-          <div className="li-stat">
-            <div className="li-stat-num">{aired.length}</div>
-            <div className="li-stat-label">Episodes Aired</div>
+        {/* ── STATS + COUNTDOWN ── */}
+        <div className="li-stats-row">
+          <div className="li-stats">
+            <div className="li-stat">
+              <div className="li-stat-num">{aired.length}</div>
+              <div className="li-stat-label">Episodes Aired</div>
+            </div>
+            <div className="li-stat">
+              <div className="li-stat-num">{islanders.length}</div>
+              <div className="li-stat-label">Islanders</div>
+            </div>
+            <div className="li-stat">
+              <div className="li-stat-num">{upcoming.length > 0 ? upcoming.length : '—'}</div>
+              <div className="li-stat-label">Episodes Left</div>
+            </div>
+            <div className="li-stat">
+              <div className="li-stat-num">S{season?.season_number || 8}</div>
+              <div className="li-stat-label">Season</div>
+            </div>
           </div>
-          <div className="li-stat">
-            <div className="li-stat-num">{islanders.length}</div>
-            <div className="li-stat-label">Islanders</div>
-          </div>
-          <div className="li-stat">
-            <div className="li-stat-num">{upcoming.length > 0 ? upcoming.length : '—'}</div>
-            <div className="li-stat-label">Episodes Remaining</div>
-          </div>
-          <div className="li-stat">
-            <div className="li-stat-num">S{season?.season_number || 8}</div>
-            <div className="li-stat-label">Current Season</div>
-          </div>
+
+          {nextEp?.air_date && <Countdown dateStr={nextEp.air_date} />}
         </div>
+
+        {/* ── EPISODES ── */}
+        {(aired.length > 0 || upcoming.length > 0) && (
+          <section className="li-section li-section-dark">
+            <div className="li-section-inner">
+              <div className="li-section-eyebrow">Season {season?.season_number || 8}</div>
+              <h2 className="li-section-title">Episode Guide</h2>
+
+              <div className="li-tabs">
+                <button
+                  className={`li-tab${tab === 'aired' ? ' active' : ''}`}
+                  onClick={() => setTab('aired')}
+                >
+                  Aired <span className="li-tab-count">{aired.length}</span>
+                </button>
+                {upcoming.length > 0 && (
+                  <button
+                    className={`li-tab${tab === 'upcoming' ? ' active' : ''}`}
+                    onClick={() => setTab('upcoming')}
+                  >
+                    Coming Up <span className="li-tab-count">{upcoming.length}</span>
+                  </button>
+                )}
+              </div>
+
+              {tab === 'aired' && aired.length > 0 && (
+                <>
+                  <div className="li-episodes-list">
+                    {airedToShow.map((ep) => (
+                      <EpisodeCard key={ep.id} ep={ep} isFuture={false} />
+                    ))}
+                  </div>
+                  {aired.length > 8 && !showAllAired && (
+                    <button className="li-show-more" onClick={() => setShowAllAired(true)}>
+                      Show all {aired.length} episodes
+                    </button>
+                  )}
+                </>
+              )}
+
+              {tab === 'upcoming' && upcoming.length > 0 && (
+                <div className="li-episodes-list">
+                  {upcoming.slice(0, 10).map((ep) => (
+                    <EpisodeCard key={ep.id} ep={ep} isFuture={true} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* ── ISLANDERS ── */}
         {islanders.length > 0 && (
           <section className="li-section">
             <div className="li-section-inner">
               <div className="li-section-eyebrow">Cast</div>
-              <h2 className="li-section-title">Meet the Islanders</h2>
+              <div className="li-islanders-header">
+                <h2 className="li-section-title" style={{ margin: 0 }}>Meet the Islanders</h2>
+                <div className="li-islander-search">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search islanders…"
+                    value={islandFilter}
+                    onChange={(e) => setIslandFilter(e.target.value)}
+                  />
+                </div>
+              </div>
               <div className="li-islanders-grid">
-                {islanders.map((person) => (
+                {filteredIslanders.map((person) => (
                   <div key={person.id} className="li-islander-card">
                     <div className="li-islander-photo">
                       {person.profile_path ? (
@@ -180,52 +307,13 @@ export default function LoveIslandUSA({ show, season, islanders }) {
                           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                         />
                       ) : (
-                        <div className="li-islander-no-photo">
-                          {person.name[0]}
-                        </div>
+                        <div className="li-islander-no-photo">{person.name[0]}</div>
                       )}
                     </div>
                     <div className="li-islander-name">{person.name}</div>
                   </div>
                 ))}
               </div>
-            </div>
-          </section>
-        )}
-
-        {/* ── AD ── */}
-        <div className="ad-container">
-          <AdSlot slot="1594520752" format="in-article" />
-        </div>
-
-        {/* ── EPISODES ── */}
-        {(aired.length > 0 || upcoming.length > 0) && (
-          <section className="li-section li-section-dark">
-            <div className="li-section-inner">
-              <div className="li-section-eyebrow">Season {season?.season_number || 8}</div>
-              <h2 className="li-section-title">Episode Guide</h2>
-
-              {aired.length > 0 && (
-                <>
-                  <div className="li-ep-subheader">Aired</div>
-                  <div className="li-episodes-list">
-                    {[...aired].reverse().slice(0, 10).map((ep) => (
-                      <EpisodeCard key={ep.id} ep={ep} isFuture={false} />
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {upcoming.length > 0 && (
-                <>
-                  <div className="li-ep-subheader" style={{ marginTop: '32px' }}>Coming Up</div>
-                  <div className="li-episodes-list">
-                    {upcoming.slice(0, 5).map((ep) => (
-                      <EpisodeCard key={ep.id} ep={ep} isFuture={true} />
-                    ))}
-                  </div>
-                </>
-              )}
             </div>
           </section>
         )}
@@ -278,19 +366,20 @@ export default function LoveIslandUSA({ show, season, islanders }) {
             </div>
           </div>
         </section>
+
       </div>
     </>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const apiKey = process.env.TMDB_API_KEY;
   let show = null;
   let season = null;
   let islanders = [];
 
   if (!apiKey) {
-    return { props: { show, season, islanders }, revalidate: 3600 };
+    return { props: { show, season, islanders } };
   }
 
   try {
@@ -309,17 +398,7 @@ export async function getStaticProps() {
     season = await seasonRes.json();
     const credits = await creditsRes.json();
 
-    // Guest stars from episode 1 are the original islanders
-    const ep1 = (season.episodes || [])[0];
-    const ep1Stars = (ep1?.guest_stars || []).map((p) => ({
-      id: p.id,
-      name: p.name,
-      profile_path: p.profile_path || null,
-    }));
-
-    // Supplement with later episodes for new arrivals
     const allGuests = new Map();
-    ep1Stars.forEach((p) => allGuests.set(p.id, p));
     (season.episodes || []).forEach((ep) => {
       (ep.guest_stars || []).forEach((p) => {
         if (!allGuests.has(p.id)) {
@@ -327,10 +406,8 @@ export async function getStaticProps() {
         }
       });
     });
-
     islanders = [...allGuests.values()].slice(0, 24);
 
-    // Clean show object for serialization
     show = {
       id: show.id,
       name: show.name,
@@ -342,7 +419,6 @@ export async function getStaticProps() {
       last_air_date: show.last_air_date,
     };
 
-    // Clean season object
     season = {
       season_number: season.season_number,
       air_date: season.air_date,
@@ -358,11 +434,8 @@ export async function getStaticProps() {
       })),
     };
   } catch (err) {
-    console.error('Love Island SSG error:', err);
+    console.error('Love Island SSR error:', err);
   }
 
-  return {
-    props: { show, season, islanders },
-    revalidate: 3600,
-  };
+  return { props: { show, season, islanders } };
 }

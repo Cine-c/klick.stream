@@ -14066,16 +14066,42 @@ a.provider-card:hover {
   text-decoration: none;
 }
 
-/* ── STATS BAR ── */
-.li-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+/* ── TODAY BANNER ── */
+.li-today-bar {
+  background: linear-gradient(90deg, rgba(255, 77, 141, 0.18), rgba(255, 140, 105, 0.12));
+  border-bottom: 1px solid rgba(255, 77, 141, 0.35);
+  padding: 10px 40px;
+  font-size: 0.88rem;
+  color: rgba(240, 232, 245, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.li-today-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--li-pink);
+  flex-shrink: 0;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+
+/* ── STATS + COUNTDOWN ROW ── */
+.li-stats-row {
+  display: flex;
+  align-items: stretch;
   background: var(--li-panel);
   border-bottom: 1px solid var(--li-border);
 }
 
+.li-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  flex: 1;
+}
+
 .li-stat {
-  padding: 24px 20px;
+  padding: 20px 16px;
   text-align: center;
   border-right: 1px solid var(--li-border);
 }
@@ -14093,10 +14119,112 @@ a.provider-card:hover {
 }
 
 .li-stat-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: rgba(240, 232, 245, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+/* ── COUNTDOWN ── */
+.li-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  border-left: 1px solid var(--li-border);
+  gap: 8px;
+  flex-shrink: 0;
+}
+.li-countdown-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--li-rose);
+}
+.li-countdown-units {
+  display: flex;
+  gap: 10px;
+}
+.li-countdown-unit {
+  text-align: center;
+  min-width: 36px;
+}
+.li-countdown-unit span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.li-countdown-unit small {
+  font-size: 0.65rem;
+  color: rgba(240, 232, 245, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── TABS ── */
+.li-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 0;
+}
+.li-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(240, 232, 245, 0.5);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px 12px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.li-tab:hover { color: rgba(240, 232, 245, 0.85); }
+.li-tab.active {
+  color: #fff;
+  border-bottom-color: var(--li-pink);
+}
+.li-tab-count {
+  background: rgba(255, 77, 141, 0.15);
+  color: var(--li-rose);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+.li-tab.active .li-tab-count {
+  background: rgba(255, 77, 141, 0.25);
+  color: var(--li-pink);
+}
+
+/* ── SHOW MORE ── */
+.li-show-more {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 77, 141, 0.3);
+  border-radius: 10px;
+  color: var(--li-rose);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.li-show-more:hover {
+  background: rgba(255, 77, 141, 0.08);
+  border-color: rgba(255, 77, 141, 0.5);
 }
 
 /* ── SECTIONS ── */
@@ -14129,6 +14257,36 @@ a.provider-card:hover {
   color: #fff;
   margin: 0 0 32px;
 }
+
+/* ── ISLANDERS HEADER ── */
+.li-islanders-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.li-islander-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  padding: 7px 14px;
+  color: rgba(240, 232, 245, 0.45);
+  flex-shrink: 0;
+}
+.li-islander-search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: rgba(240, 232, 245, 0.9);
+  font-size: 0.85rem;
+  width: 140px;
+}
+.li-islander-search input::placeholder { color: rgba(240, 232, 245, 0.35); }
 
 /* ── ISLANDERS GRID ── */
 .li-islanders-grid {
@@ -14177,29 +14335,20 @@ a.provider-card:hover {
 }
 
 /* ── EPISODES ── */
-.li-ep-subheader {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(240, 232, 245, 0.45);
-  margin-bottom: 16px;
-}
-
 .li-episodes-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .li-ep-card {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center;
+  gap: 14px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -14214,14 +14363,13 @@ a.provider-card:hover {
 }
 
 .li-ep-num {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   color: var(--li-pink);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   flex-shrink: 0;
-  padding-top: 2px;
-  min-width: 40px;
+  min-width: 36px;
 }
 
 .li-ep-info {
@@ -14230,20 +14378,22 @@ a.provider-card:hover {
 }
 
 .li-ep-name {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 4px;
-  white-space: nowrap;
+  margin-bottom: 3px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .li-ep-overview {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: rgba(240, 232, 245, 0.5);
   line-height: 1.5;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -14252,8 +14402,9 @@ a.provider-card:hover {
 
 .li-ep-meta {
   display: flex;
-  gap: 12px;
-  font-size: 0.78rem;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.76rem;
   color: rgba(240, 232, 245, 0.45);
 }
 
@@ -14263,8 +14414,8 @@ a.provider-card:hover {
 }
 
 .li-ep-thumb {
-  width: 120px;
-  height: 68px;
+  width: 100px;
+  height: 56px;
   flex-shrink: 0;
   border-radius: 6px;
   overflow: hidden;
@@ -14481,6 +14632,15 @@ a.provider-card:hover {
     width: 100px;
   }
 
+  .li-today-bar {
+    padding: 10px 20px;
+    font-size: 0.82rem;
+  }
+
+  .li-stats-row {
+    flex-direction: column;
+  }
+
   .li-stats {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -14489,8 +14649,51 @@ a.provider-card:hover {
     border-bottom: 1px solid var(--li-border);
   }
 
+  .li-countdown {
+    flex-direction: row;
+    justify-content: space-between;
+    border-left: none;
+    border-top: 1px solid var(--li-border);
+    padding: 14px 20px;
+  }
+
+  .li-countdown-units {
+    gap: 8px;
+  }
+
+  .li-countdown-unit span {
+    font-size: 1.2rem;
+  }
+
   .li-section-inner {
     padding: 0 20px;
+  }
+
+  .li-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .li-tabs::-webkit-scrollbar { display: none; }
+
+  .li-tab {
+    padding: 10px 14px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .li-islanders-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .li-islander-search {
+    width: 100%;
+  }
+
+  .li-islander-search input {
+    width: 100%;
   }
 
   .li-islanders-grid {
@@ -14499,6 +14702,15 @@ a.provider-card:hover {
   }
 
   .li-ep-thumb {
+    width: 76px;
+    height: 43px;
+  }
+
+  .li-ep-name {
+    font-size: 0.88rem;
+  }
+
+  .li-ep-overview {
     display: none;
   }
 
@@ -14515,6 +14727,16 @@ a.provider-card:hover {
 
   .li-related-links {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .li-ep-thumb {
+    display: none;
+  }
+
+  .li-stat-num {
+    font-size: 1.5rem;
   }
 }
 
