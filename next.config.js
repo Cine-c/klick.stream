@@ -39,11 +39,6 @@ const nextConfig = {
       { source: '/blockbuster/:slug.html', destination: '/blockbuster', permanent: true },
     ];
   },
-  async rewrites() {
-    return [
-      { source: '/sitemap.xml', destination: '/api/sitemap.xml' },
-    ];
-  },
   async headers() {
     return [
       {
