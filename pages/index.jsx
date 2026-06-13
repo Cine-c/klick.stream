@@ -24,7 +24,7 @@ function useScrollReveal() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
     el.querySelectorAll('.reveal').forEach((child) => observer.observe(child));
     return () => observer.disconnect();
@@ -32,94 +32,73 @@ function useScrollReveal() {
   return ref;
 }
 
+// Horizontal scroll row with arrow buttons
+function HScrollRow({ children }) {
+  const scrollRef = useRef(null);
+  const scroll = (dir) => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({ left: dir === 'left' ? -360 : 360, behavior: 'smooth' });
+  };
+  return (
+    <div className="hscroll-container">
+      <button className="hscroll-btn hscroll-btn-left" onClick={() => scroll('left')} aria-label="Scroll left">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6" /></svg>
+      </button>
+      <div className="hscroll-track" ref={scrollRef}>
+        {children}
+      </div>
+      <button className="hscroll-btn hscroll-btn-right" onClick={() => scroll('right')} aria-label="Scroll right">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6" /></svg>
+      </button>
+    </div>
+  );
+}
+
 export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities }) {
   const { language } = useLanguage();
   const router = useRouter();
   const revealRef = useScrollReveal();
-  const spotlightRef = useRef(null);
   const heroRef = useRef(null);
   const [heroTrailerKey, setHeroTrailerKey] = useState(featuredMovie?.trailerKey || null);
 
-  // Client-side fallback: fetch trailer if not available at build time
   useEffect(() => {
     if (featuredMovie?.id && !featuredMovie?.trailerKey) {
       fetch(`/api/movie/${featuredMovie.id}/trailer?language=${language}`)
-        .then((res) => res.json())
+        .then((r) => r.json())
         .then((data) => {
           const trailer = (data.results || []).find(
             (v) => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser')
           );
-          if (trailer?.key) {
-            setHeroTrailerKey(trailer.key);
-          }
+          if (trailer?.key) setHeroTrailerKey(trailer.key);
         })
         .catch(() => {});
     }
   }, [featuredMovie?.id, featuredMovie?.trailerKey, language]);
 
-  // Spotlight mouse follow
-  useEffect(() => {
-    const hero = heroRef.current;
-    const spot = spotlightRef.current;
-    if (!hero || !spot) return;
-    const handleMove = (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      spot.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`;
-    };
-    hero.addEventListener('mousemove', handleMove);
-    return () => hero.removeEventListener('mousemove', handleMove);
-  }, []);
-
-  // Now playing items for the marquee ticker
   const tickerItems = (nowPlaying || []).slice(0, 9);
-
-  // Top 8 popular movies for trending grid
-  const trendingMovies = (popular || []).slice(0, 8);
-
-  // Featured article movie — pick the second trending movie
-  const articleMovie = (popular || [])[1] || featuredMovie;
-
-  // First 6 genres for the genre grid
+  const [topMovie, ...restMovies] = (popular || []);
   const displayGenres = (genres || []).slice(0, 6);
 
   return (
     <div ref={revealRef} className="homepage-full">
       <SEOHead
         title="Klick.stream — Discover Movies, Trailers & Where to Stream"
-        description="Your free movie guide. Browse 50 000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily."
+        description="Your free movie guide. Browse 50,000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily."
         url="/"
       />
       <WebSiteJsonLd />
       <FAQPageJsonLd
         faqs={[
-          {
-            question: 'What is Klick.stream?',
-            answer:
-              'Klick.stream is a free movie discovery platform. Browse 50,000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily.',
-          },
-          {
-            question: 'Is Klick.stream free to use?',
-            answer:
-              'Yes, Klick.stream is completely free. Browse films, watch trailers, and find where to stream them without creating an account.',
-          },
-          {
-            question: 'How many streaming platforms does Klick.stream cover?',
-            answer:
-              'Klick.stream covers 40+ streaming platforms including Netflix, Prime Video, Apple TV+, Disney+, Hulu, HBO Max, and more — updated daily with new releases and availability changes.',
-          },
-          {
-            question: 'Where can I find what to watch tonight?',
-            answer:
-              'Klick.stream shows you what is streaming across Netflix, Prime Video, Apple TV+, Disney+, and 35+ other platforms. Use the Discover page to filter by genre, rating, and platform.',
-          },
+          { question: 'What is Klick.stream?', answer: 'Klick.stream is a free movie discovery platform. Browse 50,000+ titles, watch trailers, compare 40+ streaming platforms, and find exactly what to watch tonight — updated daily.' },
+          { question: 'Is Klick.stream free to use?', answer: 'Yes, Klick.stream is completely free. Browse films, watch trailers, and find where to stream them without creating an account.' },
+          { question: 'How many streaming platforms does Klick.stream cover?', answer: 'Klick.stream covers 40+ streaming platforms including Netflix, Prime Video, Apple TV+, Disney+, Hulu, Max, and more — updated daily.' },
+          { question: 'Where can I find what to watch tonight?', answer: 'Use the Discover page to filter by genre, rating, year, runtime, and streaming platform. Find your next film in seconds.' },
         ]}
       />
 
       <h1 className="sr-only">Klick.stream — Discover Movies, Trailers &amp; Where to Stream</h1>
 
-      {/* ── HERO BACKDROP ── */}
+      {/* ── HERO ── */}
       <section className="hero-backdrop" ref={heroRef}>
         {featuredMovie?.backdrop_path && (
           <Image
@@ -133,48 +112,60 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           />
         )}
         <div className="hero-backdrop-gradient" />
-        <div className="spotlight" ref={spotlightRef} />
 
         <div className="hero-content">
-          <div className="hero-eyebrow">Now Trending</div>
+          <div className="hero-eyebrow">
+            <span className="hero-live-dot" />
+            Trending Now
+          </div>
           <h2 className="hero-title">
             <em>{featuredMovie?.title || 'Discover Cinema'}</em>
           </h2>
           <div className="hero-meta">
             {featuredMovie?.release_date && (
-              <span className="hero-meta-year">{featuredMovie.release_date.split('-')[0]}</span>
+              <span className="hero-meta-pill">{featuredMovie.release_date.split('-')[0]}</span>
             )}
             {featuredMovie?.vote_average > 0 && (
-              <span className="hero-meta-rating">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span className="hero-meta-pill hero-meta-rating">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                 {featuredMovie.vote_average.toFixed(1)}
               </span>
             )}
           </div>
           {featuredMovie?.overview && (
-            <p className="hero-overview">{featuredMovie.overview}</p>
+            <p className="hero-overview">{featuredMovie.overview.slice(0, 200)}{featuredMovie.overview.length > 200 ? '…' : ''}</p>
           )}
           <div className="hero-actions">
             {featuredMovie && heroTrailerKey && (
-              <Link
-                href={`/trailers?play=${featuredMovie.id}`}
-                className="btn-primary"
-              >
-                <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Watch Trailer</span>
+              <Link href={`/trailers?play=${featuredMovie.id}`} className="btn-hero-primary">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                Watch Trailer
               </Link>
             )}
-            <Link href="/discover" className="btn-ghost">
-              <span>Explore Films</span>
-              <span>&rarr;</span>
+            <Link href="/discover" className="btn-hero-ghost">
+              Browse All Films →
             </Link>
           </div>
         </div>
+
+        {/* Floating poster card */}
+        {featuredMovie?.poster_path && (
+          <div className="hero-poster-float">
+            <Image
+              src={`https://image.tmdb.org/t/p/w342${featuredMovie.poster_path}`}
+              alt={featuredMovie.title || ''}
+              width={120}
+              height={180}
+              style={{ objectFit: 'cover', borderRadius: '8px', width: '100%', height: 'auto' }}
+            />
+          </div>
+        )}
       </section>
 
-      {/* ── MARQUEE TICKER ── */}
+      {/* ── TICKER ── */}
       {tickerItems.length > 0 && (
         <div className="ticker">
+          <div className="ticker-label">In Theaters</div>
           <div className="ticker-track">
             {[...tickerItems, ...tickerItems].map((movie, i) => (
               <div className="ticker-item" key={`${movie.id}-${i}`}>
@@ -186,48 +177,128 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
         </div>
       )}
 
-      {/* ── OSCARS 2026 BANNER ── */}
-      <Link href="/oscars-2026" className="oscars-banner">
-        <div className="oscars-banner-trophy">
-          <svg viewBox="0 0 120 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="60" cy="32" rx="22" ry="28" fill="#c9a84c"/>
-            <rect x="50" y="58" width="20" height="120" rx="2" fill="#c9a84c"/>
-            <ellipse cx="60" cy="185" rx="32" ry="12" fill="#c9a84c"/>
-            <rect x="35" y="195" width="50" height="18" rx="2" fill="#c9a84c"/>
-            <ellipse cx="60" cy="220" rx="38" ry="10" fill="#c9a84c"/>
-            <rect x="30" y="228" width="60" height="42" rx="3" fill="#c9a84c"/>
-          </svg>
+      {/* ── FIFA WORLD CUP 2026 BANNER ── */}
+      <Link href="/worldcup" className="worldcup-banner">
+        <div className="worldcup-banner-bg" aria-hidden="true">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className="wc-hex" style={{ '--i': i }} />
+          ))}
         </div>
-        <div className="oscars-banner-content">
-          <div className="oscars-banner-eyebrow">98th Academy Awards</div>
-          <div className="oscars-banner-title">The Night <em>One Battle</em> Won the War</div>
-          <div className="oscars-banner-sub">All 23 winners, historic firsts, and five defining moments from Oscar night 2026.</div>
-        </div>
-        <div className="oscars-banner-stamp">98</div>
-        <div className="oscars-banner-arrow">
-          <span>Read Full Coverage &rarr;</span>
+        <div className="worldcup-banner-inner">
+          <div className="worldcup-banner-left">
+            <span className="wc-live-badge">
+              <span className="wc-live-dot" />
+              Live Now
+            </span>
+            <div className="worldcup-banner-trophy" aria-hidden="true">⚽</div>
+          </div>
+          <div className="worldcup-banner-center">
+            <div className="worldcup-banner-eyebrow">FIFA World Cup 2026™</div>
+            <div className="worldcup-banner-title">USA · Canada · Mexico</div>
+            <div className="worldcup-banner-sub">48 nations · 104 matches · June 11 – July 19, 2026</div>
+          </div>
+          <div className="worldcup-banner-cta">
+            Full Coverage →
+          </div>
         </div>
       </Link>
 
-      {/* ── TRENDING GRID ── */}
-      {trendingMovies.length > 0 && (
+      {/* ── NOW PLAYING IN THEATERS ── */}
+      {nowPlaying.length > 0 && (
+        <section className="home-section">
+          <div className="section-header reveal">
+            <div>
+              <div className="section-tag">In Cinemas</div>
+              <h2 className="section-title">Now Playing <em>in Theaters</em></h2>
+            </div>
+            <Link href="/discover?sort=primary_release_date.desc" className="see-all">See All →</Link>
+          </div>
+          <div className="reveal">
+            <HScrollRow>
+              {nowPlaying.map((movie) => (
+                <div key={movie.id} className="hscroll-card">
+                  <MovieCard movie={movie} onWatchTrailer={() => router.push(`/trailers?play=${movie.id}`)} />
+                </div>
+              ))}
+            </HScrollRow>
+          </div>
+        </section>
+      )}
+
+      {/* ── TRENDING RANKED ── */}
+      {popular.length > 0 && (
         <section className="home-section">
           <div className="section-header reveal">
             <div>
               <div className="section-tag">Right Now</div>
               <h2 className="section-title">Trending <em>This Week</em></h2>
             </div>
-            <Link href="/discover" className="see-all">View All Films &rarr;</Link>
+            <Link href="/discover" className="see-all">View All →</Link>
           </div>
-          <div className="trending-grid reveal">
-            {trendingMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} onWatchTrailer={() => router.push(`/trailers?play=${movie.id}`)} />
-            ))}
+
+          <div className="trending-ranked reveal">
+            {/* #1 — large featured card */}
+            {topMovie && (
+              <Link href={`/movies/${topMovie.id}`} className="trending-top-card">
+                {topMovie.backdrop_path && (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w780${topMovie.backdrop_path}`}
+                    alt={topMovie.title}
+                    fill
+                    sizes="(max-width:768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                )}
+                <div className="trending-top-overlay">
+                  <div className="trending-top-rank">#1</div>
+                  <div className="trending-top-info">
+                    <h3>{topMovie.title}</h3>
+                    <div className="trending-top-meta">
+                      {topMovie.release_date && <span>{topMovie.release_date.split('-')[0]}</span>}
+                      {topMovie.vote_average > 0 && (
+                        <span>
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                          {topMovie.vote_average.toFixed(1)}
+                        </span>
+                      )}
+                    </div>
+                    {topMovie.overview && <p>{topMovie.overview.slice(0, 140)}…</p>}
+                  </div>
+                </div>
+              </Link>
+            )}
+
+            {/* #2–#8 — smaller ranked grid */}
+            <div className="trending-rest">
+              {restMovies.slice(0, 7).map((movie, idx) => (
+                <Link key={movie.id} href={`/movies/${movie.id}`} className="trending-rest-card">
+                  <span className="trending-rest-rank">#{idx + 2}</span>
+                  {movie.poster_path ? (
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`}
+                      alt={movie.title}
+                      width={48}
+                      height={72}
+                      style={{ objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }}
+                    />
+                  ) : (
+                    <div className="trending-rest-no-poster" />
+                  )}
+                  <div className="trending-rest-info">
+                    <span className="trending-rest-title">{movie.title}</span>
+                    <span className="trending-rest-meta">
+                      {movie.release_date?.split('-')[0]}
+                      {movie.vote_average > 0 && ` · ★ ${movie.vote_average.toFixed(1)}`}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* ── AD SLOT 1 ── */}
+      {/* ── AD SLOT ── */}
       <div className="ad-container" key={router.asPath + '-ad1'}>
         <AdSlot slot="3307940521" />
       </div>
@@ -252,37 +323,6 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
         </div>
       </div>
 
-      {/* ── FEATURED ARTICLE STRIP ── */}
-      {articleMovie && (
-        <div className="feature-strip reveal">
-          <div className="feature-inner">
-            <div className="feature-image">
-              <Image
-                src={`https://image.tmdb.org/t/p/w780${articleMovie.backdrop_path || articleMovie.poster_path}`}
-                alt={articleMovie.title}
-                width={780}
-                height={439}
-                loading="lazy"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              />
-            </div>
-            <div className="feature-text">
-              <div className="feature-tag">&mdash; Editor&apos;s Spotlight</div>
-              <h2 className="feature-title">
-                Why <em>{articleMovie.title}</em> Is Worth Your Time
-              </h2>
-              <p className="feature-excerpt">
-                {articleMovie.overview?.slice(0, 260)}...
-              </p>
-              <Link href={`/trailers?play=${articleMovie.id}`} className="btn-primary">
-                <span>Watch Trailer</span>
-                <span>&rarr;</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* ── GENRE GRID ── */}
       {displayGenres.length > 0 && (
         <section className="home-section">
@@ -294,19 +334,16 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           </div>
           <div className="genre-grid reveal">
             {displayGenres.map((genre) => (
-              <Link
-                href={`/discover?genre=${genre.id}`}
-                className="genre-card"
-                key={genre.id}
-              >
+              <Link href={`/discover?genre=${genre.id}`} className="genre-card" key={genre.id}>
                 <Image
-                  src={genre.image || `https://image.tmdb.org/t/p/w780/gPbM0MK8CP8A174rmUwGsADNYKD.jpg`}
+                  src={genre.image || 'https://image.tmdb.org/t/p/w780/gPbM0MK8CP8A174rmUwGsADNYKD.jpg'}
                   alt={genre.name}
-                  width={780}
-                  height={439}
+                  fill
+                  sizes="(max-width:768px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
                   loading="lazy"
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
+                <div className="genre-card-overlay" />
                 <div className="genre-name">{genre.name}</div>
               </Link>
             ))}
@@ -321,7 +358,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
             <div className="section-tag">Stars</div>
             <h2 className="section-title">Popular <em>Celebrities</em></h2>
           </div>
-          <Link href="/celebrity" className="see-all">View All &rarr;</Link>
+          <Link href="/celebrity" className="see-all">View All →</Link>
         </div>
         <div className="reveal">
           <CelebrityStrip celebrities={celebrities} />
@@ -333,7 +370,6 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
         <AdSlot slot="3307940521" />
       </div>
 
-      {/* ── DECORATIVE LINE ── */}
       <div className="deco-line" />
 
       {/* ── NEWSLETTER ── */}
@@ -353,6 +389,7 @@ export async function getStaticProps() {
   let nowPlaying = [];
   let popular = [];
   let genres = [];
+  let celebrities = [];
 
   if (apiKey) {
     try {
@@ -363,60 +400,46 @@ export async function getStaticProps() {
         fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`),
       ]);
 
-      // Parse trending
       if (trendingRes.status === 'fulfilled') {
         const trendingData = await trendingRes.value.json();
         const trending = (trendingData.results || [])
           .filter((m) => m.original_language === 'en')
           .map((m) => ({
-            id: m.id,
-            title: m.title,
-            poster_path: m.poster_path,
-            backdrop_path: m.backdrop_path,
-            release_date: m.release_date || '',
-            vote_average: m.vote_average || 0,
-            overview: m.overview || '',
+            id: m.id, title: m.title, poster_path: m.poster_path,
+            backdrop_path: m.backdrop_path, release_date: m.release_date || '',
+            vote_average: m.vote_average || 0, overview: m.overview || '',
           }));
-        const trendingWithBackdrop = trending.filter((m) => m.backdrop_path && m.overview);
-        featuredMovie = trendingWithBackdrop.length > 0
-          ? trendingWithBackdrop[Math.floor(Math.random() * trendingWithBackdrop.length)]
+        const withBackdrop = trending.filter((m) => m.backdrop_path && m.overview);
+        featuredMovie = withBackdrop.length > 0
+          ? withBackdrop[Math.floor(Math.random() * Math.min(withBackdrop.length, 5))]
           : trending[0] || null;
       }
 
-      // Parse now_playing
       if (nowPlayingRes.status === 'fulfilled') {
         const npData = await nowPlayingRes.value.json();
         nowPlaying = (npData.results || [])
           .filter((m) => m.original_language === 'en')
-          .slice(0, 12).map((m) => ({
-          id: m.id,
-          title: m.title,
-          poster_path: m.poster_path,
-          backdrop_path: m.backdrop_path,
-          release_date: m.release_date || '',
-          vote_average: m.vote_average || 0,
-          overview: m.overview || '',
-        }));
+          .slice(0, 14)
+          .map((m) => ({
+            id: m.id, title: m.title, poster_path: m.poster_path,
+            backdrop_path: m.backdrop_path, release_date: m.release_date || '',
+            vote_average: m.vote_average || 0, overview: m.overview || '',
+          }));
       }
 
-      // Parse popular
       if (popularRes.status === 'fulfilled') {
         const popData = await popularRes.value.json();
         popular = (popData.results || [])
           .filter((m) => m.original_language === 'en')
-          .slice(0, 8).map((m) => ({
-          id: m.id,
-          title: m.title,
-          poster_path: m.poster_path,
-          backdrop_path: m.backdrop_path,
-          release_date: m.release_date || '',
-          vote_average: m.vote_average || 0,
-          overview: m.overview || '',
-          genre_ids: m.genre_ids || [],
-        }));
+          .slice(0, 8)
+          .map((m) => ({
+            id: m.id, title: m.title, poster_path: m.poster_path,
+            backdrop_path: m.backdrop_path, release_date: m.release_date || '',
+            vote_average: m.vote_average || 0, overview: m.overview || '',
+            genre_ids: m.genre_ids || [],
+          }));
       }
 
-      // Parse genres and fetch a backdrop image for each
       if (genresRes.status === 'fulfilled') {
         const genData = await genresRes.value.json();
         const rawGenres = (genData.genres || []).slice(0, 12);
@@ -442,7 +465,6 @@ export async function getStaticProps() {
         });
       }
 
-      // Fetch trailer for featured movie
       if (featuredMovie?.id) {
         try {
           const videosRes = await fetch(
@@ -452,42 +474,25 @@ export async function getStaticProps() {
           const trailer = (videosData.results || []).find(
             (v) => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser')
           );
-          if (trailer) {
-            featuredMovie.trailerKey = trailer.key;
-          }
-        } catch (e) {
-          console.error('Error fetching trailer:', e);
-        }
+          if (trailer) featuredMovie.trailerKey = trailer.key;
+        } catch { /* silent */ }
       }
     } catch (err) {
       console.error('Error fetching homepage data:', err);
     }
   }
 
-  // Load a random selection of celebrities
-  let celebrities = [];
   try {
     const celebData = require('../data/celebrities.json');
     const all = celebData.celebrities || [];
     const shuffled = [...all].sort(() => Math.random() - 0.5);
     celebrities = shuffled.slice(0, 12).map((c) => ({
-      slug: c.slug,
-      name: c.name,
-      category: c.category,
-      wikipedia_slug: c.wikipedia_slug,
+      slug: c.slug, name: c.name, category: c.category, wikipedia_slug: c.wikipedia_slug,
     }));
-  } catch {
-    // celebrities.json not available
-  }
+  } catch { /* no celebrities.json */ }
 
   return {
-    props: {
-      featuredMovie,
-      nowPlaying,
-      popular,
-      genres,
-      celebrities,
-    },
+    props: { featuredMovie, nowPlaying, popular, genres, celebrities },
     revalidate: 3600,
   };
 }

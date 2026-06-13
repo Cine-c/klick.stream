@@ -10577,6 +10577,449 @@ a.provider-card:hover {
   position: relative;
 }
 
+/* ── Hero: new additions ── */
+.hero-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.5);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+.hero-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(4px);
+  color: var(--text-muted);
+}
+
+.hero-meta-pill.hero-meta-rating {
+  color: var(--accent);
+  border-color: rgba(16,185,129,0.3);
+  background: rgba(16,185,129,0.08);
+}
+
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-hero-primary:hover {
+  background: var(--accent-hover, #059669);
+  transform: translateY(-1px);
+}
+
+.btn-hero-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.btn-hero-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-poster-float {
+  position: absolute;
+  bottom: 100px;
+  right: 80px;
+  z-index: 4;
+  width: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+  opacity: 0;
+  animation: fadeUp 0.9s 1s ease forwards;
+}
+
+/* ── Ticker label ── */
+.ticker {
+  display: flex;
+  align-items: center;
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  padding: 0 16px 0 20px;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* ── World Cup Banner ── */
+.worldcup-banner {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);
+  border-top: 1px solid rgba(16,185,129,0.3);
+  border-bottom: 1px solid rgba(16,185,129,0.3);
+  text-decoration: none;
+  transition: filter 0.2s ease;
+}
+
+.worldcup-banner:hover {
+  filter: brightness(1.06);
+}
+
+.worldcup-banner-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wc-hex {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.04);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  top: calc(var(--i) * 14% - 20px);
+  left: calc(var(--i) * 9% - 10px);
+  animation: wc-float 8s ease-in-out calc(var(--i) * 0.5s) infinite;
+}
+
+@keyframes wc-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(15deg); }
+}
+
+.worldcup-banner-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 28px 60px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.worldcup-banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.wc-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(239,68,68,0.9);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.wc-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulse-dot 1.5s infinite;
+}
+
+.worldcup-banner-trophy {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.worldcup-banner-center {
+  flex: 1;
+}
+
+.worldcup-banner-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+
+.worldcup-banner-title {
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.worldcup-banner-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
+}
+
+.worldcup-banner-cta {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.worldcup-banner:hover .worldcup-banner-cta {
+  background: rgba(255,255,255,0.2);
+  border-color: #fff;
+}
+
+/* ── Horizontal Scroll Row ── */
+.hscroll-container {
+  position: relative;
+}
+
+.hscroll-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 2px 12px;
+}
+
+.hscroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+.hscroll-card {
+  flex: 0 0 180px;
+  scroll-snap-align: start;
+}
+
+.hscroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(8,12,12,0.9);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.hscroll-container:hover .hscroll-btn {
+  opacity: 1;
+}
+
+.hscroll-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.hscroll-btn-left  { left: -14px; }
+.hscroll-btn-right { right: -14px; }
+
+/* ── Trending Ranked ── */
+.trending-ranked {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.trending-top-card {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: var(--radius-md, 10px);
+  display: block;
+  text-decoration: none;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.trending-top-card:hover {
+  transform: scale(1.01);
+}
+
+.trending-top-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+.trending-top-rank {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.9;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trending-top-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.trending-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+}
+
+.trending-top-meta svg {
+  color: var(--accent);
+}
+
+.trending-top-info p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* rest list */
+.trending-rest {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trending-rest-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.18s ease;
+}
+
+.trending-rest-card:hover {
+  background: rgba(16,185,129,0.06);
+  border-color: rgba(16,185,129,0.2);
+}
+
+.trending-rest-rank {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trending-rest-no-poster {
+  width: 48px;
+  height: 72px;
+  border-radius: 4px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.trending-rest-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.trending-rest-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trending-rest-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Genre card overlay ── */
+.genre-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.1) 0%,
+    rgba(0,0,0,0.6) 70%,
+    rgba(0,0,0,0.85) 100%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.genre-card:hover .genre-card-overlay {
+  opacity: 0.7;
+}
+
 /* ── Homepage Responsive ── */
 @media (max-width: 1024px) {
   .hero-content {
@@ -10589,6 +11032,10 @@ a.provider-card:hover {
 
   .trending-scroll > .movie-card {
     flex: 0 0 calc(33.333% - 14px);
+  }
+
+  .trending-ranked {
+    grid-template-columns: 1fr;
   }
 
   .genre-grid {
@@ -10624,6 +11071,15 @@ a.provider-card:hover {
     border-right: none;
   }
 
+  .worldcup-banner-inner {
+    padding: 22px 30px;
+    gap: 20px;
+  }
+
+  .hero-poster-float {
+    display: none;
+  }
+
   .footer-container {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
@@ -10652,6 +11108,10 @@ a.provider-card:hover {
     gap: 12px;
   }
 
+  .trending-ranked {
+    grid-template-columns: 1fr;
+  }
+
   .trending-scroll {
     gap: 12px;
   }
@@ -10676,6 +11136,20 @@ a.provider-card:hover {
     font-size: 2.5rem;
   }
 
+  .worldcup-banner-inner {
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .worldcup-banner-cta {
+    display: none;
+  }
+
+  .hscroll-card {
+    flex: 0 0 150px;
+  }
+
   .newsletter-section {
     padding: 80px 20px;
   }
@@ -10693,6 +11167,595 @@ a.provider-card:hover {
     flex-direction: column;
     gap: 16px;
     text-align: center;
+  }
+}
+
+/* ============================================
+   World Cup Page
+   ============================================ */
+
+.wcp-page {
+  min-height: 100vh;
+}
+
+/* Hero */
+.wcp-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #022c22 0%, #064e3b 45%, #065f46 100%);
+  padding: 120px 60px 80px;
+  text-align: center;
+}
+
+.wcp-hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wcp-hero-hex {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.03);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  top: calc(var(--i) * 7%);
+  left: calc(var(--i) * 5.5%);
+  animation: wc-float 10s ease-in-out calc(var(--i) * 0.4s) infinite;
+}
+
+.wcp-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.wcp-hero-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.wcp-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(239,68,68,0.9);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.wcp-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulse-dot 1.5s infinite;
+}
+
+.wcp-edition-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.wcp-hero-ball {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.wcp-hero-title {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.wcp-hero-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+
+.wcp-hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto 36px;
+}
+
+.wcp-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wcp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  background: #fff;
+  color: #064e3b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.wcp-btn-primary:hover {
+  background: rgba(255,255,255,0.9);
+  transform: translateY(-1px);
+}
+
+.wcp-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.wcp-btn-ghost:hover {
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.06);
+}
+
+/* Opening match */
+.wcp-opening-match {
+  background: #0a0f0e;
+  border-top: 1px solid rgba(16,185,129,0.2);
+  border-bottom: 1px solid rgba(16,185,129,0.2);
+  padding: 28px 60px;
+}
+
+.wcp-opening-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.wcp-opening-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.wcp-opening-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s infinite;
+}
+
+.wcp-opening-score {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.wcp-opening-team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wcp-opening-team-right {
+  flex-direction: row-reverse;
+}
+
+.wcp-opening-flag {
+  font-size: 2rem;
+}
+
+.wcp-opening-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wcp-opening-goals {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.wcp-opening-vs {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-muted);
+}
+
+.wcp-opening-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Stats */
+.wcp-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.wcp-stat {
+  padding: 36px 20px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.wcp-stat:last-child {
+  border-right: none;
+}
+
+.wcp-stat-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.wcp-stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Sections */
+.wcp-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.wcp-section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.wcp-section-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.wcp-section-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.wcp-section-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+/* Format */
+.wcp-format .wcp-section-inner {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 60px;
+  align-items: start;
+}
+
+.wcp-format-text p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.wcp-format-stages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.wcp-stage {
+  text-align: center;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 60px;
+}
+
+.wcp-stage-final {
+  background: rgba(16,185,129,0.15);
+  border-color: var(--accent);
+}
+
+.wcp-stage-num {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.wcp-stage-name {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wcp-stage-arrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.wcp-format-card {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(16,185,129,0.25);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.wcp-format-card-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.wcp-format-venue-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.wcp-format-venue-location {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.wcp-format-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.wcp-format-capacity {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Host Cities */
+.wcp-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.wcp-cities-country {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.wcp-cities-country-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wcp-cities-flag {
+  font-size: 2.2rem;
+}
+
+.wcp-cities-country-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.wcp-cities-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.wcp-cities-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wcp-city-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.wcp-city-item svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Movies grid */
+.wcp-movies-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.wcp-movies-more {
+  margin-top: 32px;
+  text-align: center;
+}
+
+/* CTA bar */
+.wcp-cta-bar {
+  background: linear-gradient(135deg, #064e3b, #065f46);
+  padding: 48px 60px;
+}
+
+.wcp-cta-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.wcp-cta-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.wcp-cta-sub {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.65);
+}
+
+/* World Cup Responsive */
+@media (max-width: 1024px) {
+  .wcp-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wcp-stat:nth-child(3) {
+    border-right: none;
+  }
+
+  .wcp-format .wcp-section-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .wcp-format-card {
+    max-width: 400px;
+  }
+
+  .wcp-movies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wcp-section-inner {
+    padding: 0 30px;
+  }
+
+  .wcp-hero {
+    padding: 100px 30px 60px;
+  }
+
+  .wcp-opening-match {
+    padding: 24px 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wcp-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wcp-stat:nth-child(3) {
+    border-right: 1px solid var(--border);
+  }
+
+  .wcp-stat:nth-child(2),
+  .wcp-stat:nth-child(4),
+  .wcp-stat:nth-child(6) {
+    border-right: none;
+  }
+
+  .wcp-cities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wcp-movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wcp-opening-score {
+    gap: 16px;
+  }
+
+  .wcp-opening-name {
+    display: none;
+  }
+
+  .wcp-cta-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .wcp-section-inner {
+    padding: 0 20px;
+  }
+
+  .wcp-hero {
+    padding: 80px 20px 60px;
+  }
+
+  .wcp-opening-match {
+    padding: 20px;
   }
 }
 
