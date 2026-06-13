@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
@@ -24,6 +24,14 @@ const GA_ID = 'G-81S7GHHRSB';
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
+  const [splashVisible, setSplashVisible] = useState(true);
+  const [splashFading, setSplashFading] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setSplashFading(true), 500);
+    const t2 = setTimeout(() => setSplashVisible(false), 950);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   useEffect(() => {
     // Send initial page view
@@ -40,6 +48,14 @@ export default function App({ Component, pageProps }) {
   }, [router.events]);
 
   return (
+    <>
+    {splashVisible && (
+      <div className={`splash-screen${splashFading ? ' splash-out' : ''}`} aria-hidden="true">
+        <div className="splash-logo">
+          <span className="splash-k">K</span>lick<span className="splash-dot">.</span>stream
+        </div>
+      </div>
+    )}
     <ErrorBoundary>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
@@ -63,5 +79,6 @@ export default function App({ Component, pageProps }) {
         </AuthProvider>
       </LanguageProvider>
     </ErrorBoundary>
+    </>
   );
 }

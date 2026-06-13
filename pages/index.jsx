@@ -10,6 +10,10 @@ import NewsletterSignup from '../components/NewsletterSignup';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
+import dynamic from 'next/dynamic';
+import { useAuth } from '../components/useAuth';
+
+const AuthModal = dynamic(() => import('../components/AuthModal'), { ssr: false });
 
 function useScrollReveal() {
   const ref = useRef(null);
@@ -58,9 +62,11 @@ function HScrollRow({ children }) {
 export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities }) {
   const { language } = useLanguage();
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const revealRef = useScrollReveal();
   const heroRef = useRef(null);
   const [heroTrailerKey, setHeroTrailerKey] = useState(featuredMovie?.trailerKey || null);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     if (featuredMovie?.id && !featuredMovie?.trailerKey) {
@@ -146,6 +152,11 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
             <Link href="/discover" className="btn-hero-ghost">
               Browse All Films →
             </Link>
+            {!authLoading && !user && (
+              <button className="btn-hero-join" onClick={() => setShowAuth(true)}>
+                Join Free
+              </button>
+            )}
           </div>
         </div>
 
@@ -393,12 +404,42 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
 
       <div className="deco-line" />
 
+      {/* ── JOIN CTA ── */}
+      {!authLoading && !user && (
+        <div className="home-join-cta reveal">
+          <div className="home-join-inner">
+            <div className="home-join-text">
+              <div className="home-join-eyebrow">Free forever</div>
+              <h2 className="home-join-heading">Your Personal <em>Film Hub</em></h2>
+              <p className="home-join-sub">Save watchlists, track what you've seen, get personalised picks — no credit card needed.</p>
+              <ul className="home-join-perks">
+                <li><span>✓</span> Watchlist &amp; watch history</li>
+                <li><span>✓</span> Personalised recommendations</li>
+                <li><span>✓</span> Ad-free with Premium</li>
+              </ul>
+            </div>
+            <div className="home-join-actions">
+              <button className="home-join-btn" onClick={() => setShowAuth(true)}>
+                Create Free Account
+              </button>
+              <button className="home-join-signin" onClick={() => setShowAuth(true)}>
+                Already have an account? Sign in →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── NEWSLETTER ── */}
       <div className="newsletter-section reveal">
         <h2>Never Miss a <em>New Release.</em></h2>
         <p>Weekly picks, streaming drops, and critical coverage — straight to your inbox.</p>
         <NewsletterSignup variant="inline" />
       </div>
+
+      {showAuth && (
+        <AuthModal onClose={() => setShowAuth(false)} defaultTab="signup" />
+      )}
     </div>
   );
 }
