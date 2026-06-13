@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
+import AdSlot from '../components/AdSlot';
 
 const TMDB_IMAGE = 'https://image.tmdb.org/t/p/';
 
@@ -174,6 +175,11 @@ export default function TVHub({ trending, airingToday, popularDrama, popularReal
           </section>
         )}
 
+        {/* ── AD ── */}
+        <div className="ad-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+          <AdSlot slot="3307940521" />
+        </div>
+
         {/* ── AIRING TODAY ── */}
         {airingToday.length > 0 && (
           <section className="tv-section tv-section-dark">
@@ -213,6 +219,11 @@ export default function TVHub({ trending, airingToday, popularDrama, popularReal
             </div>
           </div>
         </section>
+
+        {/* ── AD ── */}
+        <div className="ad-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+          <AdSlot slot="3891486690" />
+        </div>
 
         {/* ── TOP DRAMAS ── */}
         {popularDrama.length > 0 && (

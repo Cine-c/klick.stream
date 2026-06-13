@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
 import MovieCard from '../components/trailers/MovieCard';
+import AdSlot from '../components/AdSlot';
 import { useRouter } from 'next/router';
 
 const HIGHLIGHT_TOPICS = [
@@ -290,6 +291,11 @@ export default function WorldCupPage({ movies }) {
           ))}
         </div>
 
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
+
         {/* ── FORMAT EXPLAINER ── */}
         <section className="wcp-section wcp-format">
           <div className="wcp-section-inner">
@@ -404,6 +410,11 @@ export default function WorldCupPage({ movies }) {
             </div>
           </section>
         )}
+
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
 
         {/* ── CTA ── */}
         <div className="wcp-cta-bar">

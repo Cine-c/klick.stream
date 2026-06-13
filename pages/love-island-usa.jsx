@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
+import AdSlot from '../components/AdSlot';
 
 const SHOW_ID = 90521;
 const PEACOCK_URL = 'https://www.peacocktv.com/stream-tv/love-island';
@@ -192,6 +193,11 @@ export default function LoveIslandUSA({ show, season, islanders }) {
           </section>
         )}
 
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
+
         {/* ── EPISODES ── */}
         {(aired.length > 0 || upcoming.length > 0) && (
           <section className="li-section li-section-dark">
@@ -223,6 +229,11 @@ export default function LoveIslandUSA({ show, season, islanders }) {
             </div>
           </section>
         )}
+
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
 
         {/* ── WHERE TO WATCH ── */}
         <div className="li-watch-bar">

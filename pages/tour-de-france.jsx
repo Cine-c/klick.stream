@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
+import AdSlot from '../components/AdSlot';
 
 const CYCLING_MOVIE_IDS = [
   271736,  // The Program (2015, Lance Armstrong biopic)
@@ -163,6 +164,11 @@ export default function TourDeFrance({ movies }) {
           </div>
         </section>
 
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
+
         {/* ── GC CONTENDERS ── */}
         <section className="tdf-section tdf-section-dark">
           <div className="tdf-section-inner">
@@ -205,6 +211,11 @@ export default function TourDeFrance({ movies }) {
             </div>
           </div>
         </section>
+
+        {/* ── AD ── */}
+        <div className="ad-container">
+          <AdSlot slot="1594520752" format="in-article" />
+        </div>
 
         {/* ── CYCLING MOVIES ── */}
         {movies.length > 0 && (

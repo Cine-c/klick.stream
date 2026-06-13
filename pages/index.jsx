@@ -387,7 +387,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
 
       {/* ── AD SLOT 2 ── */}
       <div className="ad-container" key={router.asPath + '-ad2'}>
-        <AdSlot slot="3307940521" />
+        <AdSlot slot="3891486690" />
       </div>
 
       <div className="deco-line" />
