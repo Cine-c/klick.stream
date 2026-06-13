@@ -357,24 +357,26 @@ export async function getStaticProps() {
   if (apiKey) {
     try {
       const [trendingRes, nowPlayingRes, popularRes, genresRes] = await Promise.allSettled([
-        fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`),
-        fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&page=1`),
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=1`),
-        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`),
+        fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=en-US`),
+        fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&region=US&page=1`),
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&region=US&page=1`),
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`),
       ]);
 
       // Parse trending
       if (trendingRes.status === 'fulfilled') {
         const trendingData = await trendingRes.value.json();
-        const trending = (trendingData.results || []).map((m) => ({
-          id: m.id,
-          title: m.title,
-          poster_path: m.poster_path,
-          backdrop_path: m.backdrop_path,
-          release_date: m.release_date || '',
-          vote_average: m.vote_average || 0,
-          overview: m.overview || '',
-        }));
+        const trending = (trendingData.results || [])
+          .filter((m) => m.original_language === 'en')
+          .map((m) => ({
+            id: m.id,
+            title: m.title,
+            poster_path: m.poster_path,
+            backdrop_path: m.backdrop_path,
+            release_date: m.release_date || '',
+            vote_average: m.vote_average || 0,
+            overview: m.overview || '',
+          }));
         const trendingWithBackdrop = trending.filter((m) => m.backdrop_path && m.overview);
         featuredMovie = trendingWithBackdrop.length > 0
           ? trendingWithBackdrop[Math.floor(Math.random() * trendingWithBackdrop.length)]
@@ -384,7 +386,9 @@ export async function getStaticProps() {
       // Parse now_playing
       if (nowPlayingRes.status === 'fulfilled') {
         const npData = await nowPlayingRes.value.json();
-        nowPlaying = (npData.results || []).slice(0, 12).map((m) => ({
+        nowPlaying = (npData.results || [])
+          .filter((m) => m.original_language === 'en')
+          .slice(0, 12).map((m) => ({
           id: m.id,
           title: m.title,
           poster_path: m.poster_path,
@@ -398,7 +402,9 @@ export async function getStaticProps() {
       // Parse popular
       if (popularRes.status === 'fulfilled') {
         const popData = await popularRes.value.json();
-        popular = (popData.results || []).slice(0, 8).map((m) => ({
+        popular = (popData.results || [])
+          .filter((m) => m.original_language === 'en')
+          .slice(0, 8).map((m) => ({
           id: m.id,
           title: m.title,
           poster_path: m.poster_path,
@@ -416,7 +422,7 @@ export async function getStaticProps() {
         const rawGenres = (genData.genres || []).slice(0, 12);
         const genreImageResults = await Promise.allSettled(
           rawGenres.map((g) =>
-            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${g.id}&sort_by=popularity.desc&page=1`)
+            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${g.id}&sort_by=popularity.desc&page=1&language=en-US&with_original_language=en`)
               .then((r) => r.json())
           )
         );
