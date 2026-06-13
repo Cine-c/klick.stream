@@ -57,7 +57,7 @@ function MovieCard({ movie, providers }) {
   const backdrop = movie.backdrop_path ? TMDB_IMG + movie.backdrop_path : '';
   const providerText = providers && providers.length > 0
     ? 'Stream on: ' + providers.join(', ')
-    : 'Check Klick.stream.com for availability';
+    : 'Check klick.stream for availability';
 
   return (
     <div className="cnv-movie-card">

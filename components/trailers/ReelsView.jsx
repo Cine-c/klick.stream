@@ -88,7 +88,7 @@ export default function ReelsView({ movie, movies, onNextMovie, onPrevMovie, onC
 
   const handleShare = async () => {
     try {
-      await navigator.clipboard.writeText(`https://www.Klick.stream.com/movies/${movie.id}`);
+      await navigator.clipboard.writeText(`https://klick.stream/movies/${movie.id}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}

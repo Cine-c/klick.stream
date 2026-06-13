@@ -54,6 +54,11 @@ export default function Header() {
       <div className="header-container">
         <div className="logo-group">
           <Link href="/" className="logo">
+            <span className="logo-mark" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 2.5v12M4 8.5l7-6M4 8.5l7 6" stroke="#080c0c" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
             Klick<span className="logo-stream">.stream</span>
           </Link>
           <a

@@ -46,7 +46,7 @@ export default function PrivacyPage() {
 
         <p>
           For more details, contact us at{' '}
-          <a href="mailto:privacy@Klick.stream.com">privacy@Klick.stream.com</a>.
+          <a href="mailto:privacy@klick.stream">privacy@klick.stream</a>.
         </p>
       </div>
     </>

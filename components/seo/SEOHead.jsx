@@ -9,7 +9,7 @@ export default function SEOHead({
   article = null,
   noindex = false,
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.Klick.stream.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
   const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
   const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
   const fullTitle = title === 'Klick.stream' || title.includes('Klick.stream')

@@ -129,7 +129,7 @@ export default function BlogPost({ post, relatedPosts }) {
         <Disqus
           identifier={`blog-${post.slug}`}
           title={post.title}
-          url={`https://www.Klick.stream.com/blog/${post.slug}`}
+          url={`https://klick.stream/blog/${post.slug}`}
         />
       </article>
     </>

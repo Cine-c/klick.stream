@@ -6,88 +6,67 @@ import { deflateSync } from 'zlib';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, '..', 'public');
 
-// Colors
-function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
-
+// Background: dark teal gradient
 function getGradientColor(x, y, size) {
   const t = (x + y) / (2 * (size - 1));
-  // Purple #7c3aed to Rose #f43f5e
+  // #061a14 → #091f18
   return {
-    r: lerp(0x7c, 0xf4, t),
-    g: lerp(0x3a, 0x3f, t),
-    b: lerp(0xed, 0x5e, t),
+    r: Math.round(0x06 + (0x09 - 0x06) * t),
+    g: Math.round(0x1a + (0x1f - 0x1a) * t),
+    b: Math.round(0x14 + (0x18 - 0x14) * t),
     a: 255,
   };
 }
 
-// "C" letter - uses normalized coordinates so it works at any size
-function isCPixel(x, y, size) {
+// Distance from point (px,py) to line segment (ax,ay)→(bx,by)
+function distToSegment(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay;
+  const lenSq = dx * dx + dy * dy;
+  const t = lenSq === 0 ? 0 : Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+}
+
+// K letterform at normalised coords [0,1]
+function isKPixel(x, y, size) {
   const nx = x / size;
   const ny = y / size;
+  const thick = 0.09;  // stroke thickness (half-width)
 
-  // Center and radii of the C arc
-  const cx = 0.50, cy = 0.50;
-  const outerR = 0.28;
-  const innerR = 0.165;
+  // Vertical stroke — left pillar
+  if (nx >= 0.20 && nx <= 0.20 + thick * 2 && ny >= 0.12 && ny <= 0.88) return true;
 
-  const dx = nx - cx;
-  const dy = ny - cy;
-  const dist = Math.sqrt(dx * dx + dy * dy);
+  // Upper diagonal arm: (0.38, 0.50) → (0.78, 0.12)
+  if (distToSegment(nx, ny, 0.38, 0.50, 0.78, 0.12) < thick) return true;
 
-  // Must be within the ring (between inner and outer radius)
-  if (dist > outerR || dist < innerR) return false;
+  // Lower diagonal arm: (0.38, 0.50) → (0.78, 0.88)
+  if (distToSegment(nx, ny, 0.38, 0.50, 0.78, 0.88) < thick) return true;
 
-  // Cut out the opening on the right side (gap for the C shape)
-  // Open from about -40 to +40 degrees on the right
-  const angle = Math.atan2(dy, dx);
-  if (angle > -0.70 && angle < 0.70) return false;
-
-  // Add top and bottom horizontal arms to make a crisp C
-  const armH = 0.115; // arm thickness
-  const armLeft = 0.48, armRight = 0.62;
-
-  // Top arm
-  if (nx >= armLeft && nx <= armRight && ny >= cy - outerR && ny < cy - outerR + armH) return true;
-  // Bottom arm
-  if (nx >= armLeft && nx <= armRight && ny <= cy + outerR && ny > cy + outerR - armH) return true;
-
-  return true;
+  return false;
 }
 
-// Round corners check
+// Rounded rect mask
 function isInRoundedRect(x, y, size, radius) {
-  if (x < radius && y < radius) {
-    return (x - radius) ** 2 + (y - radius) ** 2 <= radius ** 2;
-  }
-  if (x >= size - radius && y < radius) {
-    return (x - (size - radius - 1)) ** 2 + (y - radius) ** 2 <= radius ** 2;
-  }
-  if (x < radius && y >= size - radius) {
-    return (x - radius) ** 2 + (y - (size - radius - 1)) ** 2 <= radius ** 2;
-  }
-  if (x >= size - radius && y >= size - radius) {
-    return (x - (size - radius - 1)) ** 2 + (y - (size - radius - 1)) ** 2 <= radius ** 2;
-  }
+  if (x < radius && y < radius) return (x - radius) ** 2 + (y - radius) ** 2 <= radius ** 2;
+  if (x >= size - radius && y < radius) return (x - (size - radius - 1)) ** 2 + (y - radius) ** 2 <= radius ** 2;
+  if (x < radius && y >= size - radius) return (x - radius) ** 2 + (y - (size - radius - 1)) ** 2 <= radius ** 2;
+  if (x >= size - radius && y >= size - radius) return (x - (size - radius - 1)) ** 2 + (y - (size - radius - 1)) ** 2 <= radius ** 2;
   return true;
 }
 
-// Generate PNG at a given size
 function generatePNG(size) {
-  const radius = Math.round(size * 0.1875); // ~6/32 ratio
+  const radius = Math.round(size * 0.1875);
   const pixels = Buffer.alloc(size * size * 4);
 
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const offset = (y * size + x) * 4;
       if (!isInRoundedRect(x, y, size, radius)) {
-        pixels[offset] = 0;
-        pixels[offset + 1] = 0;
-        pixels[offset + 2] = 0;
-        pixels[offset + 3] = 0;
-      } else if (isCPixel(x, y, size)) {
-        pixels[offset] = 255;
-        pixels[offset + 1] = 255;
-        pixels[offset + 2] = 255;
+        pixels[offset] = pixels[offset + 1] = pixels[offset + 2] = pixels[offset + 3] = 0;
+      } else if (isKPixel(x, y, size)) {
+        // Emerald #10b981
+        pixels[offset] = 0x10;
+        pixels[offset + 1] = 0xb9;
+        pixels[offset + 2] = 0x81;
         pixels[offset + 3] = 255;
       } else {
         const c = getGradientColor(x, y, size);
@@ -99,7 +78,6 @@ function generatePNG(size) {
     }
   }
 
-  // Create PNG
   function crc32(buf) {
     let crc = 0xffffffff;
     const table = new Int32Array(256);
@@ -108,9 +86,7 @@ function generatePNG(size) {
       for (let j = 0; j < 8; j++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
       table[i] = c;
     }
-    for (let i = 0; i < buf.length; i++) {
-      crc = table[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
-    }
+    for (let i = 0; i < buf.length; i++) crc = table[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
     return (crc ^ 0xffffffff) >>> 0;
   }
 
@@ -127,28 +103,22 @@ function generatePNG(size) {
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(size, 0);
   ihdr.writeUInt32BE(size, 4);
-  ihdr[8] = 8;  // bit depth
-  ihdr[9] = 6;  // color type (RGBA)
-  ihdr[10] = 0;
-  ihdr[11] = 0;
-  ihdr[12] = 0;
+  ihdr[8] = 8; ihdr[9] = 6;
 
   const rawData = Buffer.alloc(size * (1 + size * 4));
   for (let y = 0; y < size; y++) {
     rawData[y * (1 + size * 4)] = 0;
     pixels.copy(rawData, y * (1 + size * 4) + 1, y * size * 4, (y + 1) * size * 4);
   }
-  const compressed = deflateSync(rawData);
 
   return Buffer.concat([
     Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
     pngChunk('IHDR', ihdr),
-    pngChunk('IDAT', compressed),
+    pngChunk('IDAT', deflateSync(rawData)),
     pngChunk('IEND', Buffer.alloc(0)),
   ]);
 }
 
-// Generate all icon sizes
 const icons = [
   { name: 'favicon.png', size: 32 },
   { name: 'apple-touch-icon.png', size: 180 },
@@ -162,25 +132,15 @@ for (const { name, size } of icons) {
   console.log(`Generated ${name} (${size}x${size}, ${png.length} bytes)`);
 }
 
-// Create ICO from 32x32 PNG
+// ICO from 32×32
 const png32 = generatePNG(32);
 const icoHeader = Buffer.alloc(6);
-icoHeader.writeUInt16LE(0, 0);
-icoHeader.writeUInt16LE(1, 2);
-icoHeader.writeUInt16LE(1, 4);
-
+icoHeader.writeUInt16LE(0, 0); icoHeader.writeUInt16LE(1, 2); icoHeader.writeUInt16LE(1, 4);
 const icoEntry = Buffer.alloc(16);
-icoEntry[0] = 32;
-icoEntry[1] = 32;
-icoEntry[2] = 0;
-icoEntry[3] = 0;
-icoEntry.writeUInt16LE(1, 4);
-icoEntry.writeUInt16LE(32, 6);
-icoEntry.writeUInt32LE(png32.length, 8);
-icoEntry.writeUInt32LE(22, 12);
-
+icoEntry[0] = 32; icoEntry[1] = 32;
+icoEntry.writeUInt16LE(1, 4); icoEntry.writeUInt16LE(32, 6);
+icoEntry.writeUInt32LE(png32.length, 8); icoEntry.writeUInt32LE(22, 12);
 const ico = Buffer.concat([icoHeader, icoEntry, png32]);
 writeFileSync(join(publicDir, 'favicon.ico'), ico);
 console.log(`Generated favicon.ico (${ico.length} bytes)`);
-
-console.log('\nAll icons generated for all devices!');
+console.log('\nAll icons generated!');

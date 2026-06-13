@@ -391,7 +391,7 @@ export default function Admin() {
                   <input
                     id="email"
                     type="email"
-                    placeholder="admin@Klick.stream.com"
+                    placeholder="admin@klick.stream"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

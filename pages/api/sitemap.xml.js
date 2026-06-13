@@ -1,5 +1,5 @@
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.Klick.stream.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
 function urlEntry({ loc, lastmod, changefreq = 'weekly', priority = '0.5' }) {
   return `
