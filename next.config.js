@@ -32,11 +32,11 @@ const nextConfig = {
       { source: '/sitemap.xml', destination: '/api/sitemap.xml' },
       {
         source: '/__/auth/:path*',
-        destination: 'https://cinenovatv-1e11a.firebaseapp.com/__/auth/:path*',
+        destination: 'https://klick-a2f4e.firebaseapp.com/__/auth/:path*',
       },
       {
         source: '/__/firebase/:path*',
-        destination: 'https://cinenovatv-1e11a.firebaseapp.com/__/firebase/:path*',
+        destination: 'https://klick-a2f4e.firebaseapp.com/__/firebase/:path*',
       },
     ];
   },
