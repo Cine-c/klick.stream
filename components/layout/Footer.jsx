@@ -1,68 +1,96 @@
 import Link from 'next/link';
-import NewsletterSignup from '../NewsletterSignup';
-import SupportButton from '../SupportButton';
 import AffiliateDisclosure from '../AffiliateDisclosure';
 
+const EXPLORE_LINKS = [
+  { href: '/discover',   label: 'Discover Movies' },
+  { href: '/trailers',   label: 'Trailers' },
+  { href: '/tv',         label: 'TV Shows' },
+  { href: '/scenes',     label: 'Scenes' },
+  { href: '/celebrity',  label: 'Celebrities' },
+  { href: '/blockbuster', label: 'Blockbuster' },
+  { href: '/blog',       label: 'Blog' },
+];
+
+const LIVE_LINKS = [
+  { href: '/worldcup',        label: '⚽ FIFA World Cup 2026', badge: 'Live' },
+  { href: '/love-island-usa', label: '🌴 Love Island USA',     badge: 'Now' },
+  { href: '/tour-de-france',  label: '🚴 Tour de France',      badge: 'Jul 4' },
+];
+
+const COMPANY_LINKS = [
+  { href: '/about',   label: 'About' },
+  { href: '/premium', label: 'Premium' },
+  { href: '/privacy', label: 'Privacy Policy' },
+];
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
-      <div className="footer-container">
-        <div className="footer-section">
-          <Link href="/" className="logo" style={{ display: 'block', marginBottom: '16px', textDecoration: 'none' }}>
-            Klick<span className="logo-stream">.stream</span>
-          </Link>
-          <p>Your guide to the world of cinema. Discover where to watch, what&apos;s trending, and what&apos;s worth your time — across every platform.</p>
-          <div className="footer-social" style={{ display: 'flex', gap: '16px', marginTop: '1.25rem' }}>
-            <a
-              href="https://x.com/Klick.stream"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-social-link"
-              aria-label="Follow Klick.stream on X"
-            >
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      {/* ── TOP GRADIENT BAR ── */}
+      <div className="footer-top-bar" />
+
+      <div className="footer-inner">
+        {/* ── BRAND COLUMN ── */}
+        <div className="footer-brand">
+          <Link href="/" className="footer-logo">
+            <span className="footer-logo-mark">
+              <svg width="14" height="14" viewBox="0 0 17 17" fill="none">
+                <path d="M4 2.5v12M4 8.5l7-6M4 8.5l7 6" stroke="#080c0c" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </a>
-          </div>
-          <div style={{ marginTop: '1rem' }}>
-            <SupportButton variant="compact" />
-          </div>
+            </span>
+            Klick<span className="footer-logo-dot">.stream</span>
+          </Link>
+          <p className="footer-tagline">
+            Your free guide to cinema. Browse 50,000+ titles, watch trailers, and find where to stream — across every platform.
+          </p>
+          <a
+            href="https://x.com/Klick_stream"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-social-x"
+            aria-label="Follow on X"
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Follow on X
+          </a>
         </div>
 
-        <div className="footer-section">
-          <h4>Explore</h4>
-          <nav className="footer-nav">
-            <Link href="/">Home</Link>
-            <Link href="/trailers">Trailers</Link>
-            <Link href="/scenes">Scenes</Link>
-            <Link href="/discover">Discover</Link>
-            <Link href="/blockbuster">Blockbuster</Link>
-            <Link href="/celebrity">Celebrities</Link>
-            <Link href="/tv">TV Shows</Link>
-            <Link href="/worldcup">World Cup 2026</Link>
-            <Link href="/tour-de-france">Tour de France</Link>
-            <Link href="/love-island-usa">Love Island USA</Link>
+        {/* ── EXPLORE ── */}
+        <div className="footer-col">
+          <h4 className="footer-col-heading">Explore</h4>
+          <nav className="footer-links">
+            {EXPLORE_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} className="footer-link">{l.label}</Link>
+            ))}
           </nav>
         </div>
 
-        <div className="footer-section">
-          <h4>Learn</h4>
-          <nav className="footer-nav">
-            <Link href="/blog">Blog</Link>
-            <Link href="/about">About</Link>
-            <Link href="/premium">Go Ad-Free</Link>
+        {/* ── LIVE ── */}
+        <div className="footer-col">
+          <h4 className="footer-col-heading">Live &amp; Events</h4>
+          <nav className="footer-links">
+            {LIVE_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} className="footer-link footer-link-live">
+                {l.label}
+                <span className="footer-live-badge">{l.badge}</span>
+              </Link>
+            ))}
           </nav>
         </div>
 
-        <div className="footer-section">
-          <h4>Company</h4>
-          <nav className="footer-nav">
-            <Link href="/privacy">Privacy Policy</Link>
+        {/* ── COMPANY ── */}
+        <div className="footer-col">
+          <h4 className="footer-col-heading">Company</h4>
+          <nav className="footer-links">
+            {COMPANY_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} className="footer-link">{l.label}</Link>
+            ))}
             <button
-              className="footer-cookie-btn"
+              className="footer-link footer-cookie-btn"
               onClick={() => {
                 if (window.googlefc?.showRevocationMessage) {
                   window.googlefc.showRevocationMessage();
@@ -74,30 +102,34 @@ export default function Footer() {
               Cookie Settings
             </button>
           </nav>
-          <div style={{ marginTop: '1.5rem' }}>
-            <p className="tmdb-attribution">
-              This product uses the TMDB API but is not endorsed or certified by TMDB.
-            </p>
-            <a
-              href="https://www.themoviedb.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tmdb-link"
-            >
-              <img
-                src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
-                alt="TMDB Logo"
-                width="120"
-                height="12"
-              />
-            </a>
-            <AffiliateDisclosure variant="footer" />
-          </div>
         </div>
       </div>
 
+      {/* ── AFFILIATE ROW ── */}
+      <div className="footer-affiliate-row">
+        <div className="footer-affiliate-inner">
+          <AffiliateDisclosure variant="footer" />
+        </div>
+      </div>
+
+      {/* ── BOTTOM BAR ── */}
       <div className="footer-bottom">
-        <p>&copy; {currentYear} Klick.stream. All rights reserved.</p>
+        <div className="footer-bottom-inner">
+          <p className="footer-copy">&copy; {year} Klick.stream — All rights reserved.</p>
+          <div className="footer-bottom-right">
+            <span className="footer-tmdb">
+              Data by{' '}
+              <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+                  alt="TMDB"
+                  width="52"
+                  height="10"
+                />
+              </a>
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   );
