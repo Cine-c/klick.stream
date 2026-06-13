@@ -39,4 +39,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap reference
-Sitemap: https://www.klick.stream/sitemap.xml
+Sitemap: https://klick.stream/sitemap.xml

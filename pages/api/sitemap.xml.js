@@ -12,23 +12,43 @@ function urlEntry({ loc, lastmod, changefreq = 'weekly', priority = '0.5' }) {
 
 function generateSiteMap({ posts, movieIds, celebritySlugs, sceneSlugs }) {
   const staticPages = [
+    // Core
     { url: '', priority: '1.0', changefreq: 'daily' },
     { url: '/trailers', priority: '0.9', changefreq: 'daily' },
     { url: '/discover', priority: '0.9', changefreq: 'daily' },
     { url: '/blog', priority: '0.8', changefreq: 'daily' },
+    { url: '/tv', priority: '0.9', changefreq: 'daily' },
+    // Live events
+    { url: '/worldcup', priority: '0.95', changefreq: 'daily' },
+    { url: '/tour-de-france', priority: '0.85', changefreq: 'daily' },
+    { url: '/love-island-usa', priority: '0.85', changefreq: 'daily' },
+    // Hubs
     { url: '/blockbuster', priority: '0.7', changefreq: 'weekly' },
     { url: '/scenes', priority: '0.7', changefreq: 'weekly' },
-    { url: '/oscars-2026', priority: '0.7', changefreq: 'monthly' },
-    { url: '/about', priority: '0.5', changefreq: 'monthly' },
+    { url: '/celebrity', priority: '0.7', changefreq: 'weekly' },
+    { url: '/oscars-2026', priority: '0.6', changefreq: 'monthly' },
+    // Academy
     { url: '/academy/acting-masterclass', priority: '0.6', changefreq: 'monthly' },
     { url: '/academy/cinematography', priority: '0.6', changefreq: 'monthly' },
     { url: '/academy/editing-magic', priority: '0.6', changefreq: 'monthly' },
     { url: '/academy/film-scores', priority: '0.6', changefreq: 'monthly' },
-    { url: '/celebrity', priority: '0.7', changefreq: 'weekly' },
-    { url: '/articles/anaconda-blood-coil', priority: '0.8', changefreq: 'weekly' },
-    { url: '/articles/my-boo-2', priority: '0.8', changefreq: 'weekly' },
-    { url: '/articles/chickenhare-groundhog', priority: '0.8', changefreq: 'weekly' },
-    { url: '/articles/sydney-sweeney-career', priority: '0.8', changefreq: 'weekly' },
+    // Articles
+    { url: '/articles/anaconda-blood-coil', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/austin-butler-movies-filmography', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/best-horror-movies-2026', priority: '0.8', changefreq: 'weekly' },
+    { url: '/articles/best-movies-netflix-april-2026', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/best-movies-prime-video-april-2026', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/best-thriller-movies-2026', priority: '0.8', changefreq: 'weekly' },
+    { url: '/articles/chickenhare-groundhog', priority: '0.6', changefreq: 'monthly' },
+    { url: '/articles/movies-like-peaky-blinders', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/my-boo-2', priority: '0.6', changefreq: 'monthly' },
+    { url: '/articles/new-movies-streaming-this-week', priority: '0.8', changefreq: 'weekly' },
+    { url: '/articles/scream-7-2026-review', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/sydney-sweeney-career', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/where-to-watch-goat-2026', priority: '0.7', changefreq: 'monthly' },
+    { url: '/articles/where-to-watch-peaky-blinders-immortal-man', priority: '0.7', changefreq: 'monthly' },
+    // Utility
+    { url: '/about', priority: '0.5', changefreq: 'monthly' },
     { url: '/privacy', priority: '0.3', changefreq: 'yearly' },
   ];
 
