@@ -181,6 +181,27 @@ export default function WorldCupPage({ movies }) {
         description="Full FIFA World Cup 2026 coverage — results, host cities, match schedule, and the best football movies to watch during the tournament. USA · Canada · Mexico."
         url="/worldcup"
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SportsEvent',
+            name: 'FIFA World Cup 2026',
+            description: 'The 2026 FIFA World Cup, hosted across USA, Canada, and Mexico. 48 nations, 104 matches, June 11 – July 19, 2026.',
+            startDate: '2026-06-11',
+            endDate: '2026-07-19',
+            location: [
+              { '@type': 'Place', name: 'United States', address: { '@type': 'PostalAddress', addressCountry: 'US' } },
+              { '@type': 'Place', name: 'Canada', address: { '@type': 'PostalAddress', addressCountry: 'CA' } },
+              { '@type': 'Place', name: 'Mexico', address: { '@type': 'PostalAddress', addressCountry: 'MX' } },
+            ],
+            organizer: { '@type': 'Organization', name: 'FIFA', url: 'https://www.fifa.com' },
+            url: 'https://klick.stream/worldcup',
+            sport: 'Football / Soccer',
+          }),
+        }}
+      />
 
       <div className="wcp-page">
         {/* ── HERO ── */}

@@ -124,6 +124,9 @@ export default function Header() {
               </div>
             )}
           </div>
+          <Link href="/tv" onClick={() => setMenuOpen(false)}>
+            TV Shows
+          </Link>
           <Link href="/trailers" onClick={() => setMenuOpen(false)}>
             Trailers
           </Link>

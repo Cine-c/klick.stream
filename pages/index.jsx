@@ -203,6 +203,26 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
         </div>
       </Link>
 
+      {/* ── SECONDARY BANNERS ── */}
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px 8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <Link href="/love-island-usa" className="loveisland-banner">
+          <span className="li-banner-icon">🌴</span>
+          <div className="li-banner-text">
+            <div className="li-banner-title">Love Island USA — Season 8</div>
+            <div className="li-banner-sub">New episodes daily on Peacock · Island drama all summer</div>
+          </div>
+          <span className="li-banner-badge">Now Streaming</span>
+        </Link>
+        <Link href="/tour-de-france" className="tdf-home-banner">
+          <span className="tdf-home-icon">🚴</span>
+          <div className="tdf-home-text">
+            <div className="tdf-home-title">Tour de France 2026</div>
+            <div className="tdf-home-sub">21 stages · Starts July 4 · NBC Sports &amp; Peacock</div>
+          </div>
+          <span className="tdf-home-badge">Jul 4 – 26</span>
+        </Link>
+      </div>
+
       {/* ── NOW PLAYING IN THEATERS ── */}
       {nowPlaying.length > 0 && (
         <section className="home-section">

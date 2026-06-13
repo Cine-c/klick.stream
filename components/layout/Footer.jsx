@@ -10,8 +10,8 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-container">
         <div className="footer-section">
-          <Link href="/" className="logo" style={{ display: 'block', marginBottom: '16px', fontSize: '1.5rem', textDecoration: 'none' }}>
-            Cine<span className="logo-nova">Nova</span>TV
+          <Link href="/" className="logo" style={{ display: 'block', marginBottom: '16px', textDecoration: 'none' }}>
+            Klick<span className="logo-stream">.stream</span>
           </Link>
           <p>Your guide to the world of cinema. Discover where to watch, what&apos;s trending, and what&apos;s worth your time — across every platform.</p>
           <div className="footer-social" style={{ display: 'flex', gap: '16px', marginTop: '1.25rem' }}>
@@ -41,6 +41,10 @@ export default function Footer() {
             <Link href="/discover">Discover</Link>
             <Link href="/blockbuster">Blockbuster</Link>
             <Link href="/celebrity">Celebrities</Link>
+            <Link href="/tv">TV Shows</Link>
+            <Link href="/worldcup">World Cup 2026</Link>
+            <Link href="/tour-de-france">Tour de France</Link>
+            <Link href="/love-island-usa">Love Island USA</Link>
           </nav>
         </div>
 
