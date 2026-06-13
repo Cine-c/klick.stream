@@ -90,10 +90,19 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
         </nav>
 
         {/* Hero */}
-        <section
-          className="movie-detail-hero"
-          style={backdropUrl ? { backgroundImage: `url(${backdropUrl})` } : {}}
-        >
+        <section className="movie-detail-hero">
+          {backdropUrl && (
+            <Image
+              src={backdropUrl}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              quality={70}
+              className="movie-detail-hero-bg"
+              style={{ objectFit: 'cover', objectPosition: 'center top' }}
+            />
+          )}
           <div className="movie-detail-hero-overlay" />
           <div className="movie-detail-hero-content">
             {posterUrl && (
@@ -110,6 +119,7 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
             )}
             <div className="movie-detail-hero-info">
               <h1>{movie.title}</h1>
+              {movie.tagline && <p className="movie-detail-tagline">{movie.tagline}</p>}
               <div className="movie-detail-meta">
                 {releaseYear && <span>{releaseYear}</span>}
                 {runtime && <span>{runtime}</span>}
@@ -464,6 +474,7 @@ export async function getServerSideProps({ params, req }) {
           id: data.id,
           title: data.title,
           original_title: data.original_title,
+          tagline: data.tagline || '',
           overview: data.overview,
           backdrop_path: data.backdrop_path,
           poster_path: data.poster_path,

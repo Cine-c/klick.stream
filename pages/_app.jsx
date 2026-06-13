@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Layout from '../components/layout/Layout';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { OrganizationJsonLd } from '../components/seo/JsonLd';
 import { WatchLaterProvider } from '../components/WatchLaterContext';
 import { LanguageProvider } from '../components/LanguageContext';
+// These providers are SSR-safe (all browser/Firebase access is inside useEffect
+// with deterministic initial state), so import them normally. Previously they
+// were dynamic `ssr: false`, which disabled server rendering for the ENTIRE app
+// tree — shipping a near-empty HTML shell that wrecked SEO and delayed LCP.
+import { AuthProvider } from '../components/AuthContext';
+import { AdFreeProvider } from '../components/AdFreeContext';
 import '../styles/globals.css';
-
-const AuthProvider = dynamic(
-  () => import('../components/AuthContext').then((mod) => mod.AuthProvider),
-  { ssr: false }
-);
-
-const AdFreeProvider = dynamic(
-  () => import('../components/AdFreeContext').then((mod) => mod.AdFreeProvider),
-  { ssr: false }
-);
 
 const GA_ID = 'G-81S7GHHRSB';
 

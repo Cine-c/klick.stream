@@ -6040,15 +6040,19 @@ a:focus-visible {
   z-index: 1;
   isolation: isolate;
   min-height: 60vh;
-  background-size: cover;
-  background-position: center top;
   display: flex;
   align-items: flex-end;
+}
+
+/* Optimized next/image backdrop (AVIF/WebP, sized) replaces the raw CSS bg. */
+.movie-detail-hero-bg {
+  z-index: 0;
 }
 
 .movie-detail-hero-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     to top,
     var(--bg-primary) 0%,
@@ -6070,16 +6074,22 @@ a:focus-visible {
 }
 
 .movie-detail-poster {
-  display: none;
+  display: block;
   flex-shrink: 0;
+  width: 110px;
   box-shadow: var(--shadow-lg);
   border-radius: 12px;
   overflow: hidden;
 }
 
+.movie-detail-poster img {
+  width: 100%;
+  height: auto;
+}
+
 @media (min-width: 768px) {
   .movie-detail-poster {
-    display: block;
+    width: auto;
   }
 }
 
@@ -6094,6 +6104,15 @@ a:focus-visible {
   font-size: clamp(1.75rem, 4vw, 3rem);
   font-weight: 800;
   line-height: 1.1;
+}
+
+.movie-detail-tagline {
+  margin-top: -0.5rem;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  color: var(--text-secondary);
+  opacity: 0.9;
+  max-width: 60ch;
 }
 
 .movie-detail-meta {
@@ -10571,6 +10590,18 @@ a.provider-card:hover {
   position: absolute;
   inset: 0;
   z-index: 0;
+  /* Slow cinematic Ken Burns zoom for a more alive hero. */
+  animation: heroKenBurns 24s ease-in-out infinite alternate;
+  transform-origin: center 40%;
+}
+
+@keyframes heroKenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.09); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop-image { animation: none; }
 }
 
 .hero-backdrop-gradient {
@@ -10671,11 +10702,12 @@ a.provider-card:hover {
 }
 
 .hero-overview {
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-muted);
-  max-width: 520px;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 540px;
   margin-bottom: 36px;
+  text-shadow: 0 1px 20px rgba(0, 0, 0, 0.7);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

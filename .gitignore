@@ -35,3 +35,10 @@ test_page.html
 
 # App directory
 cinenovatv-app/
+
+# Separate Expo mobile app — not part of the web deploy
+klick-mobile/
+dev-log.txt
+build*.txt
+.shots/
+

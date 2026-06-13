@@ -4,6 +4,11 @@ const nextConfig = {
   // 'standalone' for Docker builds, omit for Cloudflare Pages
   ...(process.env.STANDALONE === 'true' ? { output: 'standalone' } : {}),
   images: {
+    // Serve modern formats — AVIF first (smaller), WebP fallback. Big CWV win
+    // for an image-heavy poster/backdrop site.
+    formats: ['image/avif', 'image/webp'],
+    // Cache optimized images at the edge for 24h before re-optimizing.
+    minimumCacheTTL: 86400,
     remotePatterns: [
       {
         protocol: 'https',
@@ -26,6 +31,10 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  // Tree-shake large libraries so only the icons/modules actually used ship.
+  experimental: {
+    optimizePackageImports: ['firebase'],
   },
   async rewrites() {
     return [
