@@ -7,6 +7,7 @@ import WatchProviders from '../../components/WatchProviders';
 import { useWatchLater } from '../../components/WatchLaterContext';
 import { useState } from 'react';
 import AdSlot from '../../components/AdSlot';
+import celebritiesData from '../../data/celebrities.json';
 
 export default function MovieDetailPage({ movie, credits, videos, ratings, watchProviders, similar, celebSlugs }) {
   const [showTrailer, setShowTrailer] = useState(false);
@@ -450,16 +451,11 @@ export async function getServerSideProps({ params, req }) {
 
     // Build celebrity name→slug lookup for cast linking
     let celebSlugs = {};
-    try {
-      const celebData = require('../../data/celebrities.json');
-      const castNames = new Set((data.credits?.cast || []).slice(0, 12).map(c => c.name));
-      for (const c of celebData.celebrities || []) {
-        if (castNames.has(c.name)) {
-          celebSlugs[c.name] = c.slug;
-        }
+    const castNames = new Set((data.credits?.cast || []).slice(0, 12).map(c => c.name));
+    for (const c of celebritiesData.celebrities || []) {
+      if (castNames.has(c.name)) {
+        celebSlugs[c.name] = c.slug;
       }
-    } catch {
-      // celebrities.json not available
     }
 
     return {

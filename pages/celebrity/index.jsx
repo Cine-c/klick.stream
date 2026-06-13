@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import SEOHead from '../../components/seo/SEOHead';
+import celebritiesData from '../../data/celebrities.json';
 
 const CATEGORY_LABELS = {
   all: 'All',
@@ -112,10 +113,8 @@ export default function CelebritiesIndex({ celebrities }) {
 }
 
 export async function getStaticProps() {
-  const data = require('../../data/celebrities.json');
-
   return {
-    props: { celebrities: data.celebrities },
+    props: { celebrities: celebritiesData.celebrities },
     revalidate: 86400,
   };
 }

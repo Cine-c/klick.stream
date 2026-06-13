@@ -9,6 +9,7 @@ import AdSlot from '../components/AdSlot';
 import NewsletterSignup from '../components/NewsletterSignup';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
+import celebritiesData from '../data/celebrities.json';
 
 function useScrollReveal() {
   const ref = useRef(null);
@@ -502,14 +503,11 @@ export async function getStaticProps() {
     }
   }
 
-  try {
-    const celebData = require('../data/celebrities.json');
-    const all = celebData.celebrities || [];
-    const shuffled = [...all].sort(() => Math.random() - 0.5);
-    celebrities = shuffled.slice(0, 12).map((c) => ({
-      slug: c.slug, name: c.name, category: c.category, wikipedia_slug: c.wikipedia_slug,
-    }));
-  } catch { /* no celebrities.json */ }
+  const all = celebritiesData.celebrities || [];
+  const shuffled = [...all].sort(() => Math.random() - 0.5);
+  celebrities = shuffled.slice(0, 12).map((c) => ({
+    slug: c.slug, name: c.name, category: c.category, wikipedia_slug: c.wikipedia_slug,
+  }));
 
   return {
     props: { featuredMovie, nowPlaying, popular, genres, celebrities },

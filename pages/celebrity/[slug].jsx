@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import SEOHead from '../../components/seo/SEOHead';
 import AdSlot from '../../components/AdSlot';
+import celebritiesData from '../../data/celebrities.json';
 
 const CATEGORY_LABELS = {
   actor: 'Actor',
@@ -238,14 +239,12 @@ export default function CelebrityPage({ celebrity }) {
 }
 
 export async function getStaticPaths() {
-  const data = require('../../data/celebrities.json');
-  const paths = data.celebrities.map((c) => ({ params: { slug: c.slug } }));
+  const paths = celebritiesData.celebrities.map((c) => ({ params: { slug: c.slug } }));
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const data = require('../../data/celebrities.json');
-  const celebrity = data.celebrities.find((c) => c.slug === params.slug);
+  const celebrity = celebritiesData.celebrities.find((c) => c.slug === params.slug);
 
   if (!celebrity) {
     return { notFound: true };
