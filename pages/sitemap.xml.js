@@ -1,3 +1,5 @@
+import celebritiesData from '../data/celebrities.json';
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
 function urlEntry({ loc, lastmod, changefreq = 'weekly', priority = '0.5' }) {
@@ -72,13 +74,8 @@ export async function getServerSideProps({ res }) {
   }
 
   // Celebrity pages
-  try {
-    const data = require('../data/celebrities.json');
-    for (const c of (data.celebrities || [])) {
-      entries.push(urlEntry({ loc: `${SITE_URL}/celebrity/${c.slug}`, changefreq: 'monthly', priority: '0.6' }));
-    }
-  } catch {
-    // celebrities.json missing — skip
+  for (const c of (celebritiesData.celebrities || [])) {
+    entries.push(urlEntry({ loc: `${SITE_URL}/celebrity/${c.slug}`, changefreq: 'monthly', priority: '0.6' }));
   }
 
   // Scene pages

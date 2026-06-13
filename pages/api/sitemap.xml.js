@@ -1,3 +1,4 @@
+import celebritiesData from '../../data/celebrities.json';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
@@ -125,13 +126,7 @@ export default async function handler(req, res) {
   }
 
   // Load celebrity slugs
-  let celebritySlugs = [];
-  try {
-    const data = require('../../data/celebrities.json');
-    celebritySlugs = (data.celebrities || []).map((c) => c.slug);
-  } catch (err) {
-    console.error('Error loading celebrities for sitemap:', err);
-  }
+  const celebritySlugs = (celebritiesData.celebrities || []).map((c) => c.slug);
 
   // Fetch 5 pages from each of 4 TMDB endpoints (up to ~400 unique movies)
   const apiKey = process.env.TMDB_API_KEY;
