@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../../components/seo/SEOHead';
-import { MovieJsonLd, VideoObjectJsonLd } from '../../components/seo/JsonLd';
+import { MovieJsonLd, VideoObjectJsonLd, FAQPageJsonLd, BreadcrumbJsonLd } from '../../components/seo/JsonLd';
 import TrailerModal from '../../components/trailers/TrailerModal';
 import WatchProviders from '../../components/WatchProviders';
 import { useWatchLater } from '../../components/WatchLaterContext';
@@ -55,6 +55,39 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
 
   const similarMovies = (similar || []).filter((m) => m.poster_path).slice(0, 12);
 
+  const faqs = [];
+  if (watchProviders) {
+    const platforms = [
+      ...(watchProviders.flatrate || []),
+      ...(watchProviders.free || []),
+      ...(watchProviders.ads || []),
+    ].map((p) => p.provider_name);
+    if (platforms.length > 0) {
+      faqs.push({
+        question: `Where can I watch ${movie.title}?`,
+        answer: `${movie.title} is currently available to stream on ${platforms.slice(0, 4).join(', ')}.`,
+      });
+    }
+  }
+  if (movie.overview) {
+    faqs.push({
+      question: `What is ${movie.title} about?`,
+      answer: movie.overview,
+    });
+  }
+  if (director) {
+    faqs.push({
+      question: `Who directed ${movie.title}?`,
+      answer: `${movie.title} was directed by ${director.name}.`,
+    });
+  }
+  if (movie.release_date) {
+    faqs.push({
+      question: `When was ${movie.title} released?`,
+      answer: `${movie.title} was released on ${new Date(movie.release_date + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.`,
+    });
+  }
+
   return (
     <>
       <SEOHead
@@ -65,6 +98,12 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
         type="video.movie"
       />
       <MovieJsonLd movie={movie} trailerUrl={trailerUrl} />
+      {faqs.length > 0 && <FAQPageJsonLd faqs={faqs} />}
+      <BreadcrumbJsonLd crumbs={[
+        { name: 'Home', url: 'https://klick.stream/' },
+        { name: 'Movies', url: 'https://klick.stream/discover' },
+        { name: movie.title, url: `https://klick.stream/movies/${movie.id}` },
+      ]} />
       {trailerUrl && (
         <VideoObjectJsonLd
           video={{
@@ -423,6 +462,7 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
 
 export async function getServerSideProps({ params, req }) {
   const getLanguageFromCookies = (await import('../../lib/getLanguageFromCookies')).default;
+  const fetchWithTimeout = (await import('../../lib/fetchWithTimeout')).default;
   const language = getLanguageFromCookies(req);
   const { id } = params;
   const apiKey = process.env.TMDB_API_KEY;
@@ -432,7 +472,7 @@ export async function getServerSideProps({ params, req }) {
   }
 
   try {
-    const detailsRes = await fetch(
+    const detailsRes = await fetchWithTimeout(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos,credits,similar&language=${language}`
     );
 
@@ -449,9 +489,9 @@ export async function getServerSideProps({ params, req }) {
 
     const [omdbResult, wpResult] = await Promise.allSettled([
       omdbKey && data.imdb_id
-        ? fetch(`https://www.omdbapi.com/?i=${data.imdb_id}&apikey=${omdbKey}`).then(r => r.json())
+        ? fetchWithTimeout(`https://www.omdbapi.com/?i=${data.imdb_id}&apikey=${omdbKey}`).then(r => r.json())
         : Promise.resolve(null),
-      fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`)
+      fetchWithTimeout(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`)
         .then(r => r.json())
         .then(d => d.results?.US || null),
     ]);

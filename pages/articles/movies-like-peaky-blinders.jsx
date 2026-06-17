@@ -11,14 +11,14 @@ export default function MoviesLikePeakyBlinders() {
         description="Love Peaky Blinders? Here are 12 movies with the same gritty atmosphere — gangster epics, period crime dramas, and stylish thrillers to watch next."
         url="/articles/movies-like-peaky-blinders"
         type="article"
-        article={{ publishedTime: '2026-04-05T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-05T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: '12 Movies Like Peaky Blinders',
           description: 'Love Peaky Blinders? Here are 12 movies with the same gritty atmosphere.',
           publishedAt: '2026-04-05T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'movies-like-peaky-blinders',
         }}
       />
@@ -29,6 +29,7 @@ export default function MoviesLikePeakyBlinders() {
           <h1>12 Movies Like Peaky Blinders</h1>
           <div className="article-hero-meta">
             <span>Published: April 5, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>8 min read</span>
           </div>
         </section>

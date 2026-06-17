@@ -11,14 +11,14 @@ export default function Scream72026Review() {
         description="Our spoiler-free review of Scream 7 (2026). Does Kevin Williamson's return as director revitalise the slasher franchise? Ratings, cast, and verdict inside."
         url="/articles/scream-7-2026-review"
         type="article"
-        article={{ publishedTime: '2026-04-10T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-10T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Scream 7 (2026) Review',
           description: "Does Kevin Williamson's return as director revitalise the slasher franchise?",
           publishedAt: '2026-04-10T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'scream-7-2026-review',
         }}
       />
@@ -29,6 +29,7 @@ export default function Scream72026Review() {
           <h1>Scream 7 (2026) Review &mdash; Does the Franchise Still Cut Deep?</h1>
           <div className="article-hero-meta">
             <span>Published: April 10, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>6 min read</span>
           </div>
         </section>

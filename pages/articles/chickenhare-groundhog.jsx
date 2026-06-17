@@ -17,6 +17,7 @@ export default function ChickenhareGroundhog() {
           <h1>Chickenhare and the Secret of the Groundhog — Where to Watch, Cast & Review</h1>
           <div className="article-hero-meta">
             <span>Last updated: March 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>5 min read</span>
           </div>
         </section>

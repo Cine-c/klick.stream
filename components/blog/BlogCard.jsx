@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function BlogCard({ post }) {
+  const href = post.href || `/blog/${post.slug}`;
+
   const formattedDate = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -13,7 +15,7 @@ export default function BlogCard({ post }) {
   return (
     <article className="blog-card">
       {post.imageUrl && (
-        <Link href={`/blog/${post.slug}`} className="blog-card-image">
+        <Link href={href} className="blog-card-image">
           <Image
             src={post.imageUrl}
             alt={post.title}
@@ -27,7 +29,7 @@ export default function BlogCard({ post }) {
         </Link>
       )}
       <div className="blog-card-content">
-        <Link href={`/blog/${post.slug}`}>
+        <Link href={href}>
           <h3 className="blog-card-title">{post.title}</h3>
         </Link>
         {post.excerpt && <p className="blog-card-excerpt">{post.excerpt}</p>}
@@ -36,7 +38,7 @@ export default function BlogCard({ post }) {
           {post.author && <span className="blog-card-author">by {post.author}</span>}
           {post.readingTime && <span>{post.readingTime} min read</span>}
         </div>
-        <Link href={`/blog/${post.slug}`} className="blog-card-link">
+        <Link href={href} className="blog-card-link">
           Read More
         </Link>
       </div>

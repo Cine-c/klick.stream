@@ -87,6 +87,7 @@ export default function NewsletterSignup({ variant = 'inline' }) {
         </button>
       </form>
       {status === 'error' && <p className="newsletter-error">{message}</p>}
+      <p className="newsletter-privacy">No spam. Unsubscribe anytime.</p>
     </div>
   );
 }

@@ -19,8 +19,10 @@ const LIVE_LINKS = [
 
 const COMPANY_LINKS = [
   { href: '/about',   label: 'About' },
+  { href: '/contact', label: 'Contact' },
   { href: '/premium', label: 'Premium' },
   { href: '/privacy', label: 'Privacy Policy' },
+  { href: '/terms',   label: 'Terms of Service' },
 ];
 
 export default function Footer() {

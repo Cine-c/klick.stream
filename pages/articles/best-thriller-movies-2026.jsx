@@ -11,14 +11,14 @@ export default function BestThrillerMovies2026() {
         description="The top thriller movies released in 2026 so far, ranked. Psychological suspense, crime thrillers, and edge-of-seat action — with where to watch each one."
         url="/articles/best-thriller-movies-2026"
         type="article"
-        article={{ publishedTime: '2026-04-14T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-14T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Thriller Movies of 2026 So Far',
           description: 'The top thriller movies released in 2026 so far, ranked.',
           publishedAt: '2026-04-14T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'best-thriller-movies-2026',
         }}
       />
@@ -29,6 +29,7 @@ export default function BestThrillerMovies2026() {
           <h1>Best Thriller Movies of 2026 So Far</h1>
           <div className="article-hero-meta">
             <span>Updated: April 14, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>7 min read</span>
           </div>
         </section>

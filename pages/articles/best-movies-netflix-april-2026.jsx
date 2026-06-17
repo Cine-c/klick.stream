@@ -11,14 +11,14 @@ export default function BestMoviesNetflixApril2026() {
         description="The 15 best movies streaming on Netflix in April 2026, hand-picked by our editors. New arrivals, hidden gems, and critic favourites — updated weekly."
         url="/articles/best-movies-netflix-april-2026"
         type="article"
-        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Movies on Netflix Right Now (April 2026)',
           description: 'The 15 best movies streaming on Netflix in April 2026.',
           publishedAt: '2026-04-01T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'best-movies-netflix-april-2026',
         }}
       />
@@ -29,6 +29,7 @@ export default function BestMoviesNetflixApril2026() {
           <h1>Best Movies on Netflix Right Now (April 2026)</h1>
           <div className="article-hero-meta">
             <span>Updated: April 1, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>7 min read</span>
           </div>
         </section>

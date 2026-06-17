@@ -2,6 +2,19 @@ import celebritiesData from '../../data/celebrities.json';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
+async function tmdbFetch(url) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 4000);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    return res;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(id);
+  }
+}
+
 function urlEntry({ loc, lastmod, changefreq = 'weekly', priority = '0.5' }) {
   return `
   <url>
@@ -48,9 +61,21 @@ function generateSiteMap({ posts, movieIds, celebritySlugs, sceneSlugs }) {
     { url: '/articles/sydney-sweeney-career', priority: '0.7', changefreq: 'monthly' },
     { url: '/articles/where-to-watch-goat-2026', priority: '0.7', changefreq: 'monthly' },
     { url: '/articles/where-to-watch-peaky-blinders-immortal-man', priority: '0.7', changefreq: 'monthly' },
+    // Awards
+    { url: '/articles/golden-globes-2026-winners', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/bafta-2026-winners', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/sag-awards-2026', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/critics-choice-awards-2026', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/emmy-awards-2026-preview', priority: '0.8', changefreq: 'weekly' },
+    // Streaming guides June 2026
+    { url: '/articles/best-movies-netflix-june-2026', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/best-movies-prime-video-june-2026', priority: '0.8', changefreq: 'monthly' },
+    { url: '/articles/best-movies-apple-tv-plus-2026', priority: '0.7', changefreq: 'monthly' },
     // Utility
-    { url: '/about', priority: '0.5', changefreq: 'monthly' },
-    { url: '/privacy', priority: '0.3', changefreq: 'yearly' },
+    { url: '/about', priority: '0.6', changefreq: 'monthly' },
+    { url: '/contact', priority: '0.5', changefreq: 'monthly' },
+    { url: '/privacy', priority: '0.4', changefreq: 'yearly' },
+    { url: '/terms', priority: '0.3', changefreq: 'yearly' },
   ];
 
   const entries = [];
@@ -128,34 +153,37 @@ export default async function handler(req, res) {
   // Load celebrity slugs
   const celebritySlugs = (celebritiesData.celebrities || []).map((c) => c.slug);
 
-  // Fetch 5 pages from each of 4 TMDB endpoints (up to ~400 unique movies)
+  // Fetch 10 pages from each of 4 TMDB endpoints (up to ~800 unique movies)
   const apiKey = process.env.TMDB_API_KEY;
   if (apiKey) {
     try {
       const endpoints = [
-        'trending/movie/day',
+        'trending/movie/week',
         'movie/popular',
         'movie/now_playing',
         'movie/top_rated',
       ];
-      const pages = [1, 2, 3, 4, 5];
+      const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       const fetches = [];
       for (const endpoint of endpoints) {
         for (const page of pages) {
           fetches.push(
-            fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&page=${page}`)
+            tmdbFetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&page=${page}`)
           );
         }
       }
 
-      const results = await Promise.allSettled(fetches);
+      const responses = await Promise.all(fetches);
       const ids = new Set();
-      for (const result of results) {
-        if (result.status === 'fulfilled') {
-          const data = await result.value.json();
+      for (const res of responses) {
+        if (!res || !res.ok) continue;
+        try {
+          const data = await res.json();
           for (const m of data.results || []) {
             ids.add(m.id);
           }
+        } catch {
+          // skip malformed responses
         }
       }
       movieIds = [...ids];

@@ -11,14 +11,14 @@ export default function BestHorrorMovies2026() {
         description="The scariest and best-reviewed horror movies of 2026, ranked. Slashers, supernatural chills, and elevated horror — with where to stream each one."
         url="/articles/best-horror-movies-2026"
         type="article"
-        article={{ publishedTime: '2026-04-21T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-21T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Horror Movies of 2026 So Far',
           description: 'The scariest and best-reviewed horror movies of 2026, ranked.',
           publishedAt: '2026-04-21T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'best-horror-movies-2026',
         }}
       />
@@ -29,6 +29,7 @@ export default function BestHorrorMovies2026() {
           <h1>Best Horror Movies of 2026 So Far</h1>
           <div className="article-hero-meta">
             <span>Updated: April 21, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>7 min read</span>
           </div>
         </section>

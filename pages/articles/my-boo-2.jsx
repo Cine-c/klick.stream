@@ -17,6 +17,7 @@ export default function MyBoo2() {
           <h1>My Boo 2 (2026) — Full Cast, Release Date & Streaming Info</h1>
           <div className="article-hero-meta">
             <span>Last updated: March 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>4 min read</span>
           </div>
         </section>

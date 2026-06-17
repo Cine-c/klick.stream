@@ -116,6 +116,22 @@ export default function SearchBar() {
     return () => clearTimeout(debounceRef.current);
   }, []);
 
+  // '/' key focuses the search bar (unless already in a text field)
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key !== '/') return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable) return;
+      e.preventDefault();
+      if (inputRef.current) {
+        setMobileOpen(true);
+        inputRef.current.focus();
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <div className="header-search" ref={containerRef}>
       {/* Mobile toggle */}
@@ -141,6 +157,7 @@ export default function SearchBar() {
             type="text"
             className="search-bar-input"
             placeholder="Search movies..."
+            aria-label="Search movies"
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

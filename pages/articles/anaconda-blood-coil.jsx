@@ -17,6 +17,7 @@ export default function AnacondaBloodCoil() {
           <h1>Anaconda: Blood Coil (2026) — Everything We Know</h1>
           <div className="article-hero-meta">
             <span>Last updated: March 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>5 min read</span>
           </div>
         </section>

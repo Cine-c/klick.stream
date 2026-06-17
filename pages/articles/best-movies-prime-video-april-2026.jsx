@@ -11,14 +11,14 @@ export default function BestMoviesPrimeVideoApril2026() {
         description="The best movies streaming on Amazon Prime Video in April 2026. New originals, recent theatrical hits, and hidden gems — curated by Klick.stream editors."
         url="/articles/best-movies-prime-video-april-2026"
         type="article"
-        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-03T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Best Movies on Prime Video Right Now (April 2026)',
           description: 'The best movies streaming on Amazon Prime Video in April 2026.',
           publishedAt: '2026-04-03T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'best-movies-prime-video-april-2026',
         }}
       />
@@ -29,6 +29,7 @@ export default function BestMoviesPrimeVideoApril2026() {
           <h1>Best Movies on Prime Video Right Now (April 2026)</h1>
           <div className="article-hero-meta">
             <span>Updated: April 3, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>6 min read</span>
           </div>
         </section>

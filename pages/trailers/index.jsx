@@ -477,6 +477,7 @@ export default function TrailersPage({ initialMovies, genres, totalResults, init
 
 export async function getServerSideProps({ req }) {
   const getLanguageFromCookies = (await import('../../lib/getLanguageFromCookies')).default;
+  const fetchWithTimeout = (await import('../../lib/fetchWithTimeout')).default;
   const language = getLanguageFromCookies(req);
   let initialMovies = [];
   let genres = [];
@@ -488,10 +489,10 @@ export async function getServerSideProps({ req }) {
   if (apiKey) {
     try {
       const [page1Res, page2Res, page3Res, genresRes] = await Promise.all([
-        fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=1&language=${language}`),
-        fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=2&language=${language}`),
-        fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=3&language=${language}`),
-        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=${language}`),
+        fetchWithTimeout(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=1&language=${language}`),
+        fetchWithTimeout(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=2&language=${language}`),
+        fetchWithTimeout(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=3&language=${language}`),
+        fetchWithTimeout(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=${language}`),
       ]);
 
       const [page1Data, page2Data, page3Data, genresData] = await Promise.all([

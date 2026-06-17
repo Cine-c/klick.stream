@@ -101,7 +101,7 @@ export default function BlogIndex({ posts, categories }) {
       {featuredPost && (
         <article className="blog-featured">
           {featuredPost.imageUrl && (
-            <Link href={`/blog/${featuredPost.slug}`} className="blog-featured-image">
+            <Link href={featuredPost.href || `/blog/${featuredPost.slug}`} className="blog-featured-image">
               <Image
                 src={featuredPost.imageUrl}
                 alt={featuredPost.title}
@@ -116,7 +116,7 @@ export default function BlogIndex({ posts, categories }) {
             </Link>
           )}
           <div className="blog-featured-content">
-            <Link href={`/blog/${featuredPost.slug}`}>
+            <Link href={featuredPost.href || `/blog/${featuredPost.slug}`}>
               <h2 className="blog-featured-title">{featuredPost.title}</h2>
             </Link>
             {featuredPost.excerpt && (
@@ -135,7 +135,7 @@ export default function BlogIndex({ posts, categories }) {
                 <span>{featuredPost.readingTime} min read</span>
               )}
             </div>
-            <Link href={`/blog/${featuredPost.slug}`} className="blog-card-link">
+            <Link href={featuredPost.href || `/blog/${featuredPost.slug}`} className="blog-card-link">
               Read More
             </Link>
           </div>
@@ -214,15 +214,269 @@ export default function BlogIndex({ posts, categories }) {
   );
 }
 
+const STATIC_ARTICLES = [
+  {
+    id: 'static-best-horror-2026',
+    slug: 'best-horror-movies-2026',
+    href: '/articles/best-horror-movies-2026',
+    title: 'Best Horror Movies of 2026 So Far — Ranked & Reviewed',
+    excerpt: 'The scariest and best-reviewed horror films of 2026, ranked by our editors — from Blumhouse surprises to franchise revivals, with where to stream each one.',
+    category: 'Best Of',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-21T08:00:00Z',
+    readingTime: 7,
+  },
+  {
+    id: 'static-best-thriller-2026',
+    slug: 'best-thriller-movies-2026',
+    href: '/articles/best-thriller-movies-2026',
+    title: 'Best Thriller Movies of 2026 — Ranked',
+    excerpt: 'Edge-of-your-seat tension delivered. Our ranked list of the best thrillers released in 2026, from psychological slow-burns to relentless action.',
+    category: 'Best Of',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-28T08:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-scream-7-review',
+    slug: 'scream-7-2026-review',
+    href: '/articles/scream-7-2026-review',
+    title: 'Scream 7 (2026) Review — Does the Franchise Still Cut Deep?',
+    excerpt: 'Kevin Williamson returns as director and Neve Campbell comes back to Woodsboro. Our spoiler-free review of the most anticipated slasher of the year.',
+    category: 'Reviews',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-10T08:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-netflix-april-2026',
+    slug: 'best-movies-netflix-april-2026',
+    href: '/articles/best-movies-netflix-april-2026',
+    title: 'Best Movies on Netflix — April 2026 Picks',
+    excerpt: "This month's best films on Netflix, handpicked by our editors. New arrivals and hidden gems worth your time in April 2026.",
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-01T08:00:00Z',
+    readingTime: 5,
+  },
+  {
+    id: 'static-prime-april-2026',
+    slug: 'best-movies-prime-video-april-2026',
+    href: '/articles/best-movies-prime-video-april-2026',
+    title: 'Best Movies on Prime Video — April 2026 Picks',
+    excerpt: "Amazon Prime Video's best films this April — from recent theatrical releases to long-running catalogue gems you may have missed.",
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-01T09:00:00Z',
+    readingTime: 5,
+  },
+  {
+    id: 'static-anaconda-blood-coil',
+    slug: 'anaconda-blood-coil',
+    href: '/articles/anaconda-blood-coil',
+    title: 'Anaconda: Blood Coil (2026) — Everything We Know',
+    excerpt: 'Cast, release date, trailer breakdown, and plot details for the 2026 Anaconda revival. Everything confirmed so far about the summer blockbuster.',
+    category: 'Upcoming',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-05-05T08:00:00Z',
+    readingTime: 4,
+  },
+  {
+    id: 'static-austin-butler',
+    slug: 'austin-butler-movies-filmography',
+    href: '/articles/austin-butler-movies-filmography',
+    title: "Austin Butler's Movies & Career — Complete Filmography",
+    excerpt: 'From Elvis to Dune: Part Two — a complete guide to Austin Butler\'s film career, ranked performances, and what\'s coming next.',
+    category: 'Actor Spotlights',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-03-15T08:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-sydney-sweeney',
+    slug: 'sydney-sweeney-career',
+    href: '/articles/sydney-sweeney-career',
+    title: "Sydney Sweeney's Rise: From Euphoria to Hollywood's A-List",
+    excerpt: "How Sydney Sweeney became one of Hollywood's most in-demand actors — a deep dive into her career, best performances, and upcoming projects.",
+    category: 'Actor Spotlights',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-03-22T08:00:00Z',
+    readingTime: 7,
+  },
+  {
+    id: 'static-movies-like-peaky-blinders',
+    slug: 'movies-like-peaky-blinders',
+    href: '/articles/movies-like-peaky-blinders',
+    title: 'Movies & Shows Like Peaky Blinders — What to Watch Next',
+    excerpt: 'Loved Peaky Blinders? Here are the best crime dramas, gangster films, and prestige period shows to fill the void — with where to stream each one.',
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-02-10T08:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-new-movies-this-week',
+    slug: 'new-movies-streaming-this-week',
+    href: '/articles/new-movies-streaming-this-week',
+    title: 'New Movies Streaming This Week — What Just Dropped',
+    excerpt: "The best new arrivals across Netflix, Prime Video, Apple TV+, and more this week. Don't miss these just-added films and series.",
+    category: 'Weekly Picks',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-06-09T08:00:00Z',
+    readingTime: 4,
+  },
+  {
+    id: 'static-where-to-watch-goat',
+    slug: 'where-to-watch-goat-2026',
+    href: '/articles/where-to-watch-goat-2026',
+    title: 'Where to Watch Goat (2026) — Streaming, Rental & Cinema Guide',
+    excerpt: 'Is Goat (2026) streaming yet? Here is every way to watch the film — subscription streaming, digital rental, and cinema listings.',
+    category: 'Where to Watch',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-05-20T08:00:00Z',
+    readingTime: 3,
+  },
+  {
+    id: 'static-peaky-immortal-man',
+    slug: 'where-to-watch-peaky-blinders-immortal-man',
+    href: '/articles/where-to-watch-peaky-blinders-immortal-man',
+    title: 'Where to Watch Peaky Blinders: The Immortal Man',
+    excerpt: 'The Peaky Blinders film is here. Find out every way to watch The Immortal Man — streaming platforms, cinema listings, and release timeline.',
+    category: 'Where to Watch',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-06-01T08:00:00Z',
+    readingTime: 3,
+  },
+  {
+    id: 'static-my-boo-2',
+    slug: 'my-boo-2',
+    href: '/articles/my-boo-2',
+    title: 'My Boo 2 (2026) — Review & Where to Stream',
+    excerpt: "The follow-up to the beloved Nigerian romantic comedy is here. Our review of My Boo 2, plus where to stream it and what to expect.",
+    category: 'Reviews',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-04-18T08:00:00Z',
+    readingTime: 5,
+  },
+  {
+    id: 'static-chickenhare',
+    slug: 'chickenhare-groundhog',
+    href: '/articles/chickenhare-groundhog',
+    title: 'Chickenhare and the Hamster of Darkness — Streaming Guide',
+    excerpt: 'Where to watch Chickenhare and everything you need to know about the animated adventure film for the whole family.',
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-03-10T08:00:00Z',
+    readingTime: 3,
+  },
+  // Awards coverage
+  {
+    id: 'static-golden-globes-2026',
+    slug: 'golden-globes-2026-winners',
+    href: '/articles/golden-globes-2026-winners',
+    title: 'Golden Globes 2026 — Every Winner from the 83rd Ceremony',
+    excerpt: 'Sinners leads the night at the 83rd Golden Globe Awards. Complete winners list for film and television, plus what it means for the Oscars race.',
+    category: 'Awards',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-01-06T10:00:00Z',
+    readingTime: 8,
+  },
+  {
+    id: 'static-bafta-2026',
+    slug: 'bafta-2026-winners',
+    href: '/articles/bafta-2026-winners',
+    title: 'BAFTA Film Awards 2026 — All the Winners from the 79th Ceremony',
+    excerpt: 'Hamnet sweeps the 79th BAFTA Film Awards for Chloé Zhao. Jessie Buckley wins double. Complete winners list for every category.',
+    category: 'Awards',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-02-16T20:00:00Z',
+    readingTime: 7,
+  },
+  {
+    id: 'static-sag-2026',
+    slug: 'sag-awards-2026',
+    href: '/articles/sag-awards-2026',
+    title: 'SAG Awards 2026 — Winners from the 32nd Screen Actors Guild Awards',
+    excerpt: 'Sinners wins Outstanding Cast in a Motion Picture. Michael B. Jordan and Jessie Buckley take the lead acting prizes. Full winners list inside.',
+    category: 'Awards',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-02-23T22:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-critics-choice-2026',
+    slug: 'critics-choice-awards-2026',
+    href: '/articles/critics-choice-awards-2026',
+    title: "Critics' Choice Awards 2026 — Every Winner, Film & Television",
+    excerpt: "One Battle After Another takes Best Picture at the Critics' Choice Awards, while Sinners claims Best Actor and the Sci-Fi/Horror prize. Full list.",
+    category: 'Awards',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-01-13T22:00:00Z',
+    readingTime: 7,
+  },
+  {
+    id: 'static-emmys-2026-preview',
+    slug: 'emmy-awards-2026-preview',
+    href: '/articles/emmy-awards-2026-preview',
+    title: 'Emmy Awards 2026 Preview — Predictions for Every Major Category',
+    excerpt: 'The 78th Emmy Awards air in September. Our editors predict every major category — from Drama and Comedy to Limited Series — with full analysis.',
+    category: 'Awards',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-06-10T08:00:00Z',
+    readingTime: 9,
+  },
+  // Streaming guides June 2026
+  {
+    id: 'static-netflix-june-2026',
+    slug: 'best-movies-netflix-june-2026',
+    href: '/articles/best-movies-netflix-june-2026',
+    title: "Best Movies on Netflix — June 2026 Editor's Picks",
+    excerpt: 'The best films on Netflix this June: new arrivals, catalogue gems, and our honest ratings. The Woman in the Yard, Companion, Presence, and more.',
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-06-01T08:00:00Z',
+    readingTime: 6,
+  },
+  {
+    id: 'static-prime-june-2026',
+    slug: 'best-movies-prime-video-june-2026',
+    href: '/articles/best-movies-prime-video-june-2026',
+    title: "Best Movies on Prime Video — June 2026 Editor's Picks",
+    excerpt: "Sinners finally arrives on streaming. Plus Conclave, Wolf Man, No Country for Old Men, and more of Prime Video's best films this June.",
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-06-01T09:00:00Z',
+    readingTime: 5,
+  },
+  {
+    id: 'static-apple-tv-2026',
+    slug: 'best-movies-apple-tv-plus-2026',
+    href: '/articles/best-movies-apple-tv-plus-2026',
+    title: "Best Movies on Apple TV+ in 2026 — Editor's Guide",
+    excerpt: "Killers of the Flower Moon alone is worth a month's subscription. Our guide to the best films on Apple TV+ in 2026, with honest ratings for each.",
+    category: 'Streaming Guides',
+    author: 'J., Editor-in-Chief',
+    publishedAt: '2026-05-15T08:00:00Z',
+    readingTime: 6,
+  },
+];
+
 export async function getStaticProps() {
-  let posts = [];
+  let firestorePosts = [];
 
   try {
     const { getAllPostsMeta } = await import('../../lib/firestore');
-    posts = await getAllPostsMeta();
+    firestorePosts = await getAllPostsMeta();
   } catch (err) {
     console.error('Error fetching posts:', err);
   }
+
+  // Merge Firestore posts with static articles; Firestore posts take precedence
+  const firestoreSlugs = new Set(firestorePosts.map((p) => p.slug));
+  const uniqueStatic = STATIC_ARTICLES.filter((a) => !firestoreSlugs.has(a.slug));
+  const posts = [...firestorePosts, ...uniqueStatic].sort(
+    (a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0)
+  );
 
   const categories = [...new Set(posts.map((p) => p.category).filter(Boolean))];
 

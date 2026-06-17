@@ -10,10 +10,10 @@ export function OrganizationJsonLd() {
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
     sameAs: [
-      'https://x.com/Klick.stream',
-      'https://www.instagram.com/Klick.stream',
-      'https://www.youtube.com/@Klick.stream',
-      'https://www.tiktok.com/@Klick.stream',
+      'https://x.com/Klick_stream',
+      'https://www.instagram.com/Klick_stream',
+      'https://www.youtube.com/@Klick_stream',
+      'https://www.tiktok.com/@Klick_stream',
     ],
     description:
       'Movie discovery platform. Browse 50,000+ films and series, watch trailers, and find where to stream across 40+ platforms.',
@@ -158,6 +158,28 @@ export function MovieJsonLd({ movie, trailerUrl }) {
           : null,
       },
     }),
+  };
+
+  return (
+    <Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+    </Head>
+  );
+}
+
+export function BreadcrumbJsonLd({ crumbs }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
   };
 
   return (

@@ -11,14 +11,14 @@ export default function AustinButlerMoviesFilmography() {
         description="Every Austin Butler movie ranked and reviewed. From Elvis to Dune: Part Two to Caught Stealing — explore his complete filmography and career trajectory."
         url="/articles/austin-butler-movies-filmography"
         type="article"
-        article={{ publishedTime: '2026-04-17T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-17T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'Austin Butler Movies — Complete Filmography & Career Guide',
           description: 'Every Austin Butler movie ranked and reviewed.',
           publishedAt: '2026-04-17T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'austin-butler-movies-filmography',
         }}
       />
@@ -29,6 +29,7 @@ export default function AustinButlerMoviesFilmography() {
           <h1>Austin Butler Movies &mdash; Complete Filmography &amp; Career Guide</h1>
           <div className="article-hero-meta">
             <span>Published: April 17, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>8 min read</span>
           </div>
         </section>

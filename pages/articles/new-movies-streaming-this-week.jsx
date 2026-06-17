@@ -11,14 +11,14 @@ export default function NewMoviesStreamingThisWeek() {
         description="Every new movie hitting streaming platforms this week — Netflix, Prime Video, Disney+, Apple TV+, and more. Updated every Monday with fresh picks."
         url="/articles/new-movies-streaming-this-week"
         type="article"
-        article={{ publishedTime: '2026-04-07T08:00:00Z', author: 'Klick.stream' }}
+        article={{ publishedTime: '2026-04-07T08:00:00Z', author: 'J., Editor-in-Chief' }}
       />
       <BlogPostingJsonLd
         post={{
           title: 'New Movies Streaming This Week (April 2026)',
           description: 'Every new movie hitting streaming platforms this week.',
           publishedAt: '2026-04-07T08:00:00Z',
-          author: 'Klick.stream',
+          author: 'J., Editor-in-Chief',
           slug: 'new-movies-streaming-this-week',
         }}
       />
@@ -29,6 +29,7 @@ export default function NewMoviesStreamingThisWeek() {
           <h1>New Movies Streaming This Week (April 7&ndash;13, 2026)</h1>
           <div className="article-hero-meta">
             <span>Updated: April 7, 2026</span>
+            <span>by J., Editor-in-Chief</span>
             <span>5 min read</span>
           </div>
         </section>
