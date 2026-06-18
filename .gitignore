@@ -42,3 +42,5 @@ dev-log.txt
 build*.txt
 .shots/
 
+
+certbot/cloudflare.ini

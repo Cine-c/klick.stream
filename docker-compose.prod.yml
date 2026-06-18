@@ -60,14 +60,12 @@ services:
     restart: unless-stopped
 
   certbot:
-    image: certbot/certbot
+    image: certbot/dns-cloudflare
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-      - certbot-webroot:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done'"
-    depends_on:
-      - nginx
+      - ./certbot:/etc/cloudflare:ro
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --dns-cloudflare --dns-cloudflare-credentials /etc/cloudflare/cloudflare.ini --quiet; sleep 12h & wait $${!}; done'"
     restart: unless-stopped
 
 volumes:
