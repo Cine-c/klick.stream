@@ -63,28 +63,80 @@ const nextConfig = {
   },
   async headers() {
     return [
+      // Immutable static assets — 1 year
       {
         source: '/_next/static/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      // Optimised images — 24h at edge
+      {
+        source: '/_next/image',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800' },
+          { key: 'Vary', value: 'Accept' },
+        ],
+      },
+      // API routes — never cache at CDN
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
+      // Auth / account pages — no CDN cache
+      {
+        source: '/:path(login|account|watchlater|premium)',
+        headers: [
+          { key: 'Cache-Control', value: 'private, no-store' },
+        ],
+      },
+      // Articles & blog — 15 min CDN, 2h SWR
+      {
+        source: '/articles/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=900, stale-while-revalidate=7200' },
+        ],
+      },
       {
         source: '/blog/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=86400' },
+          { key: 'Cache-Control', value: 'public, s-maxage=900, stale-while-revalidate=7200' },
+        ],
+      },
+      // Movie / TV detail pages — 10 min CDN, 1h SWR
+      {
+        source: '/movies/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
         ],
       },
       {
-        source: '/blockbuster',
+        source: '/tv/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=86400' },
+          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
         ],
       },
+      // Blockbuster / scenes / celebrity — 1h CDN, 24h SWR
       {
-        source: '/:path((?!_next/static).*)',
+        source: '/:path(blockbuster|scenes|celebrity|oscars-2026)/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
+          { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+        ],
+      },
+      // Homepage — 3 min CDN, 15 min SWR (TMDB data refreshes)
+      {
+        source: '/',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=180, stale-while-revalidate=900' },
+        ],
+      },
+      // Everything else — security headers, 5 min CDN
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=3600' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },

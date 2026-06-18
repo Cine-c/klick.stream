@@ -14,7 +14,7 @@ User-agent: Bingbot
 Allow: /
 Disallow: /api/
 
-# Block common AI training bots
+# Block AI crawlers / training bots
 User-agent: GPTBot
 Disallow: /
 
@@ -31,6 +31,24 @@ User-agent: Omgilibot
 Disallow: /
 
 User-agent: FacebookBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Applebot-Extended
 Disallow: /
 
 # Default: allow everything else
