@@ -17,6 +17,61 @@ const AuthModal = dynamic(() => import('../components/AuthModal'), { ssr: false 
 
 const HOME_ARTICLES = [
   {
+    href: '/articles/best-tv-shows-streaming-june-2026',
+    category: 'Streaming Guide',
+    title: 'Best TV Shows to Watch Right Now — June 2026',
+    excerpt: 'Severance Season 2, The Last of Us Season 2, and Andor Season 2 lead an exceptional month for TV. Plus The Bear, Tulsa King, and the best new limited series hitting Netflix and Max right now.',
+    date: 'Jun 17, 2026',
+    author: 'J., Editor-in-Chief',
+    readTime: '8 min',
+  },
+  {
+    href: '/articles/best-sci-fi-movies-streaming-2026',
+    category: 'Genre Guide',
+    title: 'Best Sci-Fi Movies Streaming Right Now — 2026 Guide',
+    excerpt: 'From Dune: Part Two to Arrival, Annihilation, and the entire Alien franchise — our ranked guide to the best science fiction you can stream tonight across every platform.',
+    date: 'Jun 12, 2026',
+    author: 'Editorial Team',
+    readTime: '9 min',
+  },
+  {
+    href: '/articles/summer-blockbusters-2026-where-to-watch',
+    category: 'Preview',
+    title: 'Summer Blockbusters 2026 — Full Preview & Streaming Dates',
+    excerpt: 'Superman, The Fantastic Four, Mission: Impossible – The Final Reckoning, and Jurassic World Rebirth. Every major summer 2026 release with expected streaming arrival dates.',
+    date: 'Jun 8, 2026',
+    author: 'J., Editor-in-Chief',
+    readTime: '11 min',
+  },
+  {
+    href: '/articles/best-action-movies-streaming-2026',
+    category: 'Genre Guide',
+    title: 'Best Action Movies on Netflix, Prime & Max Right Now',
+    excerpt: 'Mad Max: Fury Road, John Wick 4, Extraction 2, and the complete Mission: Impossible series — our curated picks for the best action films streaming across every major platform.',
+    date: 'Jun 5, 2026',
+    author: 'Editorial Team',
+    readTime: '8 min',
+  },
+  {
+    href: '/articles/what-to-watch-this-weekend-june-20',
+    category: 'Weekend Picks',
+    title: 'What to Watch This Weekend — June 20–22 Picks',
+    excerpt: 'Short on time? Our editors picked one film for Friday night, one for Saturday, and a hidden gem for Sunday. No browsing required — just press play.',
+    date: 'Jun 19, 2026',
+    author: 'Editorial Team',
+    readTime: '4 min',
+  },
+  {
+    href: '/articles/best-documentaries-streaming-2026',
+    category: 'Genre Guide',
+    title: 'Best Documentaries Streaming Right Now — 2026 List',
+    excerpt: 'From true crime to music docs and nature epics — our ranked guide to the 20 best documentaries currently on Netflix, Prime, Apple TV+, and Max. Updated monthly.',
+    date: 'Jun 3, 2026',
+    author: 'Editorial Team',
+    readTime: '7 min',
+  },
+
+  {
     href: '/articles/new-movies-streaming-this-week',
     category: 'Weekly Roundup',
     title: 'New Movies Streaming This Week — June 2026',
@@ -201,6 +256,16 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   const heroRef = useRef(null);
   const [heroTrailerKey, setHeroTrailerKey] = useState(featuredMovie?.trailerKey || null);
   const [showAuth, setShowAuth] = useState(false);
+  const [news, setNews] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/news?limit=9')
+      .then((r) => r.json())
+      .then((data) => setNews(data.articles || []))
+      .catch(() => {})
+      .finally(() => setNewsLoading(false));
+  }, []);
 
   useEffect(() => {
     if (featuredMovie?.id && !featuredMovie?.trailerKey) {
@@ -959,6 +1024,34 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
             </div>
           </div>
         </div>
+      )}
+
+      {/* ── LATEST NEWS ── */}
+      {(newsLoading || news.length > 0) && (
+        <section className="home-section">
+          <div className="section-header reveal">
+            <div>
+              <div className="section-tag news-tag">● Live</div>
+              <h2 className="section-title">Latest <em>News</em></h2>
+            </div>
+          </div>
+          <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
+            {newsLoading
+              ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
+              : news.map((item, i) => (
+                  <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-card">
+                    <div className="news-card-source">{item.source}</div>
+                    <div className="news-card-title">{item.title}</div>
+                    {item.description && <div className="news-card-desc">{item.description}</div>}
+                    {item.date && (
+                      <div className="news-card-date">
+                        {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      </div>
+                    )}
+                  </a>
+                ))}
+          </div>
+        </section>
       )}
 
       {/* ── LATEST ARTICLES ── */}
