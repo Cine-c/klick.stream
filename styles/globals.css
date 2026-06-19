@@ -11628,6 +11628,94 @@ a.provider-card:hover {
   flex-shrink: 0;
 }
 
+/* ── Leaving Soon ── */
+.leaving-tag { color: #f97316; }
+
+.leaving-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.leaving-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.2s ease;
+}
+.leaving-card:hover { transform: translateY(-4px); }
+
+.leaving-card-poster {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.leaving-card-platform {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+}
+
+.leaving-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.leaving-card-info { padding: 0 0.1rem; }
+
+.leaving-card-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.leaving-card-year {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.15rem;
+}
+
+.leaving-card-countdown {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #f97316;
+  margin-top: 0.2rem;
+}
+
+.leaving-card-countdown--urgent {
+  color: #ef4444;
+  animation: leaving-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes leaving-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
 /* ── Newsletter Section ── */
 .newsletter-section {
   background: var(--bg-secondary);
@@ -17752,6 +17840,20 @@ a.provider-card:hover {
   .home-article-hero { padding: 1.5rem; }
   .home-article-hero-title { font-size: 1.2rem; }
   .home-article-hero-excerpt { font-size: 0.88rem; }
+  .leaving-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+}
+
+@media (max-width: 600px) {
+  .leaving-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .leaving-grid::-webkit-scrollbar { display: none; }
+  .leaving-card { flex: 0 0 120px; }
 }
 
 

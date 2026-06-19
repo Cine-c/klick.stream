@@ -184,8 +184,16 @@ const STAFF_PICKS = [
   { id: 762509, title: 'Mufasa: The Lion King', reason: "Surprisingly emotional. Barry Jenkins brings a warmth the original didn't expect.", poster: 'https://image.tmdb.org/t/p/w342/qBErSzgwRhVMKhoBjFAJkLCpqRc.jpg', year: '2024' },
   { id: 1064213, title: 'The Substance', reason: "Body horror that actually says something. Demi Moore is extraordinary.", poster: 'https://image.tmdb.org/t/p/w342/lqoMzCcZYEFK729d6qzt349fB4o.jpg', year: '2024' },
 ];
+const LEAVING_SOON = [
+  { id: 155,    title: 'The Dark Knight',        year: '2008', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jun 30 2026' },
+  { id: 27205,  title: 'Inception',              year: '2010', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jun 30 2026' },
+  { id: 546554, title: 'Knives Out',             year: '2019', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jul 1 2026' },
+  { id: 157336, title: 'Interstellar',           year: '2014', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jul 1 2026' },
+  { id: 6977,   title: 'No Country for Old Men', year: '2007', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jun 25 2026' },
+  { id: 493922, title: 'Hereditary',             year: '2018', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jun 25 2026' },
+];
 
-export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated }) {
+export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon = [] }) {
   const { language } = useLanguage();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -419,6 +427,48 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
                 </div>
               ))}
             </HScrollRow>
+          </div>
+        </section>
+      )}
+
+      {/* ── LEAVING SOON ── */}
+      {leavingSoon.length > 0 && (
+        <section className="home-section">
+          <div className="section-header reveal">
+            <div>
+              <div className="section-tag leaving-tag">⏳ Last Chance</div>
+              <h2 className="section-title">Leaving <em>Soon</em></h2>
+            </div>
+            <Link href="/articles/best-movies-netflix-june-2026" className="see-all">Streaming Guides →</Link>
+          </div>
+          <div className="leaving-grid reveal">
+            {leavingSoon.map((item) => (
+              <Link key={item.id} href={`/movies/${item.id}`} className="leaving-card">
+                <div className="leaving-card-poster">
+                  {item.poster_path ? (
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 600px) 120px, 140px"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div className="leaving-card-placeholder">{item.title[0]}</div>
+                  )}
+                  <div className="leaving-card-platform" style={{ background: item.platformColor }}>
+                    {item.platform}
+                  </div>
+                </div>
+                <div className="leaving-card-info">
+                  <div className="leaving-card-title">{item.title}</div>
+                  <div className="leaving-card-year">{item.year}</div>
+                  <div className={`leaving-card-countdown${item.daysLeft <= 3 ? ' leaving-card-countdown--urgent' : ''}`}>
+                    {item.daysLeft === 0 ? 'Leaving today' : item.daysLeft === 1 ? 'Leaving tomorrow' : `${item.daysLeft} days left`}
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       )}
@@ -1041,6 +1091,12 @@ export async function getStaticProps() {
   let onPrime = [];
   let upcoming = [];
   let topRated = [];
+  const nowMs = Date.now();
+  let leavingSoon = LEAVING_SOON.map((item) => ({
+    ...item,
+    poster_path: null,
+    daysLeft: Math.max(0, Math.ceil((new Date(item.leaveDate).getTime() - nowMs) / 86400000)),
+  }));
 
   if (apiKey) {
     try {
@@ -1164,6 +1220,17 @@ export async function getStaticProps() {
           if (trailer) featuredMovie.trailerKey = trailer.key;
         } catch { /* silent */ }
       }
+
+      const leavingPosterResults = await Promise.allSettled(
+        LEAVING_SOON.map((item) =>
+          fetch(`https://api.themoviedb.org/3/movie/${item.id}?api_key=${apiKey}&language=en-US`).then((r) => r.json())
+        )
+      );
+      leavingSoon = LEAVING_SOON.map((item, i) => ({
+        ...item,
+        daysLeft: Math.max(0, Math.ceil((new Date(item.leaveDate).getTime() - nowMs) / 86400000)),
+        poster_path: leavingPosterResults[i].status === 'fulfilled' ? (leavingPosterResults[i].value.poster_path || null) : null,
+      }));
     } catch (err) {
       console.error('Error fetching homepage data:', err);
     }
@@ -1176,7 +1243,7 @@ export async function getStaticProps() {
   }));
 
   return {
-    props: { featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated },
+    props: { featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon },
     revalidate: 3600,
   };
 }
