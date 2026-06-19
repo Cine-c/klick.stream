@@ -133,8 +133,8 @@ export default function CookieConsent() {
       if (resolved || localStorage.getItem(STORAGE_KEY)) return;
 
       if (typeof window.__tcfapi !== 'function') {
-        // CMP never loaded (blocked / network error) — load ads in
-        // non-personalized mode (consent-mode defaults stay denied)
+        // CMP never loaded (blocked / network error) — analytics already
+        // granted by default; load ads in non-personalized mode only.
         window.__tcfapiConsentCache = 'npa';
         loadAdSense();
         window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: 'npa' }));
