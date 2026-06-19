@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 import Layout from '../components/layout/Layout';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { OrganizationJsonLd } from '../components/seo/JsonLd';
@@ -13,8 +12,6 @@ import { LanguageProvider } from '../components/LanguageContext';
 import { AuthProvider } from '../components/AuthContext';
 import { AdFreeProvider } from '../components/AdFreeContext';
 import '../styles/globals.css';
-
-const GA_ID = 'G-YWRLP3SY16';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -52,17 +49,6 @@ export default function App({ Component, pageProps }) {
       </div>
     )}
     <ErrorBoundary>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:false});`,
-        }}
-      />
       <LanguageProvider>
         <AuthProvider>
           <AdFreeProvider>

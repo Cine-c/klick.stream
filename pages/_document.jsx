@@ -10,15 +10,14 @@ export default function Document() {
         {/* Google consent mode defaults — must run before gtag loads */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{
-  ad_storage:'denied',
-  ad_user_data:'denied',
-  ad_personalization:'denied',
-  analytics_storage:'granted'
-});`,
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});`,
+          }}
+        />
+        {/* GA4 — async so it never blocks rendering but loads in initial HTML */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:false});`,
           }}
         />
         {/* Google Funding Choices CMP — serves IAB TCF v2.3 consent dialog */}
@@ -37,7 +36,6 @@ gtag('consent','default',{
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8747979755893623"
   crossOrigin="anonymous"
 />
-        {/* GA gtag.js is loaded via next/script in _app.jsx with afterInteractive strategy */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
@@ -51,6 +49,8 @@ gtag('consent','default',{
         />
         <link rel="preconnect" href="https://image.tmdb.org" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fundingchoicesmessages.google.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossOrigin="anonymous" />
