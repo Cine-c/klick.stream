@@ -1,6 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
-const GA_ID = 'G-81S7GHHRSB';
+const GA_ID = 'G-YWRLP3SY16';
 
 export default function Document() {
   return (

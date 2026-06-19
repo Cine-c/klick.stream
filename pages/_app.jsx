@@ -14,7 +14,7 @@ import { AuthProvider } from '../components/AuthContext';
 import { AdFreeProvider } from '../components/AdFreeContext';
 import '../styles/globals.css';
 
-const GA_ID = 'G-81S7GHHRSB';
+const GA_ID = 'G-YWRLP3SY16';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
