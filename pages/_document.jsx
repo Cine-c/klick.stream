@@ -17,7 +17,7 @@ export default function Document() {
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:false});`,
+            __html: `gtag('js',new Date());gtag('config','${GA_ID}');`,
           }}
         />
         {/* Google Funding Choices CMP — serves IAB TCF v2.3 consent dialog */}

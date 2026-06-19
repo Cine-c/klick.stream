@@ -26,12 +26,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    // Send initial page view
-    window.gtag?.('event', 'page_view', {
-      page_path: window.location.pathname,
-    });
-
-    // Track client-side navigations
+    // Track client-side navigations (initial page view handled by gtag auto)
     const handleRouteChange = (url) => {
       window.gtag?.('event', 'page_view', { page_path: url });
     };
