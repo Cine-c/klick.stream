@@ -405,6 +405,87 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
         </div>
       </section>
 
+      {/* ── LATEST NEWS ── */}
+      {(newsLoading || news.length > 0) && (
+        <section className="home-section">
+          <div className="section-header reveal">
+            <div>
+              <div className="section-tag news-tag">● Live</div>
+              <h2 className="section-title">Latest <em>News</em></h2>
+            </div>
+          </div>
+          <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
+            {newsLoading
+              ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
+              : news.map((item, i) => (
+                  <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-card">
+                    <div className="news-card-source">{item.source}</div>
+                    <div className="news-card-title">{item.title}</div>
+                    {item.description && <div className="news-card-desc">{item.description}</div>}
+                    {item.date && (
+                      <div className="news-card-date">
+                        {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      </div>
+                    )}
+                  </a>
+                ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── LATEST ARTICLES ── */}
+      <section className="home-section">
+        <div className="section-header reveal">
+          <div>
+            <div className="section-tag">Editorial</div>
+            <h2 className="section-title">From the <em>Blog</em></h2>
+          </div>
+          <Link href="/blog" className="see-all">All Articles →</Link>
+        </div>
+
+        {/* Featured hero article */}
+        <Link href={HOME_ARTICLES[0].href} className="home-article-hero reveal">
+          <div className="home-article-hero-meta">
+            <span className="home-article-category">{HOME_ARTICLES[0].category}</span>
+            {HOME_ARTICLES[0].readTime && (
+              <span className="home-article-read-time">{HOME_ARTICLES[0].readTime} read</span>
+            )}
+          </div>
+          <h3 className="home-article-hero-title">{HOME_ARTICLES[0].title}</h3>
+          <p className="home-article-hero-excerpt">{HOME_ARTICLES[0].excerpt}</p>
+          <div className="home-article-byline">
+            {HOME_ARTICLES[0].author && <span className="home-article-author">{HOME_ARTICLES[0].author}</span>}
+            {HOME_ARTICLES[0].date && <span className="home-article-date">{HOME_ARTICLES[0].date}</span>}
+          </div>
+          <span className="home-article-cta">Read Full Guide →</span>
+        </Link>
+
+        {/* 3×3 grid of remaining articles */}
+        <div className="home-articles-grid reveal">
+          {HOME_ARTICLES.slice(1).map((a) => (
+            <Link key={a.href} href={a.href} className="home-article-card">
+              <div className="home-article-card-meta">
+                <span className="home-article-category">{a.category}</span>
+                {a.readTime && <span className="home-article-read-time">{a.readTime}</span>}
+              </div>
+              <h3 className="home-article-title">{a.title}</h3>
+              <p className="home-article-excerpt">{a.excerpt}</p>
+              {(a.date || a.author) && (
+                <div className="home-article-byline">
+                  {a.author && <span className="home-article-author">{a.author}</span>}
+                  {a.date && <span className="home-article-date">{a.date}</span>}
+                </div>
+              )}
+              <span className="home-article-cta">Read more →</span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="home-articles-footer reveal">
+          <Link href="/blog" className="home-articles-cta-btn">Read the Blog →</Link>
+        </div>
+      </section>
+
       {/* ── NOW PLAYING IN THEATERS ── */}
       {nowPlaying.length > 0 && (
         <section className="home-section">
@@ -1025,87 +1106,6 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           </div>
         </div>
       )}
-
-      {/* ── LATEST NEWS ── */}
-      {(newsLoading || news.length > 0) && (
-        <section className="home-section">
-          <div className="section-header reveal">
-            <div>
-              <div className="section-tag news-tag">● Live</div>
-              <h2 className="section-title">Latest <em>News</em></h2>
-            </div>
-          </div>
-          <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
-            {newsLoading
-              ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
-              : news.map((item, i) => (
-                  <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-card">
-                    <div className="news-card-source">{item.source}</div>
-                    <div className="news-card-title">{item.title}</div>
-                    {item.description && <div className="news-card-desc">{item.description}</div>}
-                    {item.date && (
-                      <div className="news-card-date">
-                        {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </div>
-                    )}
-                  </a>
-                ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── LATEST ARTICLES ── */}
-      <section className="home-section">
-        <div className="section-header reveal">
-          <div>
-            <div className="section-tag">Editorial</div>
-            <h2 className="section-title">From the <em>Blog</em></h2>
-          </div>
-          <Link href="/blog" className="see-all">All Articles →</Link>
-        </div>
-
-        {/* Featured hero article */}
-        <Link href={HOME_ARTICLES[0].href} className="home-article-hero reveal">
-          <div className="home-article-hero-meta">
-            <span className="home-article-category">{HOME_ARTICLES[0].category}</span>
-            {HOME_ARTICLES[0].readTime && (
-              <span className="home-article-read-time">{HOME_ARTICLES[0].readTime} read</span>
-            )}
-          </div>
-          <h3 className="home-article-hero-title">{HOME_ARTICLES[0].title}</h3>
-          <p className="home-article-hero-excerpt">{HOME_ARTICLES[0].excerpt}</p>
-          <div className="home-article-byline">
-            {HOME_ARTICLES[0].author && <span className="home-article-author">{HOME_ARTICLES[0].author}</span>}
-            {HOME_ARTICLES[0].date && <span className="home-article-date">{HOME_ARTICLES[0].date}</span>}
-          </div>
-          <span className="home-article-cta">Read Full Guide →</span>
-        </Link>
-
-        {/* 3×3 grid of remaining articles */}
-        <div className="home-articles-grid reveal">
-          {HOME_ARTICLES.slice(1).map((a) => (
-            <Link key={a.href} href={a.href} className="home-article-card">
-              <div className="home-article-card-meta">
-                <span className="home-article-category">{a.category}</span>
-                {a.readTime && <span className="home-article-read-time">{a.readTime}</span>}
-              </div>
-              <h3 className="home-article-title">{a.title}</h3>
-              <p className="home-article-excerpt">{a.excerpt}</p>
-              {(a.date || a.author) && (
-                <div className="home-article-byline">
-                  {a.author && <span className="home-article-author">{a.author}</span>}
-                  {a.date && <span className="home-article-date">{a.date}</span>}
-                </div>
-              )}
-              <span className="home-article-cta">Read more →</span>
-            </Link>
-          ))}
-        </div>
-
-        <div className="home-articles-footer reveal">
-          <Link href="/blog" className="home-articles-cta-btn">Read the Blog →</Link>
-        </div>
-      </section>
 
       {/* ── AWARDS COVERAGE ── */}
       <section className="home-section">
