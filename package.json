@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx opennextjs-cloudflare build",
     "start": "next start",
     "pages:build": "npx opennextjs-cloudflare build",
     "pages:dev": "npx opennextjs-cloudflare dev"
