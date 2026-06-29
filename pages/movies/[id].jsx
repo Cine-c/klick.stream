@@ -8,6 +8,7 @@ import { useWatchLater } from '../../components/WatchLaterContext';
 import { useState } from 'react';
 import AdSlot from '../../components/AdSlot';
 import celebritiesData from '../../data/celebrities.json';
+import { generateMovieEditorial } from '../../lib/movieEditorial';
 
 export default function MovieDetailPage({ movie, credits, videos, ratings, watchProviders, similar, celebSlugs }) {
   const [showTrailer, setShowTrailer] = useState(false);
@@ -54,6 +55,8 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
     : null;
 
   const similarMovies = (similar || []).filter((m) => m.poster_path).slice(0, 12);
+
+  const editorial = generateMovieEditorial({ movie, credits, ratings, watchProviders });
 
   const faqs = [];
   if (watchProviders) {
@@ -243,6 +246,18 @@ export default function MovieDetailPage({ movie, credits, videos, ratings, watch
               <div className="movie-detail-section">
                 <h2>Overview</h2>
                 <p className="movie-overview-text">{movie.overview}</p>
+              </div>
+            )}
+
+            {/* Editorial — original, data-driven analysis (verdict, reception,
+                streaming guidance, box office) so the page adds value beyond
+                the raw catalog data. */}
+            {editorial.length > 0 && (
+              <div className="movie-detail-section movie-editorial">
+                <h2>Is {movie.title} Worth Watching?</h2>
+                {editorial.map((para, i) => (
+                  <p key={i} className="movie-editorial-text">{para}</p>
+                ))}
               </div>
             )}
 

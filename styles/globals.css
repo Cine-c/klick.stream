@@ -6438,6 +6438,17 @@ a:focus-visible {
   line-height: 1.8;
 }
 
+/* Editorial — original analysis prose */
+.movie-editorial-text {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.movie-editorial-text:last-child {
+  margin-bottom: 0;
+}
+
 /* Cast Grid */
 .cast-grid {
   display: grid;
