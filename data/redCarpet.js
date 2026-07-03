@@ -406,3 +406,41 @@ export function getEventById(id, nowMs = Date.now()) {
   const e = RED_CARPET_EVENTS.find((ev) => ev.id === id);
   return e ? deriveEvent(e, nowMs) : null;
 }
+
+/**
+ * Related events for a coverage page: only events that have their own
+ * coverage page (a url), ranked by same-type first, then by calendar
+ * proximity to the current event. Returns a trimmed shape for cards.
+ */
+export function getRelatedEvents(id, limit = 4, nowMs = Date.now()) {
+  const all = RED_CARPET_EVENTS.map((e) => deriveEvent(e, nowMs));
+  const current = all.find((e) => e.id === id);
+  if (!current) return [];
+  const curTime = new Date(current.date).getTime();
+
+  return all
+    .filter((e) => e.id !== id && e.url)
+    .sort((a, b) => {
+      const sameA = a.type === current.type ? 0 : 1;
+      const sameB = b.type === current.type ? 0 : 1;
+      if (sameA !== sameB) return sameA - sameB;
+      return (
+        Math.abs(new Date(a.date).getTime() - curTime) -
+        Math.abs(new Date(b.date).getTime() - curTime)
+      );
+    })
+    .slice(0, limit)
+    .map((e) => ({
+      id: e.id,
+      title: e.title,
+      type: e.type,
+      url: e.url,
+      image: e.image,
+      dateRange: e.dateRange,
+      date: e.date,
+      accent: e.accent,
+      month: e.month,
+      day: e.day,
+      countdownLabel: e.countdownLabel,
+    }));
+}

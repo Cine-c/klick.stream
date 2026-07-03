@@ -1,17 +1,50 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import SEOHead from './seo/SEOHead';
-import { EventJsonLd, BreadcrumbJsonLd } from './seo/JsonLd';
 import NewsletterSignup from './NewsletterSignup';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
+
+// JSON-LD is built inline (rather than importing the shared JsonLd components)
+// to keep EventGuide's module graph self-contained.
+function buildEventLd(event, guide, canonical) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': event.type === 'Festival' ? 'Festival' : 'Event',
+    name: event.title,
+    description: guide.standfirst || event.blurb,
+    startDate: event.date,
+    endDate: event.endDate || event.date,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    url: canonical,
+    ...(event.image && { image: [event.image] }),
+    ...(event.location && {
+      location: { '@type': 'Place', name: event.location, address: event.location },
+    }),
+  };
+}
+
+function buildBreadcrumbLd(event, canonical) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Red Carpet', item: `${SITE_URL}/red-carpet` },
+      { '@type': 'ListItem', position: 3, name: event.title, item: canonical },
+    ],
+  };
+}
 
 /**
  * Shared coverage-guide layout used by both /festivals/[slug] and
  * /awards/[slug]. Renders a hero (event backdrop + countdown), a quick-facts
  * sidebar, editorial body, a highlights box, and a "how to follow" note.
  */
-export default function EventGuide({ event, guide, backHref = '/red-carpet', backLabel = 'Red Carpet Calendar' }) {
+export default function EventGuide({ event, guide, related = [], backHref = '/red-carpet' }) {
+  const canonical = `${SITE_URL}${event.coverageBase || ''}/${event.id}`;
   return (
     <>
       <SEOHead
@@ -20,14 +53,16 @@ export default function EventGuide({ event, guide, backHref = '/red-carpet', bac
         url={`${event.coverageBase || ''}/${event.id}`}
         image={event.image || undefined}
       />
-      <EventJsonLd event={event} guide={guide} />
-      <BreadcrumbJsonLd
-        crumbs={[
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Red Carpet', url: `${SITE_URL}/red-carpet` },
-          { name: event.title, url: `${SITE_URL}${event.coverageBase || ''}/${event.id}` },
-        ]}
-      />
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventLd(event, guide, canonical)) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbLd(event, canonical)) }}
+        />
+      </Head>
 
       <article className="festguide" style={{ '--rc-accent': event.accent }}>
         {/* HERO */}
@@ -44,7 +79,13 @@ export default function EventGuide({ event, guide, backHref = '/red-carpet', bac
           )}
           <div className="festguide-hero-scrim" />
           <div className="festguide-hero-inner">
-            <Link href={backHref} className="festguide-back">← {backLabel}</Link>
+            <nav className="festguide-crumbs" aria-label="Breadcrumb">
+              <Link href="/">Home</Link>
+              <span className="festguide-crumb-sep" aria-hidden="true">›</span>
+              <Link href="/red-carpet">Red Carpet</Link>
+              <span className="festguide-crumb-sep" aria-hidden="true">›</span>
+              <span className="festguide-crumb-current">{event.title}</span>
+            </nav>
             <div className="festguide-hero-badges">
               <span className="redcarpet-type">{event.type}</span>
               <span className={`redcarpet-countdown${event.live ? ' redcarpet-countdown--live' : ''}`}>
@@ -107,6 +148,44 @@ export default function EventGuide({ event, guide, backHref = '/red-carpet', bac
             </div>
           </div>
         </div>
+
+        {/* RELATED EVENTS */}
+        {related.length > 0 && (
+          <section className="festguide-related">
+            <h2 className="festguide-related-title">Related on the Red Carpet</h2>
+            <div className="festguide-related-grid">
+              {related.map((r) => (
+                <Link
+                  key={r.id}
+                  href={r.url}
+                  className="festguide-related-card"
+                  style={{ '--rc-accent': r.accent }}
+                >
+                  <div className="festguide-related-media">
+                    {r.image && (
+                      <Image
+                        src={r.image}
+                        alt={r.title}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 240px"
+                        style={{ objectFit: 'cover' }}
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="festguide-related-grad" />
+                    <span className="redcarpet-type festguide-related-type">{r.type}</span>
+                  </div>
+                  <div className="festguide-related-info">
+                    <span className="festguide-related-name">{r.title}</span>
+                    <span className="festguide-related-date">
+                      {r.dateRange}, {new Date(r.date).getFullYear()}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* NEWSLETTER */}
         <div className="newsletter-section reveal">

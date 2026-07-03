@@ -1,9 +1,9 @@
 import EventGuide from '../../components/EventGuide';
 import { AWARD_GUIDES } from '../../data/awardGuides';
-import { getEventById } from '../../data/redCarpet';
+import { getEventById, getRelatedEvents } from '../../data/redCarpet';
 
-export default function AwardGuide({ event, guide }) {
-  return <EventGuide event={event} guide={guide} />;
+export default function AwardGuide({ event, guide, related }) {
+  return <EventGuide event={event} guide={guide} related={related} />;
 }
 
 export async function getStaticPaths() {
@@ -20,7 +20,7 @@ export async function getStaticProps({ params }) {
     return { notFound: true };
   }
   return {
-    props: { event: { ...event, coverageBase: '/awards' }, guide },
+    props: { event: { ...event, coverageBase: '/awards' }, guide, related: getRelatedEvents(params.slug) },
     revalidate: 3600,
   };
 }
