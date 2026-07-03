@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import SEOHead from './seo/SEOHead';
-import { EventJsonLd } from './seo/JsonLd';
+import { EventJsonLd, BreadcrumbJsonLd } from './seo/JsonLd';
 import NewsletterSignup from './NewsletterSignup';
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
 /**
  * Shared coverage-guide layout used by both /festivals/[slug] and
@@ -19,6 +21,13 @@ export default function EventGuide({ event, guide, backHref = '/red-carpet', bac
         image={event.image || undefined}
       />
       <EventJsonLd event={event} guide={guide} />
+      <BreadcrumbJsonLd
+        crumbs={[
+          { name: 'Home', url: `${SITE_URL}/` },
+          { name: 'Red Carpet', url: `${SITE_URL}/red-carpet` },
+          { name: event.title, url: `${SITE_URL}${event.coverageBase || ''}/${event.id}` },
+        ]}
+      />
 
       <article className="festguide" style={{ '--rc-accent': event.accent }}>
         {/* HERO */}
