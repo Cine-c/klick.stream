@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import SEOHead from './seo/SEOHead';
+import { EventJsonLd } from './seo/JsonLd';
 import NewsletterSignup from './NewsletterSignup';
 
 /**
@@ -17,6 +18,7 @@ export default function EventGuide({ event, guide, backHref = '/red-carpet', bac
         url={`${event.coverageBase || ''}/${event.id}`}
         image={event.image || undefined}
       />
+      <EventJsonLd event={event} guide={guide} />
 
       <article className="festguide" style={{ '--rc-accent': event.accent }}>
         {/* HERO */}
