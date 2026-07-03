@@ -8,6 +8,7 @@
  */
 
 import { hasFestivalGuide } from './festivalGuides';
+import { hasAwardGuide } from './awardGuides';
 
 export const RED_CARPET_EVENTS = [
   {
@@ -372,9 +373,12 @@ function deriveEvent(e, nowMs) {
   else countdownLabel = plural(Math.round(daysUntil / 30), 'month');
   return {
     ...e,
-    // Explicit url wins; otherwise a festival guide page if one exists
-    // (null, not undefined — undefined can't be serialized by getStaticProps)
-    url: e.url || (hasFestivalGuide(e.id) ? `/festivals/${e.id}` : null),
+    // Explicit url wins; otherwise a festival or awards coverage page if one
+    // exists (null, not undefined — undefined can't be serialized by getStaticProps)
+    url:
+      e.url ||
+      (hasFestivalGuide(e.id) ? `/festivals/${e.id}` : null) ||
+      (hasAwardGuide(e.id) ? `/awards/${e.id}` : null),
     image: RED_CARPET_IMAGES[e.id] || null,
     dateRange: fmtRange(e.date, e.endDate),
     month,

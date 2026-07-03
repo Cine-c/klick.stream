@@ -1,26 +1,26 @@
 import EventGuide from '../../components/EventGuide';
-import { FESTIVAL_GUIDES } from '../../data/festivalGuides';
+import { AWARD_GUIDES } from '../../data/awardGuides';
 import { getEventById } from '../../data/redCarpet';
 
-export default function FestivalGuide({ event, guide }) {
+export default function AwardGuide({ event, guide }) {
   return <EventGuide event={event} guide={guide} />;
 }
 
 export async function getStaticPaths() {
   return {
-    paths: Object.keys(FESTIVAL_GUIDES).map((slug) => ({ params: { slug } })),
+    paths: Object.keys(AWARD_GUIDES).map((slug) => ({ params: { slug } })),
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
-  const guide = FESTIVAL_GUIDES[params.slug] || null;
+  const guide = AWARD_GUIDES[params.slug] || null;
   const event = getEventById(params.slug);
   if (!guide || !event) {
     return { notFound: true };
   }
   return {
-    props: { event: { ...event, coverageBase: '/festivals' }, guide },
+    props: { event: { ...event, coverageBase: '/awards' }, guide },
     revalidate: 3600,
   };
 }
