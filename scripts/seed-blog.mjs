@@ -140,7 +140,7 @@ async function seed() {
       createdAt: now,
       publishedAt: now,
       updatedAt: now,
-      author: "CineNovaTV",
+      author: "Klick.stream",
     });
 
     console.log(`OK: "${title}" -> /blog/${slug} [${category}]`);
