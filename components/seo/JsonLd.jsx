@@ -226,41 +226,6 @@ export function BreadcrumbJsonLd({ crumbs }) {
   );
 }
 
-export function EventJsonLd({ event, guide }) {
-  // schema.org Festival is a subtype of Event; awards/conventions use Event
-  const eventType = event.type === 'Festival' ? 'Festival' : 'Event';
-  const url = `${siteUrl}${event.coverageBase || ''}/${event.id}`;
-
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': eventType,
-    name: event.title,
-    description: guide?.standfirst || event.blurb,
-    startDate: event.date,
-    endDate: event.endDate || event.date,
-    eventStatus: 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    url,
-    ...(event.image && { image: [event.image] }),
-    ...(event.location && {
-      location: {
-        '@type': 'Place',
-        name: event.location,
-        address: event.location,
-      },
-    }),
-  };
-
-  return (
-    <Head>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-    </Head>
-  );
-}
-
 export function ItemListJsonLd({ items, type = 'Movie' }) {
   const schema = {
     '@context': 'https://schema.org',
