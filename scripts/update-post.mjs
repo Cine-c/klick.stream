@@ -1,7 +1,8 @@
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import admin from "firebase-admin";
+import { initializeApp, cert } from "firebase-admin/app";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
@@ -9,10 +10,10 @@ const projectRoot = join(__dirname, "..");
 const serviceAccount = JSON.parse(
   readFileSync(join(projectRoot, "serviceAccountKey.json"), "utf8")
 );
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+initializeApp({
+  credential: cert(serviceAccount),
 });
-const db = admin.firestore();
+const db = getFirestore();
 
 function markdownToHtml(md) {
   let html = md;
@@ -96,7 +97,7 @@ await docRef.update({
   excerpt,
   content,
   category,
-  updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+  updatedAt: FieldValue.serverTimestamp(),
 });
 
 console.log(`Updated: "${title}" -> /blog/${postSlug} [${category}]`);
