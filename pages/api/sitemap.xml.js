@@ -1,4 +1,6 @@
 import celebritiesData from '../../data/celebrities.json';
+import { FESTIVAL_GUIDES } from '../../data/festivalGuides';
+import { AWARD_GUIDES } from '../../data/awardGuides';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://klick.stream';
 
@@ -40,6 +42,7 @@ function generateSiteMap({ posts, movieIds, celebritySlugs, sceneSlugs }) {
     { url: '/blockbuster', priority: '0.7', changefreq: 'weekly' },
     { url: '/scenes', priority: '0.7', changefreq: 'weekly' },
     { url: '/celebrity', priority: '0.7', changefreq: 'weekly' },
+    { url: '/red-carpet', priority: '0.8', changefreq: 'weekly' },
     { url: '/oscars-2026', priority: '0.6', changefreq: 'monthly' },
     // Academy
     { url: '/academy/acting-masterclass', priority: '0.6', changefreq: 'monthly' },
@@ -119,6 +122,24 @@ function generateSiteMap({ posts, movieIds, celebritySlugs, sceneSlugs }) {
       loc: `${SITE_URL}/scenes/${slug}`,
       changefreq: 'monthly',
       priority: '0.6',
+    }));
+  }
+
+  // Red Carpet festival coverage pages
+  for (const slug of Object.keys(FESTIVAL_GUIDES)) {
+    entries.push(urlEntry({
+      loc: `${SITE_URL}/festivals/${slug}`,
+      changefreq: 'weekly',
+      priority: '0.7',
+    }));
+  }
+
+  // Red Carpet awards coverage pages
+  for (const slug of Object.keys(AWARD_GUIDES)) {
+    entries.push(urlEntry({
+      loc: `${SITE_URL}/awards/${slug}`,
+      changefreq: 'weekly',
+      priority: '0.7',
     }));
   }
 
