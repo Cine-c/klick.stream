@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import SEOHead from '../components/seo/SEOHead';
 import NewsletterSignup from '../components/NewsletterSignup';
 import { withCountdown } from '../data/redCarpet';
@@ -63,7 +64,21 @@ export default function RedCarpet({ events }) {
               </div>
               <div className="redcarpet-list">
                 {group.events.map((ev) => (
-                  <article key={ev.id} className="redcarpet-row" style={{ '--rc-accent': ev.accent }}>
+                  <article key={ev.id} className={`redcarpet-row${ev.image ? ' redcarpet-row--hasmedia' : ''}`} style={{ '--rc-accent': ev.accent }}>
+                    {ev.image && (
+                      <div className="redcarpet-row-media">
+                        <Image
+                          src={ev.image}
+                          alt={ev.title}
+                          fill
+                          sizes="(max-width: 900px) 100vw, 820px"
+                          style={{ objectFit: 'cover' }}
+                          loading="lazy"
+                        />
+                        <div className="redcarpet-row-media-grad" />
+                      </div>
+                    )}
+                    <div className="redcarpet-row-main">
                     <div className="redcarpet-row-date">
                       <span className="redcarpet-row-month">{ev.month}</span>
                       <span className="redcarpet-row-day">{ev.day}</span>
@@ -98,6 +113,7 @@ export default function RedCarpet({ events }) {
                           <Link href={ev.url} className="redcarpet-row-link">Read our coverage →</Link>
                         )}
                       </div>
+                    </div>
                     </div>
                   </article>
                 ))}

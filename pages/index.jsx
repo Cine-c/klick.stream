@@ -787,32 +787,45 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
                     className="hscroll-card redcarpet-card"
                     style={{ '--rc-accent': ev.accent }}
                   >
-                    <div className="redcarpet-card-top">
-                      <div className="redcarpet-date">
+                    <div className="redcarpet-card-media">
+                      {ev.image && (
+                        <Image
+                          src={ev.image}
+                          alt={ev.title}
+                          fill
+                          sizes="288px"
+                          style={{ objectFit: 'cover' }}
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="redcarpet-card-media-grad" />
+                      <div className="redcarpet-date redcarpet-date--overlay">
                         <span className="redcarpet-date-month">{ev.month}</span>
                         <span className="redcarpet-date-day">{ev.day}</span>
                       </div>
-                      <span className={`redcarpet-countdown${ev.live ? ' redcarpet-countdown--live' : ''}`}>
+                      <span className={`redcarpet-countdown redcarpet-countdown--overlay${ev.live ? ' redcarpet-countdown--live' : ''}`}>
                         {ev.live && <span className="redcarpet-live-dot" />}
                         {ev.countdownLabel}
                       </span>
+                      <span className="redcarpet-type redcarpet-type--overlay">{ev.type}</span>
                     </div>
-                    <span className="redcarpet-type">{ev.type}</span>
-                    <h3 className="redcarpet-card-title">{ev.title}</h3>
-                    <div className="redcarpet-daterange">{ev.dateRange}</div>
-                    <div className="redcarpet-location">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-                      </svg>
-                      {ev.location}
+                    <div className="redcarpet-card-body">
+                      <h3 className="redcarpet-card-title">{ev.title}</h3>
+                      <div className="redcarpet-daterange">{ev.dateRange}</div>
+                      <div className="redcarpet-location">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                        </svg>
+                        {ev.location}
+                      </div>
+                      <p className="redcarpet-blurb">{ev.blurb}</p>
+                      <div className="redcarpet-films">
+                        {ev.films.slice(0, 3).map((f) => (
+                          <span key={f} className="redcarpet-film-chip">{f}</span>
+                        ))}
+                      </div>
+                      <div className="redcarpet-watch">{ev.watch}{ev.url && <span className="redcarpet-watch-cta"> · Read →</span>}</div>
                     </div>
-                    <p className="redcarpet-blurb">{ev.blurb}</p>
-                    <div className="redcarpet-films">
-                      {ev.films.slice(0, 3).map((f) => (
-                        <span key={f} className="redcarpet-film-chip">{f}</span>
-                      ))}
-                    </div>
-                    <div className="redcarpet-watch">{ev.watch}{ev.url && <span className="redcarpet-watch-cta"> · Read →</span>}</div>
                   </Card>
                 );
               })}
