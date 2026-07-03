@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SEOHead from '../../components/seo/SEOHead';
-import { BlogPostingJsonLd } from '../../components/seo/JsonLd';
+import { BlogPostingJsonLd, BreadcrumbJsonLd } from '../../components/seo/JsonLd';
 import Disqus from '../../components/Disqus';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import AdSlot from '../../components/AdSlot';
@@ -42,8 +42,20 @@ export default function BlogPost({ post, relatedPosts }) {
         }}
       />
       <BlogPostingJsonLd post={post} />
+      <BreadcrumbJsonLd crumbs={[
+        { name: 'Home', url: 'https://klick.stream/' },
+        { name: 'Blog', url: 'https://klick.stream/blog' },
+        { name: post.title, url: `https://klick.stream/blog/${post.slug}` },
+      ]} />
 
       <article className="blog-post">
+        <nav className="breadcrumbs">
+          <Link href="/">Home</Link>
+          <span className="separator">/</span>
+          <Link href="/blog">Blog</Link>
+          <span className="separator">/</span>
+          <span className="current">{post.title}</span>
+        </nav>
         <header className="blog-post-header">
           <h1 className="blog-post-title">{post.title}</h1>
           <div className="blog-post-meta">

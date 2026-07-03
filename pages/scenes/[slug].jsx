@@ -1,4 +1,5 @@
 import SEOHead from '../../components/seo/SEOHead';
+import { BreadcrumbJsonLd } from '../../components/seo/JsonLd';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -163,8 +164,21 @@ export default function SceneDetail({ scene }) {
         url={`/scenes/${scene.slug}`}
         image={scene.image}
       />
+      <BreadcrumbJsonLd crumbs={[
+        { name: 'Home', url: 'https://klick.stream/' },
+        { name: 'Scenes', url: 'https://klick.stream/scenes' },
+        { name: `${scene.title} — ${scene.movie}`, url: `https://klick.stream/scenes/${scene.slug}` },
+      ]} />
 
       <article className="scene-detail">
+        <nav className="breadcrumbs">
+          <Link href="/">Home</Link>
+          <span className="separator">/</span>
+          <Link href="/scenes">Scenes</Link>
+          <span className="separator">/</span>
+          <span className="current">{scene.title}</span>
+        </nav>
+
         {/* Hero Section */}
         <section
           className="scene-detail-hero"
