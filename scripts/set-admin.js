@@ -12,7 +12,7 @@ const path = require('path');
 // Load .env from project root
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
-const PROJECT_ID = 'cinenovatv-1e11a';
+const PROJECT_ID = 'klick-a2f4e';
 
 async function getAccessToken() {
   const email = process.env.FIREBASE_SERVICE_ACCOUNT_EMAIL;
