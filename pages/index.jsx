@@ -10,6 +10,7 @@ import NewsletterSignup from '../components/NewsletterSignup';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
+import { withCountdown } from '../data/redCarpet';
 import dynamic from 'next/dynamic';
 import { useAuth } from '../components/useAuth';
 
@@ -248,7 +249,7 @@ const LEAVING_SOON = [
   { id: 493922, title: 'Hereditary',             year: '2018', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jun 25 2026' },
 ];
 
-export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon = [] }) {
+export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon = [], redCarpet = [] }) {
   const { language } = useLanguage();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -758,6 +759,67 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           <span className="tdf-home-badge">Jul 4 – 26</span>
         </Link>
       </div>
+
+      {/* ── RED CARPET & PREMIERES ── */}
+      {redCarpet.length > 0 && (
+        <section className="home-section redcarpet-section">
+          <div className="section-header reveal">
+            <div>
+              <div className="section-tag redcarpet-tag">🎟 Save the Date</div>
+              <h2 className="section-title">Red Carpet <em>&amp; Premieres</em></h2>
+            </div>
+            <Link href="/red-carpet" className="see-all">Full Calendar →</Link>
+          </div>
+          <p className="redcarpet-intro reveal">
+            Every major film festival, award ceremony, and marquee world premiere on the horizon —
+            from Comic-Con and Venice through the fall festival circuit to the winter&rsquo;s biggest opening nights.
+            Here&rsquo;s what&rsquo;s coming down the carpet next.
+          </p>
+          <div className="reveal">
+            <HScrollRow>
+              {redCarpet.map((ev) => {
+                const Card = ev.url ? Link : 'div';
+                const cardProps = ev.url ? { href: ev.url } : {};
+                return (
+                  <Card
+                    key={ev.id}
+                    {...cardProps}
+                    className="hscroll-card redcarpet-card"
+                    style={{ '--rc-accent': ev.accent }}
+                  >
+                    <div className="redcarpet-card-top">
+                      <div className="redcarpet-date">
+                        <span className="redcarpet-date-month">{ev.month}</span>
+                        <span className="redcarpet-date-day">{ev.day}</span>
+                      </div>
+                      <span className={`redcarpet-countdown${ev.live ? ' redcarpet-countdown--live' : ''}`}>
+                        {ev.live && <span className="redcarpet-live-dot" />}
+                        {ev.countdownLabel}
+                      </span>
+                    </div>
+                    <span className="redcarpet-type">{ev.type}</span>
+                    <h3 className="redcarpet-card-title">{ev.title}</h3>
+                    <div className="redcarpet-daterange">{ev.dateRange}</div>
+                    <div className="redcarpet-location">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                      </svg>
+                      {ev.location}
+                    </div>
+                    <p className="redcarpet-blurb">{ev.blurb}</p>
+                    <div className="redcarpet-films">
+                      {ev.films.slice(0, 3).map((f) => (
+                        <span key={f} className="redcarpet-film-chip">{f}</span>
+                      ))}
+                    </div>
+                    <div className="redcarpet-watch">{ev.watch}{ev.url && <span className="redcarpet-watch-cta"> · Read →</span>}</div>
+                  </Card>
+                );
+              })}
+            </HScrollRow>
+          </div>
+        </section>
+      )}
 
       {/* ── TRAILERS TEASER ── */}
       {nowPlaying.length > 0 && (
@@ -1335,8 +1397,10 @@ export async function getStaticProps() {
     slug: c.slug, name: c.name, category: c.category, wikipedia_slug: c.wikipedia_slug,
   }));
 
+  const redCarpet = withCountdown().slice(0, 8);
+
   return {
-    props: { featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon },
+    props: { featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon, redCarpet },
     revalidate: 3600,
   };
 }

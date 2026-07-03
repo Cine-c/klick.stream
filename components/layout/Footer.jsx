@@ -6,6 +6,7 @@ const EXPLORE_LINKS = [
   { href: '/trailers',   label: 'Trailers' },
   { href: '/tv',         label: 'TV Shows' },
   { href: '/scenes',     label: 'Scenes' },
+  { href: '/red-carpet', label: 'Red Carpet' },
   { href: '/celebrity',  label: 'Celebrities' },
   { href: '/blockbuster', label: 'Blockbuster' },
   { href: '/blog',       label: 'Blog' },

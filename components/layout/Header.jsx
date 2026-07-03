@@ -48,6 +48,7 @@ const LIVE_ITEMS = [
 ];
 
 const EXPLORE_ITEMS = [
+  { href: '/red-carpet',  label: '🎟 Red Carpet & Premieres' },
   { href: '/blockbuster', label: 'Film Reviews' },
   { href: '/scenes',      label: 'Iconic Scenes' },
   { href: '/celebrity',   label: 'Celebrities' },
