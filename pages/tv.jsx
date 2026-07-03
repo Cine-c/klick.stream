@@ -33,7 +33,7 @@ function ShowCard({ show, rank }) {
 
   return (
     <Link
-      href={`/discover?type=tv&search=${encodeURIComponent(show.name || show.original_name || '')}`}
+      href={`/tv/${show.id}`}
       className="tv-show-card"
     >
       <div className="tv-show-poster">
@@ -69,7 +69,7 @@ function ShowRow({ show }) {
 
   return (
     <Link
-      href={`/discover?type=tv&search=${encodeURIComponent(show.name || '')}`}
+      href={`/tv/${show.id}`}
       className="tv-airing-row"
     >
       <div className="tv-airing-thumb">

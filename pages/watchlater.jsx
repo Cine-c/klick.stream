@@ -41,7 +41,11 @@ export default function WatchLaterPage() {
         )}
 
         {selectedMovie && (
-          <TrailerModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
+          <TrailerModal
+            movie={selectedMovie}
+            mediaType={selectedMovie.media_type === 'tv' ? 'tv' : 'movie'}
+            onClose={() => setSelectedMovie(null)}
+          />
         )}
       </div>
     </>

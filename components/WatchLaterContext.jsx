@@ -26,6 +26,7 @@ export function WatchLaterProvider({ children }) {
         poster_path: movie.poster_path,
         vote_average: movie.vote_average,
         releaseYear: movie.releaseYear || (movie.release_date ? movie.release_date.split('-')[0] : ''),
+        media_type: movie.media_type || 'movie',
       }];
       try { localStorage.setItem('watchLater', JSON.stringify(next)); } catch {}
       return next;

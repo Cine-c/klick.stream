@@ -11,6 +11,7 @@ export default function MovieCard({ movie, onWatchTrailer, genreMap }) {
     : '/placeholder-poster.jpg';
 
   const year = (movie.release_date || '').split('-')[0] || movie.releaseYear || null;
+  const detailHref = movie.media_type === 'tv' ? `/tv/${movie.id}` : `/movies/${movie.id}`;
 
   return (
     <article className="movie-card">
@@ -56,7 +57,7 @@ export default function MovieCard({ movie, onWatchTrailer, genreMap }) {
         </button>
       </div>
       <div className="movie-card-info">
-        <Link href={`/movies/${movie.id}`} className="movie-card-title-link">
+        <Link href={detailHref} className="movie-card-title-link">
           <h3 className="movie-card-title">{movie.title}</h3>
         </Link>
         <div className="movie-card-meta">

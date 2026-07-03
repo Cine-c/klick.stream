@@ -525,7 +525,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
             <HScrollRow>
               {tvTrending.map((show) => (
                 <div key={show.id} className="hscroll-card">
-                  <MovieCard movie={show} genreMap={genreMap} onWatchTrailer={() => router.push(`/trailers?play=${show.id}`)} />
+                  <MovieCard movie={show} genreMap={genreMap} onWatchTrailer={() => router.push(`/tv/${show.id}`)} />
                 </div>
               ))}
             </HScrollRow>
@@ -1280,7 +1280,7 @@ export async function getStaticProps() {
           id: m.id, title: m.name || m.title, poster_path: m.poster_path,
           backdrop_path: m.backdrop_path, release_date: m.first_air_date || '',
           vote_average: m.vote_average || 0, overview: m.overview || '',
-          genre_ids: m.genre_ids || [],
+          genre_ids: m.genre_ids || [], media_type: 'tv',
         }));
       }
       const mapMovies = (results) => (results || []).filter((m) => m.original_language === 'en').slice(0, 8).map((m) => ({

@@ -170,6 +170,40 @@ export function MovieJsonLd({ movie, trailerUrl }) {
   );
 }
 
+export function TVSeriesJsonLd({ show, trailerUrl }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'TVSeries',
+    name: show.name,
+    description: show.overview,
+    image: show.poster_path
+      ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+      : null,
+    datePublished: show.first_air_date,
+    numberOfSeasons: show.number_of_seasons || undefined,
+    numberOfEpisodes: show.number_of_episodes || undefined,
+    ...(trailerUrl && {
+      trailer: {
+        '@type': 'VideoObject',
+        name: `${show.name} - Official Trailer`,
+        embedUrl: trailerUrl,
+        thumbnailUrl: show.backdrop_path
+          ? `https://image.tmdb.org/t/p/w780${show.backdrop_path}`
+          : null,
+      },
+    }),
+  };
+
+  return (
+    <Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+    </Head>
+  );
+}
+
 export function BreadcrumbJsonLd({ crumbs }) {
   const schema = {
     '@context': 'https://schema.org',

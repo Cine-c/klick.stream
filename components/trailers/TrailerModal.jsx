@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useWatchLater } from '../WatchLaterContext';
 import AdSlot from '../AdSlot';
 
-export default function TrailerModal({ movie, movies = [], onNextMovie, onClose, onMinimize }) {
+export default function TrailerModal({ movie, movies = [], onNextMovie, onClose, onMinimize, mediaType = 'movie' }) {
+  const apiBase = mediaType === 'tv' ? '/api/tv' : '/api/movie';
+  const detailHref = mediaType === 'tv' ? `/tv/${movie?.id}` : `/movies/${movie?.id}`;
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
   const previousActiveElement = useRef(null);
@@ -119,8 +121,8 @@ export default function TrailerModal({ movie, movies = [], onNextMovie, onClose,
       setShowUpNext(false);
 
       Promise.all([
-        fetch(`/api/movie/${movie.id}/details`).then((res) => res.json()),
-        fetch(`/api/movie/${movie.id}/ratings`).then((res) => res.json()).catch(() => null),
+        fetch(`${apiBase}/${movie.id}/details`).then((res) => res.json()),
+        fetch(`${apiBase}/${movie.id}/ratings`).then((res) => res.json()).catch(() => null),
       ])
         .then(([tmdbData, omdbData]) => {
           setDetails(tmdbData);
@@ -185,7 +187,7 @@ export default function TrailerModal({ movie, movies = [], onNextMovie, onClose,
 
   const handleShare = async () => {
     try {
-      await navigator.clipboard.writeText(`https://klick.stream/movies/${movie.id}`);
+      await navigator.clipboard.writeText(`https://klick.stream${detailHref}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -368,7 +370,7 @@ export default function TrailerModal({ movie, movies = [], onNextMovie, onClose,
                     {copied && <span className="trailer-copied-tooltip">Copied!</span>}
                   </button>
 
-                  <Link href={`/movies/${movie.id}`} className="trailer-action-btn" onClick={onClose}>
+                  <Link href={detailHref} className="trailer-action-btn" onClick={onClose}>
                     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                       <path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
                     </svg>
