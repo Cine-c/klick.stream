@@ -1438,7 +1438,13 @@ export async function getStaticProps() {
     slug: c.slug, name: c.name, category: c.category, wikipedia_slug: c.wikipedia_slug,
   }));
 
-  const redCarpet = withCountdown().slice(0, 8);
+  // Always feature the marquee premieres first, then fill with the soonest
+  // upcoming festivals/ceremonies. The /red-carpet page keeps the full
+  // chronological calendar.
+  const allRedCarpet = withCountdown();
+  const premieres = allRedCarpet.filter((e) => e.type === 'Premiere');
+  const others = allRedCarpet.filter((e) => e.type !== 'Premiere');
+  const redCarpet = [...premieres, ...others].slice(0, 8);
 
   return {
     props: { featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon, redCarpet },
