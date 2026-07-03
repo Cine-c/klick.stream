@@ -15,6 +15,18 @@ import dynamic from 'next/dynamic';
 import { useAuth } from '../components/useAuth';
 
 const AuthModal = dynamic(() => import('../components/AuthModal'), { ssr: false });
+const TrailerModal = dynamic(() => import('../components/trailers/TrailerModal'), { ssr: false });
+
+// Build a minimal movie object for TrailerModal from a red-carpet premiere event
+function eventToMovie(ev) {
+  return {
+    id: ev.tmdbId,
+    title: ev.films?.[0] || ev.title,
+    overview: ev.overview || ev.blurb,
+    release_date: ev.date,
+    backdrop_path: ev.image ? ev.image.replace('https://image.tmdb.org/t/p/w780', '') : null,
+  };
+}
 
 const HOME_ARTICLES = [
   {
@@ -257,6 +269,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   const heroRef = useRef(null);
   const [heroTrailerKey, setHeroTrailerKey] = useState(featuredMovie?.trailerKey || null);
   const [showAuth, setShowAuth] = useState(false);
+  const [trailerMovie, setTrailerMovie] = useState(null);
   const [news, setNews] = useState([]);
   const [newsLoading, setNewsLoading] = useState(true);
 
@@ -824,7 +837,18 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
                           <span key={f} className="redcarpet-film-chip">{f}</span>
                         ))}
                       </div>
-                      <div className="redcarpet-watch">{ev.watch}{ev.url && <span className="redcarpet-watch-cta"> · Read →</span>}</div>
+                      {ev.tmdbId ? (
+                        <button
+                          type="button"
+                          className="redcarpet-trailer-btn"
+                          onClick={() => setTrailerMovie(eventToMovie(ev))}
+                        >
+                          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                          Watch Trailer
+                        </button>
+                      ) : (
+                        <div className="redcarpet-watch">{ev.watch}{ev.url && <span className="redcarpet-watch-cta"> · Read →</span>}</div>
+                      )}
                     </div>
                   </Card>
                 );
@@ -1241,6 +1265,10 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
 
       {showAuth && (
         <AuthModal onClose={() => setShowAuth(false)} defaultTab="signup" />
+      )}
+
+      {trailerMovie && (
+        <TrailerModal movie={trailerMovie} onClose={() => setTrailerMovie(null)} />
       )}
     </div>
   );

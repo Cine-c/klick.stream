@@ -18149,6 +18149,25 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 }
 .redcarpet-watch-cta { color: var(--rc-accent); }
 
+.redcarpet-trailer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--rc-accent);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+.redcarpet-trailer-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.redcarpet-trailer-btn svg { flex-shrink: 0; }
+.redcarpet-card-body .redcarpet-trailer-btn { align-self: flex-start; margin-top: 0.55rem; }
+
 /* ── Dedicated /red-carpet page ── */
 .redcarpet-page {
   min-height: 100vh;

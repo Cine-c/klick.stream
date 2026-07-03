@@ -1,8 +1,22 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import SEOHead from '../components/seo/SEOHead';
 import NewsletterSignup from '../components/NewsletterSignup';
 import { withCountdown } from '../data/redCarpet';
+
+const TrailerModal = dynamic(() => import('../components/trailers/TrailerModal'), { ssr: false });
+
+function eventToMovie(ev) {
+  return {
+    id: ev.tmdbId,
+    title: ev.films?.[0] || ev.title,
+    overview: ev.overview || ev.blurb,
+    release_date: ev.date,
+    backdrop_path: ev.image ? ev.image.replace('https://image.tmdb.org/t/p/w780', '') : null,
+  };
+}
 
 function groupByMonth(events) {
   const groups = [];
@@ -22,6 +36,7 @@ function groupByMonth(events) {
 export default function RedCarpet({ events }) {
   const groups = groupByMonth(events);
   const nextUp = events[0];
+  const [trailerMovie, setTrailerMovie] = useState(null);
 
   return (
     <>
@@ -109,6 +124,16 @@ export default function RedCarpet({ events }) {
                       </div>
                       <div className="redcarpet-row-footer">
                         <span className="redcarpet-watch">📍 {ev.watch}</span>
+                        {ev.tmdbId && (
+                          <button
+                            type="button"
+                            className="redcarpet-trailer-btn"
+                            onClick={() => setTrailerMovie(eventToMovie(ev))}
+                          >
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                            Watch Trailer
+                          </button>
+                        )}
                         {ev.url && (
                           <Link href={ev.url} className="redcarpet-row-link">Read our coverage →</Link>
                         )}
@@ -129,6 +154,10 @@ export default function RedCarpet({ events }) {
           </div>
         </div>
       </div>
+
+      {trailerMovie && (
+        <TrailerModal movie={trailerMovie} onClose={() => setTrailerMovie(null)} />
+      )}
     </>
   );
 }
