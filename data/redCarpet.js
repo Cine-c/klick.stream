@@ -7,6 +7,8 @@
  * client-side date logic. Update this list as the season evolves.
  */
 
+import { hasFestivalGuide } from './festivalGuides';
+
 export const RED_CARPET_EVENTS = [
   {
     id: 'sdcc-2026',
@@ -352,39 +354,51 @@ function fmtRange(startISO, endISO) {
   return `${startStr}–${endStr}`;
 }
 
+// Enrich a single raw event with derived date/countdown/image/url fields.
+function deriveEvent(e, nowMs) {
+  const startMs = new Date(e.date + 'T00:00:00').getTime();
+  const endMs = e.endDate ? new Date(e.endDate + 'T23:59:59').getTime() : startMs + MS_PER_DAY;
+  const daysUntil = Math.ceil((startMs - nowMs) / MS_PER_DAY);
+  const live = nowMs >= startMs && nowMs <= endMs;
+  const month = new Date(e.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const day = new Date(e.date + 'T00:00:00').getDate();
+  const plural = (n, unit) => `In ${n} ${unit}${n === 1 ? '' : 's'}`;
+  let countdownLabel;
+  if (live) countdownLabel = 'Happening now';
+  else if (daysUntil <= 0) countdownLabel = 'This week';
+  else if (daysUntil === 1) countdownLabel = 'Tomorrow';
+  else if (daysUntil <= 7) countdownLabel = plural(daysUntil, 'day');
+  else if (daysUntil <= 30) countdownLabel = plural(Math.round(daysUntil / 7), 'week');
+  else countdownLabel = plural(Math.round(daysUntil / 30), 'month');
+  return {
+    ...e,
+    // Explicit url wins; otherwise a festival guide page if one exists
+    // (null, not undefined — undefined can't be serialized by getStaticProps)
+    url: e.url || (hasFestivalGuide(e.id) ? `/festivals/${e.id}` : null),
+    image: RED_CARPET_IMAGES[e.id] || null,
+    dateRange: fmtRange(e.date, e.endDate),
+    month,
+    day,
+    daysUntil,
+    live,
+    countdownLabel,
+    finished: nowMs > endMs,
+  };
+}
+
 /**
  * Returns the events with derived countdown fields, filtering out any that
  * have fully finished, and sorted by soonest start date.
  * @param {number} [nowMs] injectable "now" for deterministic SSG
  */
 export function withCountdown(nowMs = Date.now()) {
-  return RED_CARPET_EVENTS.map((e) => {
-    const startMs = new Date(e.date + 'T00:00:00').getTime();
-    const endMs = e.endDate ? new Date(e.endDate + 'T23:59:59').getTime() : startMs + MS_PER_DAY;
-    const daysUntil = Math.ceil((startMs - nowMs) / MS_PER_DAY);
-    const live = nowMs >= startMs && nowMs <= endMs;
-    const month = new Date(e.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-    const day = new Date(e.date + 'T00:00:00').getDate();
-    const plural = (n, unit) => `In ${n} ${unit}${n === 1 ? '' : 's'}`;
-    let countdownLabel;
-    if (live) countdownLabel = 'Happening now';
-    else if (daysUntil <= 0) countdownLabel = 'This week';
-    else if (daysUntil === 1) countdownLabel = 'Tomorrow';
-    else if (daysUntil <= 7) countdownLabel = plural(daysUntil, 'day');
-    else if (daysUntil <= 30) countdownLabel = plural(Math.round(daysUntil / 7), 'week');
-    else countdownLabel = plural(Math.round(daysUntil / 30), 'month');
-    return {
-      ...e,
-      image: RED_CARPET_IMAGES[e.id] || null,
-      dateRange: fmtRange(e.date, e.endDate),
-      month,
-      day,
-      daysUntil,
-      live,
-      countdownLabel,
-      finished: nowMs > endMs,
-    };
-  })
+  return RED_CARPET_EVENTS.map((e) => deriveEvent(e, nowMs))
     .filter((e) => !e.finished)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
+/** Look up a single event with derived meta by id (ignores the finished filter). */
+export function getEventById(id, nowMs = Date.now()) {
+  const e = RED_CARPET_EVENTS.find((ev) => ev.id === id);
+  return e ? deriveEvent(e, nowMs) : null;
 }

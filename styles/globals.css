@@ -18354,4 +18354,176 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
   .redcarpet-card { flex: 0 0 246px; }
 }
 
+/* ── Festival coverage guide (/festivals/[slug]) ── */
+.festguide { background: var(--bg-primary); }
+.festguide-hero {
+  position: relative;
+  min-height: 460px;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem);
+  overflow: hidden;
+}
+.festguide-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 12, 0.35) 0%, rgba(8, 12, 12, 0.55) 45%, var(--bg-primary) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--rc-accent) 22%, transparent), transparent 60%);
+}
+.festguide-hero-inner { position: relative; max-width: 860px; width: 100%; margin: 0 auto; }
+.festguide-back {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 1.1rem;
+  transition: color var(--transition-fast);
+}
+.festguide-back:hover { color: var(--rc-accent); }
+.festguide-hero-badges { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; }
+.festguide-title {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.85rem;
+  color: var(--text-primary);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+}
+.festguide-standfirst {
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 0 1.25rem;
+}
+.festguide-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.festguide-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 2rem);
+}
+.festguide-facts {
+  align-self: start;
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--rc-accent);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.35rem;
+}
+.festguide-facts-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rc-accent);
+  margin: 0 0 0.9rem;
+}
+.festguide-facts-list { margin: 0; }
+.festguide-fact {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.festguide-fact:last-child { border-bottom: none; }
+.festguide-fact dt { font-size: 0.8rem; color: var(--text-muted); }
+.festguide-fact dd { margin: 0; font-size: 0.82rem; font-weight: 600; color: var(--text-primary); text-align: right; }
+
+.festguide-main { min-width: 0; }
+.festguide-para {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 0 0 1.35rem;
+}
+.festguide-h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 2rem 0 1rem;
+  color: var(--text-primary);
+}
+.festguide-highlights {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  margin: 1.5rem 0;
+}
+.festguide-highlights .festguide-h2 { margin-top: 0; }
+.festguide-highlight-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.festguide-highlight-list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.festguide-highlight-list li::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--rc-accent);
+  font-size: 0.9rem;
+}
+.festguide-follow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background: var(--bg-glass);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--rc-accent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  margin: 1.75rem 0;
+}
+.festguide-follow-icon { flex-shrink: 0; }
+.festguide-cta { margin-top: 2rem; }
+.festguide-cta-btn {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  background: var(--rc-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+.festguide-cta-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+
+@media (max-width: 768px) {
+  .festguide-body { grid-template-columns: 1fr; gap: 1.75rem; }
+  .festguide-facts { position: static; }
+  .festguide-hero { min-height: 380px; }
+}
+
 
