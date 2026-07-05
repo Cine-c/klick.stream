@@ -10,7 +10,7 @@ export function OrganizationJsonLd() {
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
     sameAs: [
-      'https://x.com/Klick_stream',
+      'https://x.com/klick4u',
       'https://www.instagram.com/Klick_stream',
       'https://www.youtube.com/@Klick_stream',
       'https://www.tiktok.com/@Klick_stream',

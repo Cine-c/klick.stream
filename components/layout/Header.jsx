@@ -56,6 +56,8 @@ const EXPLORE_ITEMS = [
   { href: '/about',       label: 'About' },
 ];
 
+const X_URL = 'https://x.com/klick4u';
+
 function MegaMenu({ open, children }) {
   if (!open) return null;
   return <div className="nav-megamenu">{children}</div>;
@@ -304,6 +306,20 @@ export default function Header() {
               {items.length > 0 && <span className="nav-watchlist-count">{items.length}</span>}
             </Link>
 
+            {/* Follow on X */}
+            <a
+              href={X_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-icon-btn"
+              aria-label="Follow Klick.stream on X"
+              title="Follow on X"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+
             {/* Language */}
             <div className="nav-dd-wrap" ref={langRef}>
               <button
@@ -430,6 +446,12 @@ export default function Header() {
               <Link href="/premium" className="nav-mobile-account-btn nav-mobile-account-btn--premium" onClick={close}>
                 ⭐ Premium
               </Link>
+              <a href={X_URL} target="_blank" rel="noopener noreferrer" className="nav-mobile-account-btn" onClick={close}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style={{ marginRight: 6, verticalAlign: 'middle' }}>
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Follow on X
+              </a>
               {!authLoading && (
                 user
                   ? <Link href="/account" className="nav-mobile-account-btn" onClick={close}>👤 Account</Link>

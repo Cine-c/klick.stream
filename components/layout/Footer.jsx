@@ -49,7 +49,7 @@ export default function Footer() {
             Your free guide to cinema. Browse 50,000+ titles, watch trailers, and find where to stream — across every platform.
           </p>
           <a
-            href="https://x.com/Klick_stream"
+            href="https://x.com/klick4u"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-social-x"
