@@ -7,6 +7,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { useRouter } from 'next/router';
 import AdSlot from '../components/AdSlot';
 import NewsletterSignup from '../components/NewsletterSignup';
+import NewsTicker from '../components/NewsTicker';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
@@ -274,11 +275,18 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   const [newsLoading, setNewsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/news?limit=9')
-      .then((r) => r.json())
-      .then((data) => setNews(data.articles || []))
-      .catch(() => {})
-      .finally(() => setNewsLoading(false));
+    let active = true;
+    const loadNews = () =>
+      fetch('/api/news?limit=15')
+        .then((r) => r.json())
+        .then((data) => { if (active) setNews(data.articles || []); })
+        .catch(() => {})
+        .finally(() => { if (active) setNewsLoading(false); });
+    loadNews();
+    // Keep the "Live" news genuinely current — refresh every 5 min
+    // (aligned with the API's 10-min edge cache).
+    const id = setInterval(loadNews, 5 * 60 * 1000);
+    return () => { active = false; clearInterval(id); };
   }, []);
 
   useEffect(() => {
@@ -427,10 +435,11 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
               <h2 className="section-title">Latest <em>News</em></h2>
             </div>
           </div>
+          {!newsLoading && news.length > 0 && <NewsTicker items={news} />}
           <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
             {newsLoading
               ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
-              : news.map((item, i) => (
+              : news.slice(0, 9).map((item, i) => (
                   <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-card">
                     <div className="news-card-source">{item.source}</div>
                     <div className="news-card-title">{item.title}</div>
