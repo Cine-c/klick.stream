@@ -50,7 +50,7 @@ export default function AccountPage() {
     setPortalLoading(true);
     try {
       const idToken = await user.getIdToken();
-      const res = await fetch('/api/stripe/create-portal', {
+      const res = await fetch('/api/lemonsqueezy/create-portal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

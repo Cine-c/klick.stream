@@ -57,7 +57,7 @@ export default function PremiumPage() {
     setLoading(interval);
     try {
       const idToken = await user.getIdToken();
-      const res = await fetch('/api/stripe/create-checkout', {
+      const res = await fetch('/api/lemonsqueezy/create-checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function PremiumPage() {
     setLoading('portal');
     try {
       const idToken = await user.getIdToken();
-      const res = await fetch('/api/stripe/create-portal', {
+      const res = await fetch('/api/lemonsqueezy/create-portal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
