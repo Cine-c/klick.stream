@@ -22,7 +22,6 @@ export default function NewsTicker({ items = [] }) {
               aria-hidden={i >= items.length ? true : undefined}
               tabIndex={i >= items.length ? -1 : undefined}
             >
-              <span className="news-ticker-source">{item.source}</span>
               <span className="news-ticker-title">{item.title}</span>
               <span className="news-ticker-sep" aria-hidden="true">◆</span>
             </a>

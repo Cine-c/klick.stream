@@ -8,7 +8,7 @@ export default function BestMoviesNetflixApril2026() {
     <>
       <SEOHead
         title="Best Movies on Netflix Right Now (April 2026) | Klick.stream"
-        description="The 15 best movies streaming on Netflix in April 2026, hand-picked by our editors. New arrivals, hidden gems, and critic favourites — updated weekly."
+        description="The 15 best movies streaming on Netflix in April 2026, hand-picked by our editors. New arrivals, hidden gems, and critic favourites."
         url="/articles/best-movies-netflix-april-2026"
         type="article"
         article={{ publishedTime: '2026-04-01T08:00:00Z', author: 'J., Editor-in-Chief' }}

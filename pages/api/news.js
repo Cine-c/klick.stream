@@ -11,6 +11,11 @@ const FEEDS = [
   { url: 'https://www.slashfilm.com/feed/',                  source: '/Film' },
   { url: 'https://deadline.com/category/film/feed/',         source: 'Deadline' },
   { url: 'https://variety.com/v/film/feed/',                 source: 'Variety' },
+  { url: 'https://www.joblo.com/feed/',                      source: 'JoBlo' },
+  { url: 'https://www.comingsoon.net/feed',                  source: 'ComingSoon' },
+  { url: 'https://consequence.net/feed/',                    source: 'Consequence' },
+  { url: 'https://www.indiewire.com/feed/',                  source: 'IndieWire' },
+  { url: 'https://www.hollywoodreporter.com/c/movies/movie-news/feed/', source: 'The Hollywood Reporter' },
 ];
 
 function getText(xml, tag) {
@@ -26,6 +31,24 @@ function getLink(itemXml) {
   return rss ? rss[1].trim() : '';
 }
 
+// Best-effort thumbnail: media:content/thumbnail, image enclosure, or the first
+// <img> embedded in content:encoded/description. Not every feed provides one.
+function getImage(itemXml) {
+  let m =
+    itemXml.match(/<media:(?:content|thumbnail)[^>]*\burl="([^"]+\.(?:jpe?g|png|webp)[^"]*)"/i) ||
+    itemXml.match(/<media:content[^>]*\bmedium="image"[^>]*\burl="([^"]+)"/i) ||
+    itemXml.match(/<media:content[^>]*\burl="([^"]+)"[^>]*\bmedium="image"/i) ||
+    itemXml.match(/<enclosure[^>]*\btype="image\/[^"]*"[^>]*\burl="([^"]+)"/i) ||
+    itemXml.match(/<enclosure[^>]*\burl="([^"]+)"[^>]*\btype="image\//i);
+  if (m) return m[1].trim();
+  const rich =
+    itemXml.match(/<content:encoded[^>]*>([\s\S]*?)<\/content:encoded>/i)?.[1] ||
+    itemXml.match(/<description[^>]*>([\s\S]*?)<\/description>/i)?.[1] ||
+    '';
+  const img = rich.match(/<img[^>]+src="([^"]+\.(?:jpe?g|png|webp)[^"]*)"/i) || rich.match(/<img[^>]+src="([^"]+)"/i);
+  return img ? img[1].trim() : '';
+}
+
 function parseRSS(xml, source) {
   const items = [];
   const raw = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
@@ -35,7 +58,8 @@ function parseRSS(xml, source) {
     const link  = getLink(content) || getText(content, 'link');
     const date  = getText(content, 'pubDate') || getText(content, 'dc:date') || '';
     const desc  = getText(content, 'description').slice(0, 160);
-    if (title && link) items.push({ title, link, date, description: desc, source });
+    const image = getImage(content);
+    if (title && link) items.push({ title, link, date, description: desc, source, image });
   }
   return items;
 }
