@@ -406,15 +406,14 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
       <section className="home-streaming-blurb reveal">
         <div className="home-blurb-inner">
           <div className="home-blurb-meta">
-            <span className="section-tag">Updated Weekly</span>
-            <span className="home-blurb-date">Week of June 16, 2026</span>
+            <span className="section-tag">Editor&rsquo;s Picks</span>
           </div>
-          <h2 className="home-blurb-heading">What&rsquo;s Streaming This Week</h2>
+          <h2 className="home-blurb-heading">What&rsquo;s Streaming Now</h2>
           <p className="home-blurb-body">
-            The biggest streaming arrival this week is Ryan Coogler&rsquo;s <strong>Sinners</strong>, now on Prime Video after a record-breaking theatrical run. The supernatural thriller stars Michael B. Jordan in a dual role and is the most acclaimed film of 2026 — essential viewing for anyone who hasn&rsquo;t caught it yet. On Netflix, <strong>The Woman in the Yard</strong> delivers tense domestic horror directed by Roadrunner&rsquo;s Morgan Neville, while <strong>Lilo &amp; Stitch</strong> lands on Disney+ following its record theatrical debut. Apple TV+ adds <strong>The Studio</strong>, Seth Rogen&rsquo;s sharp Hollywood satire that has become one of the best shows of the year. In theaters, the summer season is peaking with <strong>Superman</strong> and <strong>Mission: Impossible &mdash; The Final Reckoning</strong> competing for the weekend box office crown.
+            One of the biggest recent streaming arrivals is Ryan Coogler&rsquo;s <strong>Sinners</strong>, now on Prime Video after a record-breaking theatrical run. The supernatural thriller stars Michael B. Jordan in a dual role and is among the most acclaimed films of 2026 — essential viewing for anyone who hasn&rsquo;t caught it yet. On Netflix, <strong>The Woman in the Yard</strong> delivers tense domestic horror directed by Roadrunner&rsquo;s Morgan Neville, while <strong>Lilo &amp; Stitch</strong> lands on Disney+ following its record theatrical debut. Apple TV+ adds <strong>The Studio</strong>, Seth Rogen&rsquo;s sharp Hollywood satire and one of the best shows of the year. In theaters, recent blockbusters include <strong>Superman</strong> and <strong>Mission: Impossible &mdash; The Final Reckoning</strong>.
           </p>
           <Link href="/articles/new-movies-streaming-this-week" className="home-blurb-link">
-            Full Weekly Streaming Guide →
+            Full Streaming Guide →
           </Link>
         </div>
       </section>
