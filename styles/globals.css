@@ -18712,3 +18712,9 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
   transition:transform .4s ease;
 }
 .news-card:hover .news-card-thumb img{transform:scale(1.05)}
+
+/* News card hover polish */
+.news-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
+.news-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px -12px rgba(16,185,129,.42);border-color:rgba(16,185,129,.45)}
+.news-card:hover .news-card-title{color:#10b981}
+.news-card-title{transition:color .18s ease}

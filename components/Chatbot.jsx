@@ -3,8 +3,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 const TMDB_IMG = 'https://image.tmdb.org/t/p/w500';
 
 const CHATBOT_CSS = `
-.cnv-chat-btn{position:fixed;bottom:24px;right:24px;z-index:10000;width:58px;height:58px;border-radius:50%;border:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:28px;cursor:pointer;box-shadow:0 4px 20px rgba(16,185,129,.45),0 2px 8px rgba(0,0,0,.4);transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;line-height:1}
-.cnv-chat-btn:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(16,185,129,.6),0 2px 12px rgba(0,0,0,.5)}
+.cnv-chat-btn{position:fixed;bottom:24px;right:24px;z-index:10000;width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#5eead4 0%,#10b981 45%,#059669 100%);color:#fff;font-size:28px;cursor:pointer;box-shadow:0 6px 22px rgba(16,185,129,.5),0 2px 8px rgba(0,0,0,.4);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;display:flex;align-items:center;justify-content:center;line-height:1;animation:cnvPulse 2.8s ease-in-out infinite}
+.cnv-chat-btn:hover{transform:scale(1.12) rotate(-6deg);box-shadow:0 10px 34px rgba(16,185,129,.7),0 2px 12px rgba(0,0,0,.5);animation-play-state:paused}
+.cnv-chat-btn:active{transform:scale(1.04)}
+.cnv-chat-btn svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
 .cnv-chat-window{display:none;position:fixed;bottom:96px;right:24px;z-index:10000;width:380px;max-height:540px;border-radius:var(--radius-lg,6px);background:var(--bg-secondary,#0e0e12);color:#e5e5e5;box-shadow:0 8px 32px rgba(0,0,0,.6);font-family:var(--font-body,'DM Sans',sans-serif);flex-direction:column;overflow:hidden;border:1px solid rgba(16,185,129,.2)}
 .cnv-chat-window.open{display:flex}
 .cnv-chat-header{background:linear-gradient(135deg,#10b981,#059669);padding:14px 18px;font-size:16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;color:#fff;font-family:var(--font-heading,'Cormorant Garamond',serif)}
@@ -40,6 +42,8 @@ const CHATBOT_CSS = `
 .cnv-chat-tooltip{position:fixed;bottom:30px;right:96px;z-index:10000;background:#10b981;color:#070709;font-family:var(--font-body,'DM Sans',sans-serif);font-size:14px;font-weight:600;padding:10px 16px;border-radius:var(--radius-md,4px);box-shadow:0 4px 12px rgba(0,0,0,.3);white-space:nowrap;animation:cnvFadeIn .4s ease-out}
 .cnv-chat-tooltip::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:#10b981;border-right:0}
 @keyframes cnvFadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes cnvPulse{0%,100%{box-shadow:0 6px 22px rgba(16,185,129,.5),0 0 0 0 rgba(94,234,212,.55)}50%{box-shadow:0 8px 28px rgba(16,185,129,.6),0 0 0 12px rgba(94,234,212,0)}}
+@media(prefers-reduced-motion:reduce){.cnv-chat-btn{animation:none}}
 `;
 
 const GENRE_MAP = {
@@ -338,11 +342,16 @@ export default function Chatbot() {
   }, [hasOpened]);
 
   const botIcon = (
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" stroke="none">
-      {/* 4-pointed sparkle */}
-      <path d="M12 2L13.6 10.4L22 12L13.6 13.6L12 22L10.4 13.6L2 12L10.4 10.4Z" />
-      {/* Small accent star */}
-      <path d="M19.5 3.5L20.2 5.8L22.5 6.5L20.2 7.2L19.5 9.5L18.8 7.2L16.5 6.5L18.8 5.8Z" />
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
+      {/* rounded chat bubble */}
+      <path
+        d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v6A2.5 2.5 0 0 1 17.5 15H10l-3.6 3.1A.6.6 0 0 1 5.4 17.7V15A2.5 2.5 0 0 1 4 12.5z"
+        fill="#fff"
+      />
+      {/* AI sparkle accent (brand emerald) */}
+      <path d="M12 7.1l.85 2.15L15 10.1l-2.15.85L12 13.1l-.85-2.15L9 10.1l2.15-.85z" fill="#059669" />
+      {/* twinkle */}
+      <circle cx="15.4" cy="7.4" r="0.9" fill="#34d399" />
     </svg>
   );
 
