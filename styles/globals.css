@@ -18817,3 +18817,9 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 :root[data-theme="light"] .search-bar-input::placeholder{color:var(--text-muted)}
 :root[data-theme="light"] .search-dropdown{background:#ffffff;border-color:rgba(15,40,35,0.10)}
 :root[data-theme="light"] .search-result-item{color:var(--text-primary)}
+
+/* Light-mode: emerald accent text (mint) is too faint on the cream bg — darken to ~AA */
+:root[data-theme="light"] .home-article-category,
+:root[data-theme="light"] .home-article-cta,
+:root[data-theme="light"] .section-tag:not(.news-tag){color:#047857}
+:root[data-theme="light"] .see-all{color:var(--text-secondary)}
