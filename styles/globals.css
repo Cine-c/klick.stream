@@ -18810,3 +18810,10 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 .news-modal-desc{font-size:.98rem;line-height:1.6;color:var(--text-secondary);margin:0 0 1.3rem}
 .news-modal-cta{display:inline-flex;align-items:center;gap:.4rem;background:var(--primary);color:#04120d;font-weight:700;padding:.7rem 1.3rem;border-radius:var(--radius-full,9999px);text-decoration:none;transition:filter .15s}
 .news-modal-cta:hover{filter:brightness(1.08)}
+
+/* Light-mode nav fixes: active link was #fff !important; header search pill hardcoded dark */
+:root[data-theme="light"] .nav-link--active{color:var(--primary) !important}
+:root[data-theme="light"] .search-bar-input{background:rgba(255,255,255,0.92)}
+:root[data-theme="light"] .search-bar-input::placeholder{color:var(--text-muted)}
+:root[data-theme="light"] .search-dropdown{background:#ffffff;border-color:rgba(15,40,35,0.10)}
+:root[data-theme="light"] .search-result-item{color:var(--text-primary)}
