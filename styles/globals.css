@@ -18776,3 +18776,16 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 :root[data-theme="light"] .nav-megamenu{background:#ffffff;border-color:rgba(15,40,35,0.10)}
 :root[data-theme="light"] .nav-mobile-panel{background:#ffffff}
 :root[data-theme="light"] .site-footer{background:#eef4f2}
+
+/* Light-mode header foreground (was hardcoded white → invisible on light) */
+:root[data-theme="light"] .logo{color:var(--text-primary)}
+:root[data-theme="light"] .nav-link{color:var(--text-primary)}
+:root[data-theme="light"] .nav-link:hover,
+:root[data-theme="light"] .nav-link--active{color:var(--primary)}
+:root[data-theme="light"] .nav-watchlist-btn{color:var(--text-secondary)}
+:root[data-theme="light"] .nav-signin{color:var(--text-primary) !important}
+:root[data-theme="light"] .nav-icon-btn{color:var(--text-secondary)}
+:root[data-theme="light"] .mobile-menu-btn{color:var(--text-primary)}
+:root[data-theme="light"] .hamburger,
+:root[data-theme="light"] .hamburger::before,
+:root[data-theme="light"] .hamburger::after{background:var(--text-primary)}
