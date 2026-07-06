@@ -18,9 +18,37 @@ const FEEDS = [
   { url: 'https://www.hollywoodreporter.com/c/movies/movie-news/feed/', source: 'The Hollywood Reporter' },
 ];
 
+const NAMED_ENTITIES = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+  rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”',
+  mdash: '—', ndash: '–', hellip: '…', deg: '°',
+  eacute: 'é', egrave: 'è', agrave: 'à', ccedil: 'ç',
+};
+
+// Decode HTML entities (numeric + named) and repair the common UTF-8-read-as-
+// Windows-1252 mojibake (e.g. â€™ → ’). Run twice to catch double-escaping
+// like &amp;#8217;.
+function decodeEntities(s) {
+  if (!s) return s;
+  s = s
+    .replace(/â€™/g, '’').replace(/â€˜/g, '‘')
+    .replace(/â€œ/g, '“').replace(/â€/g, '”')
+    .replace(/â€"/g, '—').replace(/â€"/g, '–')
+    .replace(/â€¦/g, '…').replace(/Â /g, ' ').replace(/Â/g, '');
+  const pass = (str) =>
+    str
+      .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(parseInt(n, 10)))
+      .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+      .replace(/&([a-z]+);/gi, (m, e) => {
+        const v = NAMED_ENTITIES[e] ?? NAMED_ENTITIES[e.toLowerCase()];
+        return v !== undefined ? v : m;
+      });
+  return pass(pass(s)).trim();
+}
+
 function getText(xml, tag) {
   const m = xml.match(new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/${tag}>`, 'i'));
-  return m ? m[1].replace(/<[^>]*>/g, '').trim() : '';
+  return m ? decodeEntities(m[1].replace(/<[^>]*>/g, '').trim()) : '';
 }
 
 function getLink(itemXml) {
