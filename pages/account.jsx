@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SEOHead from '../components/seo/SEOHead';
+import Link from 'next/link';
 import { useAuth } from '../components/useAuth';
+import { useWatchLater } from '../components/WatchLaterContext';
 
 export default function AccountPage() {
   const router = useRouter();
   const { user, loading: authLoading, signOut } = useAuth();
+  const { items } = useWatchLater();
   const [sub, setSub] = useState(null);
   const [subLoading, setSubLoading] = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
@@ -88,6 +91,12 @@ export default function AccountPage() {
       })
     : null;
 
+  const joinDate = user.metadata?.creationTime
+    ? new Date(user.metadata.creationTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+    : null;
+  const watchCount = items?.length || 0;
+  const initial = (user.displayName || user.email || '?').trim().charAt(0).toUpperCase();
+
   return (
     <>
       <SEOHead
@@ -97,20 +106,34 @@ export default function AccountPage() {
       />
 
       <div className="account-page">
-        <h1>Your Account</h1>
-
-        <div className="account-section">
-          <h2>Profile</h2>
-          <div className="account-detail">
-            <span className="account-label">Email</span>
-            <span>{user.email}</span>
+        <div className="profile-header">
+          <div className="profile-avatar">
+            {user.photoURL
+              ? <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
+              : <span>{initial}</span>}
           </div>
-          {user.displayName && (
-            <div className="account-detail">
-              <span className="account-label">Name</span>
-              <span>{user.displayName}</span>
+          <div className="profile-id">
+            <div className="profile-name">
+              {user.displayName || 'Film Fan'}
+              {isActive && <span className="profile-badge">★ Premium</span>}
             </div>
-          )}
+            <div className="profile-email">{user.email}</div>
+            <div className="profile-meta">
+              {joinDate && <span>Member since {joinDate}</span>}
+              <span>{watchCount} in watchlist</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="profile-quicklinks">
+          <Link href="/watchlater" className="profile-quicklink">
+            <span className="profile-quicklink-num">{watchCount}</span>
+            <span className="profile-quicklink-label">Watchlist</span>
+          </Link>
+          <Link href="/premium" className="profile-quicklink">
+            <span className="profile-quicklink-num">{isActive ? '★' : '☆'}</span>
+            <span className="profile-quicklink-label">{isActive ? 'Premium' : 'Go Premium'}</span>
+          </Link>
         </div>
 
         <div className="account-section">

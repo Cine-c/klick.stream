@@ -5,6 +5,7 @@ import { useWatchLater } from '../WatchLaterContext';
 import { useAuth } from '../useAuth';
 import { useLanguage, SUPPORTED_LANGUAGES } from '../LanguageContext';
 import SearchBar from '../SearchBar';
+import ThemeToggle from '../ThemeToggle';
 
 const TOP_GENRES = [
   { id: 28, name: 'Action' },
@@ -305,6 +306,9 @@ export default function Header() {
               Watchlist
               {items.length > 0 && <span className="nav-watchlist-count">{items.length}</span>}
             </Link>
+
+            {/* Theme toggle */}
+            <ThemeToggle />
 
             {/* Follow on X */}
             <a
