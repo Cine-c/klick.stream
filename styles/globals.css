@@ -18823,3 +18823,6 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 :root[data-theme="light"] .home-article-cta,
 :root[data-theme="light"] .section-tag:not(.news-tag){color:#047857}
 :root[data-theme="light"] .see-all{color:var(--text-secondary)}
+
+/* Light-mode: amber rating chip is low-contrast on light cards -> darker amber */
+:root[data-theme="light"] .movie-card-rating{color:#b45309}
