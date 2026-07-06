@@ -3,7 +3,7 @@
  * Items are duplicated once so the CSS marquee loops seamlessly; the second
  * copy is hidden from assistive tech. Pauses on hover, respects reduced motion.
  */
-export default function NewsTicker({ items = [] }) {
+export default function NewsTicker({ items = [], onSelect }) {
   if (!items || items.length === 0) return null;
   const loop = [...items, ...items];
 
@@ -16,7 +16,7 @@ export default function NewsTicker({ items = [] }) {
             <a
               key={`${i}-${item.link}`}
               href={item.link}
-              target="_blank"
+              onClick={(e) => { if (onSelect) { e.preventDefault(); onSelect(item); } }}
               rel="noopener noreferrer"
               className="news-ticker-item"
               aria-hidden={i >= items.length ? true : undefined}

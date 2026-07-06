@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import AdSlot from '../components/AdSlot';
 import NewsletterSignup from '../components/NewsletterSignup';
 import NewsTicker from '../components/NewsTicker';
+import NewsModal from '../components/NewsModal';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
@@ -201,6 +202,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   const [trailerMovie, setTrailerMovie] = useState(null);
   const [news, setNews] = useState([]);
   const [newsLoading, setNewsLoading] = useState(true);
+  const [activeNews, setActiveNews] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -363,12 +365,12 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
               <h2 className="section-title">Latest <em>News</em></h2>
             </div>
           </div>
-          {!newsLoading && news.length > 0 && <NewsTicker items={news} />}
+          {!newsLoading && news.length > 0 && <NewsTicker items={news} onSelect={setActiveNews} />}
           <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
             {newsLoading
               ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
               : news.slice(0, 9).map((item, i) => (
-                  <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="news-card">
+                  <a key={i} href={item.link} onClick={(e) => { e.preventDefault(); setActiveNews(item); }} className="news-card">
                     {item.image && (
                       <div className="news-card-thumb">
                         <img
@@ -392,6 +394,8 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           </div>
         </section>
       )}
+
+      <NewsModal article={activeNews} onClose={() => setActiveNews(null)} />
 
       {/* ── LATEST ARTICLES ── */}
       <section className="home-section">
