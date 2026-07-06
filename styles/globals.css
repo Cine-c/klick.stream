@@ -18768,3 +18768,11 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 .profile-quicklink:hover{transform:translateY(-3px);border-color:var(--border-glow);background:var(--bg-hover)}
 .profile-quicklink-num{font-size:1.5rem;font-weight:800;color:var(--primary)}
 .profile-quicklink-label{font-size:.82rem;color:var(--text-secondary)}
+
+/* Light-mode overrides for surfaces with hardcoded dark backgrounds */
+:root[data-theme="light"] .site-header{background:rgba(255,255,255,0.82);border-bottom:1px solid rgba(15,40,35,0.08)}
+:root[data-theme="light"] .site-header.header-scrolled{background:rgba(255,255,255,0.96);border-bottom-color:rgba(15,40,35,0.12);box-shadow:0 2px 24px rgba(16,24,22,0.10)}
+:root[data-theme="light"] .nav-dropdown,
+:root[data-theme="light"] .nav-megamenu{background:#ffffff;border-color:rgba(15,40,35,0.10)}
+:root[data-theme="light"] .nav-mobile-panel{background:#ffffff}
+:root[data-theme="light"] .site-footer{background:#eef4f2}
