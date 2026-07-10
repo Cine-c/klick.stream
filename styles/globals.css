@@ -312,6 +312,10 @@ button {
   margin: 0 12px;
 }
 
+/* X icon in the mobile top bar — desktop keeps its X inside .nav-actions,
+   which collapses on mobile, so surface it next to the hamburger there. */
+.nav-x-mobile { display: none; }
+
 /* ── MOBILE HAMBURGER ── */
 .mobile-menu-btn {
   display: none;
@@ -647,6 +651,19 @@ button {
   .header-container { padding: 0 16px; gap: 8px; }
   .header-search { max-width: none; flex: 1; margin: 0 4px; }
   .mobile-menu-btn { display: flex; }
+  .nav-x-mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    margin-right: 2px;
+    transition: color 0.15s;
+  }
+  .nav-x-mobile:hover { color: var(--primary); }
 
   .nav-menu {
     display: none;
@@ -18835,6 +18852,10 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 :root[data-theme="light"] .btn-hero-ghost,
 :root[data-theme="light"] .btn-hero-trailer{color:var(--text-primary);border-color:rgba(15,40,35,0.30)}
 :root[data-theme="light"] .hero-join-benefit{color:var(--text-secondary)}
+/* Overview copy was left white → washes out where the scrim fades light. Match
+   the controls above and go dark; drop the dark text-shadow that made it muddy. */
+:root[data-theme="light"] .hero-overview{color:var(--text-primary);text-shadow:none}
+:root[data-theme="light"] .hero-meta-pill{color:var(--text-primary);border-color:rgba(15,40,35,0.22);background:rgba(15,40,35,0.06)}
 
 /* ───────────── On-site news reader modal ───────────── */
 .news-modal-overlay{position:fixed;inset:0;z-index:12000;background:rgba(0,0,0,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;animation:newsFade .18s ease}
