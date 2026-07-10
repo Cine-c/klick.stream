@@ -31,11 +31,10 @@ export default function AdSlot({ slot, format = 'auto', responsive = true }) {
 function AdSlotInner({ slot, format, responsive, native }) {
   const adRef = useRef(null);
   const pushed = useRef(false);
-  const [consented, setConsented] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const s = getConsentStatus();
-    return s === 'accepted' || s === 'npa';
-  });
+  // Always start false so the server render and the first client render match.
+  // The effect below re-reads the real consent state right after mount, so a
+  // returning visitor still sees ads — without a hydration mismatch.
+  const [consented, setConsented] = useState(false);
   const [inView, setInView] = useState(false);
 
   // Listen for consent changes
