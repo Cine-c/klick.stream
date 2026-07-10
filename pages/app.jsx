@@ -2,13 +2,13 @@ import Link from 'next/link';
 import SEOHead from '../components/seo/SEOHead';
 
 // --- APK distribution config ---------------------------------------------
-// Host: Firebase Storage on klick-a2f4e. Upload the .apk via the Firebase
-// Console (Storage → app/klick.apk), then copy its "Download URL" (a tokenized
-// https://firebasestorage.googleapis.com/... link that works without changing
-// Storage rules) and paste it below.
-const APK_URL = ''; // e.g. 'https://firebasestorage.googleapis.com/v0/b/klick-a2f4e.firebasestorage.app/o/app%2Fklick.apk?alt=media&token=...'
+// Host: GitHub Releases on the public repo Cine-c/klick.stream. To publish a
+// new build, upload the .apk as a release asset named klick.apk, e.g.:
+//   gh release create app-vX.Y.Z klick.apk --title "Klick Android App vX.Y.Z"
+// The download URL below is stable as long as the release/tag exists.
+const APK_URL = 'https://github.com/Cine-c/klick.stream/releases/download/app-v1.0.0/klick.apk';
 const APK_VERSION = '1.0.0';
-const APK_SIZE = '~60 MB';
+const APK_SIZE = '~114 MB';
 const READY = APK_URL.length > 0;
 
 export default function GetAppPage() {
