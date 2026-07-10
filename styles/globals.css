@@ -18731,6 +18731,16 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
   --text-primary:#0e1b18;
   --text-secondary:#354641;
   --text-muted:#586b66;
+  /* Accent colors double as TEXT on the white light bg, where the bright dark-mode
+     shades (#10b981 emerald, #0ea5e9 sky) only hit ~2.5:1. Darken them so accent
+     text/links/stat-numbers read solid instead of faded (buttons using them as a
+     background just get a slightly deeper, still-on-brand green). */
+  --primary:#047857;
+  --primary-light:#059669;
+  --gold:#047857;
+  --gold-light:#059669;
+  --accent:#0369a1;
+  --accent-light:#0284c7;
   --primary-glow:rgba(16,185,129,0.16);
   --accent-glow:rgba(14,165,233,0.14);
   --cyan-glow:rgba(16,185,129,0.16);
