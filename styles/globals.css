@@ -588,6 +588,32 @@ button {
   border: 1.5px solid rgba(10, 10, 16, 0.9);
 }
 
+/* Get the App — persistent download CTA (desktop pill in .nav-actions) */
+.nav-getapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #10b981 !important;
+  color: #04120d !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  border: 1px solid #10b981 !important;
+  border-radius: 99px !important;
+  padding: 6px 14px !important;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px -8px rgba(16, 185, 129, 0.7);
+  transition: background 0.15s, box-shadow 0.15s, transform 0.15s !important;
+}
+.nav-getapp:hover {
+  background: #0ea371 !important;
+  color: #04120d !important;
+  box-shadow: 0 8px 22px -8px rgba(16, 185, 129, 0.9);
+  transform: translateY(-1px);
+}
+/* Mobile top-bar variant — hidden on desktop, revealed ≤768px */
+.nav-getapp-mobile { display: none; }
+
 /* Nav Premium / Sign In / User */
 .nav-premium {
   background: rgba(16, 185, 129, 0.12) !important;
@@ -665,6 +691,25 @@ button {
   }
   .nav-x-mobile:hover { color: var(--primary); }
 
+  /* Get the App — always-visible top-bar pill on mobile */
+  .nav-getapp-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 99px;
+    background: #10b981;
+    color: #04120d;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-right: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-getapp-mobile:hover { background: #0ea371; color: #04120d; }
+
   .nav-menu {
     display: none;
     position: absolute;
@@ -709,6 +754,13 @@ button {
     flex-direction: column;
     gap: 0;
     width: 100%;
+  }
+
+  /* Get the App — highlighted button in the mobile drawer */
+  .nav-mobile-account-btn--getapp {
+    background: #10b981 !important;
+    color: #04120d !important;
+    font-weight: 700 !important;
   }
 }
 

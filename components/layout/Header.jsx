@@ -158,6 +158,14 @@ export default function Header() {
           <SearchBar />
         </div>
 
+        {/* ── Get the App (mobile top bar only; desktop shows it in .nav-actions) ── */}
+        <Link href="/app" className="nav-getapp-mobile" aria-label="Get the Klick Android app" title="Get the app">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+          </svg>
+          App
+        </Link>
+
         {/* ── X / Twitter (mobile top bar only; desktop shows it in .nav-actions) ── */}
         <a
           href={X_URL}
@@ -322,6 +330,14 @@ export default function Header() {
           {/* ── RIGHT ACTION CLUSTER ── */}
           <div className="nav-actions">
 
+            {/* Get the App — primary download CTA */}
+            <Link href="/app" className="nav-getapp" onClick={close}>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+              </svg>
+              Get App
+            </Link>
+
             {/* Watchlist — labeled */}
             <Link href="/watchlater" className="nav-watchlist-btn" onClick={close}>
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
@@ -465,6 +481,9 @@ export default function Header() {
             </div>
 
             <div className="nav-mobile-account">
+              <Link href="/app" className="nav-mobile-account-btn nav-mobile-account-btn--getapp" onClick={close}>
+                📱 Get the Android App
+              </Link>
               <Link href="/watchlater" className="nav-mobile-account-btn" onClick={close}>
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
