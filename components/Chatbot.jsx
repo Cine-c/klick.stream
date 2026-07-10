@@ -343,15 +343,22 @@ export default function Chatbot() {
 
   const botIcon = (
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
-      {/* rounded chat bubble */}
-      <path
-        d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v6A2.5 2.5 0 0 1 17.5 15H10l-3.6 3.1A.6.6 0 0 1 5.4 17.7V15A2.5 2.5 0 0 1 4 12.5z"
-        fill="#fff"
-      />
-      {/* AI sparkle accent (violet) */}
-      <path d="M12 7.1l.85 2.15L15 10.1l-2.15.85L12 13.1l-.85-2.15L9 10.1l2.15-.85z" fill="#7c3aed" />
-      {/* twinkle (blue) */}
-      <circle cx="15.4" cy="7.4" r="0.9" fill="#60a5fa" />
+      {/* antenna */}
+      <line x1="12" y1="2.4" x2="12" y2="5.2" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="1.9" r="1.35" fill="#fff" />
+      {/* ears */}
+      <rect x="2.3" y="9.4" width="2.2" height="4.6" rx="1.1" fill="#fff" />
+      <rect x="19.5" y="9.4" width="2.2" height="4.6" rx="1.1" fill="#fff" />
+      {/* head */}
+      <rect x="4.5" y="5.4" width="15" height="12.6" rx="3.6" fill="#fff" />
+      {/* eyes */}
+      <circle cx="9.2" cy="10.9" r="1.75" fill="#7c3aed" />
+      <circle cx="14.8" cy="10.9" r="1.75" fill="#7c3aed" />
+      {/* eye highlights */}
+      <circle cx="9.75" cy="10.35" r="0.55" fill="#c4b5fd" />
+      <circle cx="15.35" cy="10.35" r="0.55" fill="#c4b5fd" />
+      {/* smile */}
+      <path d="M9 14.7q3 2.1 6 0" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
     </svg>
   );
 
