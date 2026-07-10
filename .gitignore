@@ -30,6 +30,9 @@ nul
 # Zip archives
 *.zip
 
+# Android build artifacts (hosted on GitHub Releases, not in-repo)
+*.apk
+
 # Test artifacts
 test_page.html
 
