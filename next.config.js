@@ -59,6 +59,15 @@ const nextConfig = {
       { source: '/reviews', destination: '/blog', permanent: true },
       { source: '/reviews.html', destination: '/blog', permanent: true },
       { source: '/blockbuster/:slug.html', destination: '/blockbuster', permanent: true },
+      // Branded APK download — on-brand URL that redirects to the current GitHub
+      // release asset. Temporary (307) so it can be re-pointed on a new release
+      // without browsers caching the old target. GitHub still counts the download.
+      {
+        source: '/download/klick.apk',
+        destination: 'https://github.com/Cine-c/klick.stream/releases/download/app-v1.0.0/klick.apk',
+        permanent: false,
+      },
+      { source: '/download', destination: '/app', permanent: false },
     ];
   },
   async headers() {

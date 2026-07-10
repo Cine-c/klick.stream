@@ -5,8 +5,11 @@ import SEOHead from '../components/seo/SEOHead';
 // Host: GitHub Releases on the public repo Cine-c/klick.stream. To publish a
 // new build, upload the .apk as a release asset named klick.apk, e.g.:
 //   gh release create app-vX.Y.Z klick.apk --title "Klick Android App vX.Y.Z"
-// The download URL below is stable as long as the release/tag exists.
-const APK_URL = 'https://github.com/Cine-c/klick.stream/releases/download/app-v1.0.0/klick.apk';
+// then update the /download/klick.apk redirect target in next.config.js.
+// The button links to the on-brand /download/klick.apk path (307-redirects to
+// the GitHub asset), so the URL stays branded and GitHub still counts each
+// download. A GA `apk_download` event fires on click for per-source analytics.
+const APK_URL = '/download/klick.apk';
 const APK_VERSION = '1.0.0';
 const APK_SIZE = '~114 MB';
 const READY = APK_URL.length > 0;
@@ -46,6 +49,15 @@ export default function GetAppPage() {
             <a
               href={APK_URL}
               download
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.gtag?.('event', 'apk_download', {
+                    method: 'website',
+                    app_version: APK_VERSION,
+                    location: 'app_page',
+                  });
+                }
+              }}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

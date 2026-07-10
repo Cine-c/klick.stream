@@ -126,6 +126,14 @@ export default function Header() {
 
   const close = () => setMenuOpen(false);
 
+  // Fire a GA funnel event when a "Get App" nav CTA is clicked, tagged with
+  // where it was clicked (top bar / desktop cluster / mobile drawer).
+  const trackGetApp = (location) => {
+    if (typeof window !== 'undefined') {
+      window.gtag?.('event', 'get_app_click', { location });
+    }
+  };
+
   // Same logic as the desktop ThemeToggle — flips data-theme on <html> and
   // persists it. Kept here so the mobile menu (where .nav-actions is hidden)
   // still exposes a theme switch. Label/icon swap is CSS-driven, so no state.
@@ -159,7 +167,7 @@ export default function Header() {
         </div>
 
         {/* ── Get the App (mobile top bar only; desktop shows it in .nav-actions) ── */}
-        <Link href="/app" className="nav-getapp-mobile" aria-label="Get the Klick Android app" title="Get the app">
+        <Link href="/app" className="nav-getapp-mobile" aria-label="Get the Klick Android app" title="Get the app" onClick={() => trackGetApp('nav_topbar_mobile')}>
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
           </svg>
@@ -331,7 +339,7 @@ export default function Header() {
           <div className="nav-actions">
 
             {/* Get the App — primary download CTA */}
-            <Link href="/app" className="nav-getapp" onClick={close}>
+            <Link href="/app" className="nav-getapp" onClick={() => { trackGetApp('nav_desktop'); close(); }}>
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
               </svg>
@@ -481,7 +489,7 @@ export default function Header() {
             </div>
 
             <div className="nav-mobile-account">
-              <Link href="/app" className="nav-mobile-account-btn nav-mobile-account-btn--getapp" onClick={close}>
+              <Link href="/app" className="nav-mobile-account-btn nav-mobile-account-btn--getapp" onClick={() => { trackGetApp('nav_drawer'); close(); }}>
                 📱 Get the Android App
               </Link>
               <Link href="/watchlater" className="nav-mobile-account-btn" onClick={close}>
