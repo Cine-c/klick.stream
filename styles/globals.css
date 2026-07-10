@@ -699,8 +699,8 @@ button {
     height: 38px;
     padding: 0 12px;
     border-radius: 99px;
-    background: #10b981;
-    color: #04120d;
+    background: #e11d2a;
+    color: #0a0a0a;
     font-weight: 700;
     font-size: 0.8rem;
     flex-shrink: 0;
@@ -708,7 +708,7 @@ button {
     text-decoration: none;
     white-space: nowrap;
   }
-  .nav-getapp-mobile:hover { background: #0ea371; color: #04120d; }
+  .nav-getapp-mobile:hover { background: #c11722; color: #0a0a0a; }
 
   .nav-menu {
     display: none;
