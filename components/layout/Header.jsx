@@ -126,6 +126,16 @@ export default function Header() {
 
   const close = () => setMenuOpen(false);
 
+  // Same logic as the desktop ThemeToggle — flips data-theme on <html> and
+  // persists it. Kept here so the mobile menu (where .nav-actions is hidden)
+  // still exposes a theme switch. Label/icon swap is CSS-driven, so no state.
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+  };
+
   const isActive = (path) =>
     router.pathname === path || router.pathname.startsWith(path + '/');
 
@@ -456,6 +466,15 @@ export default function Header() {
                 </svg>
                 Follow on X
               </a>
+              <button
+                type="button"
+                className="nav-mobile-account-btn nav-mobile-theme-btn"
+                onClick={toggleTheme}
+                aria-label="Toggle light or dark theme"
+              >
+                <span className="nmt-dark">☀️ Light mode</span>
+                <span className="nmt-light">🌙 Dark mode</span>
+              </button>
               {!authLoading && (
                 user
                   ? <Link href="/account" className="nav-mobile-account-btn" onClick={close}>👤 Account</Link>

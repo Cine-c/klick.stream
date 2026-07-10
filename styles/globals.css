@@ -18754,6 +18754,13 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 .theme-icon-moon{display:none}
 :root[data-theme="light"] .theme-icon-sun{display:none}
 :root[data-theme="light"] .theme-icon-moon{display:block}
+/* Mobile-menu theme switch — .nav-actions (with the desktop toggle) is hidden on
+   mobile, so this labeled button in the mobile panel is the only switch there.
+   Icon+label swap is CSS-driven off data-theme (no React state → SSR-safe). */
+.nav-mobile-theme-btn{width:100%;cursor:pointer;font-family:inherit}
+.nav-mobile-theme-btn .nmt-light{display:none}
+:root[data-theme="light"] .nav-mobile-theme-btn .nmt-dark{display:none}
+:root[data-theme="light"] .nav-mobile-theme-btn .nmt-light{display:inline}
 
 /* ───────────── Profile header (account page) ───────────── */
 .profile-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.5rem;flex-wrap:wrap}
@@ -18776,6 +18783,26 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 :root[data-theme="light"] .nav-megamenu{background:#ffffff;border-color:rgba(15,40,35,0.10)}
 :root[data-theme="light"] .nav-mobile-panel{background:#ffffff}
 :root[data-theme="light"] .site-footer{background:#eef4f2}
+
+/* Light-mode mobile panel: its contents were hardcoded white (invisible on the
+   now-white panel). The theme toggle is reachable on mobile now, so flip them. */
+:root[data-theme="light"] .nav-mobile-group{border-bottom-color:rgba(15,40,35,0.09)}
+:root[data-theme="light"] .nav-mobile-group-label{color:var(--text-muted)}
+:root[data-theme="light"] .nav-mobile-tile,
+:root[data-theme="light"] .nav-mobile-chip,
+:root[data-theme="light"] .nav-mobile-platform,
+:root[data-theme="light"] .nav-mobile-account-btn{background:rgba(15,40,35,0.04);border-color:rgba(15,40,35,0.10);color:var(--text-secondary)}
+:root[data-theme="light"] .nav-mobile-tile:hover,
+:root[data-theme="light"] .nav-mobile-chip:hover,
+:root[data-theme="light"] .nav-mobile-platform:hover,
+:root[data-theme="light"] .nav-mobile-account-btn:hover{background:rgba(15,40,35,0.09);color:var(--text-primary)}
+:root[data-theme="light"] .nav-mobile-live-item{color:var(--text-secondary)}
+:root[data-theme="light"] .nav-mobile-live-item:hover{color:var(--text-primary)}
+:root[data-theme="light"] .nav-mobile-account{border-top-color:rgba(15,40,35,0.09)}
+/* Keep the accent (green) variants readable on light */
+:root[data-theme="light"] .nav-mobile-chip--more,
+:root[data-theme="light"] .nav-mobile-account-btn--premium{color:#047857;background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.28)}
+:root[data-theme="light"] .nav-mobile-account-btn--signin{color:#04120d;background:var(--primary);border-color:var(--primary)}
 
 /* Light-mode header foreground (was hardcoded white → invisible on light) */
 :root[data-theme="light"] .logo{color:var(--text-primary)}
