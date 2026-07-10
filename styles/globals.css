@@ -18816,6 +18816,10 @@ a.redcarpet-card:hover .redcarpet-card-media img { transform: scale(1.05); }
 
 /* Light-mode header foreground (was hardcoded white → invisible on light) */
 :root[data-theme="light"] .logo{color:var(--text-primary)}
+/* Hardcoded #10b981 greens that don't ride the accent vars → darken on light */
+:root[data-theme="light"] .logo-stream{color:#047857}
+:root[data-theme="light"] .news-ticker-badge{color:#047857}
+:root[data-theme="light"] .news-ticker-badge::before{background:#047857}
 :root[data-theme="light"] .nav-link{color:var(--text-primary)}
 :root[data-theme="light"] .nav-link:hover,
 :root[data-theme="light"] .nav-link--active{color:var(--primary)}
