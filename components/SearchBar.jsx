@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import AdvancedSearchPanel from './AdvancedSearchPanel';
 
 export default function SearchBar() {
   const router = useRouter();
@@ -146,7 +147,8 @@ export default function SearchBar() {
         </svg>
       </button>
 
-      <div className={`search-bar${mobileOpen ? ' mobile-open' : ''}`}>
+      <div className={`search-bar${mobileOpen ? ' mobile-open' : ''}`} style={{ position: 'relative' }}>
+        <AdvancedSearchPanel />
         <div className="search-bar-input-wrapper">
           <svg className="search-bar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />

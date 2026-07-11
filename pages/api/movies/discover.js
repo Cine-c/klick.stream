@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     runtimeMax,
     search,
     language = 'en-US',
+    person,
   } = req.query;
   const apiKey = process.env.TMDB_API_KEY;
 
@@ -43,6 +44,7 @@ export default async function handler(req, res) {
         url += `&with_watch_providers=${providerIds}&watch_region=${region}`;
       }
 
+      if (person) url += `&with_people=${person}`;
       if (rating) url += `&vote_average.gte=${rating}`;
       if (runtimeMin) url += `&with_runtime.gte=${runtimeMin}`;
       if (runtimeMax) url += `&with_runtime.lte=${runtimeMax}`;

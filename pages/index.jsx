@@ -13,6 +13,7 @@ import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
 import { withCountdown } from '../data/redCarpet';
+import { LEAVING_SOON } from '../data/leavingSoon';
 import dynamic from 'next/dynamic';
 import { useAuth } from '../components/useAuth';
 
@@ -181,14 +182,6 @@ const STAFF_PICKS = [
   { id: 1160018, title: 'Sinners', reason: "The thriller of the year — Ryan Coogler at his absolute peak.", poster: 'https://image.tmdb.org/t/p/w342/qTvFWCGeGXgBRaINLY1zqgTPSpn.jpg', year: '2025' },
   { id: 762509, title: 'Mufasa: The Lion King', reason: "Surprisingly emotional. Barry Jenkins brings a warmth the original didn't expect.", poster: 'https://image.tmdb.org/t/p/w342/qBErSzgwRhVMKhoBjFAJkLCpqRc.jpg', year: '2024' },
   { id: 1064213, title: 'The Substance', reason: "Body horror that actually says something. Demi Moore is extraordinary.", poster: 'https://image.tmdb.org/t/p/w342/lqoMzCcZYEFK729d6qzt349fB4o.jpg', year: '2024' },
-];
-const LEAVING_SOON = [
-  { id: 155,    title: 'The Dark Knight',        year: '2008', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jun 30 2026' },
-  { id: 27205,  title: 'Inception',              year: '2010', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jun 30 2026' },
-  { id: 546554, title: 'Knives Out',             year: '2019', platform: 'Netflix',     platformColor: '#E50914', leaveDate: 'Jul 1 2026' },
-  { id: 157336, title: 'Interstellar',           year: '2014', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jul 1 2026' },
-  { id: 6977,   title: 'No Country for Old Men', year: '2007', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jun 25 2026' },
-  { id: 493922, title: 'Hereditary',             year: '2018', platform: 'Prime Video', platformColor: '#00A8E0', leaveDate: 'Jun 25 2026' },
 ];
 
 export default function Home({ featuredMovie, nowPlaying, popular, genres, celebrities, tvTrending, onNetflix, onPrime, upcoming, topRated, leavingSoon = [], redCarpet = [] }) {
