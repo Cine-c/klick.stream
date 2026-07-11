@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 const TMDB_IMG = 'https://image.tmdb.org/t/p/w500';
 
 const CHATBOT_CSS = `
-.cnv-chat-btn{position:fixed;bottom:24px;right:24px;z-index:10000;width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#60a5fa 0%,#8b5cf6 48%,#7c3aed 100%);color:#fff;font-size:28px;cursor:pointer;box-shadow:0 6px 22px rgba(124,58,237,.5),0 2px 8px rgba(0,0,0,.4);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;display:flex;align-items:center;justify-content:center;line-height:1;animation:cnvPulse 2.8s ease-in-out infinite}
+.cnv-chat-btn{position:fixed;bottom:24px;right:24px;z-index:10000;width:60px;height:60px;border-radius:50%;border:none;background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.55),rgba(255,255,255,0) 46%),linear-gradient(135deg,#60a5fa 0%,#8b5cf6 48%,#7c3aed 100%);color:#fff;font-size:28px;cursor:pointer;box-shadow:0 6px 22px rgba(124,58,237,.5),0 2px 8px rgba(0,0,0,.4),inset 0 -3px 8px rgba(76,29,149,.35),inset 0 2px 6px rgba(255,255,255,.35);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;display:flex;align-items:center;justify-content:center;line-height:1;animation:cnvPulse 2.8s ease-in-out infinite,cnvFloat 3.6s ease-in-out infinite}
 .cnv-chat-btn:hover{transform:scale(1.12) rotate(-6deg);box-shadow:0 10px 34px rgba(124,58,237,.7),0 2px 12px rgba(0,0,0,.5);animation-play-state:paused}
 .cnv-chat-btn:active{transform:scale(1.04)}
 .cnv-chat-btn svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
@@ -42,7 +42,8 @@ const CHATBOT_CSS = `
 .cnv-chat-tooltip{position:fixed;bottom:30px;right:96px;z-index:10000;background:#7c3aed;color:#fff;font-family:var(--font-body,'DM Sans',sans-serif);font-size:14px;font-weight:600;padding:10px 16px;border-radius:var(--radius-md,4px);box-shadow:0 4px 12px rgba(0,0,0,.3);white-space:nowrap;animation:cnvFadeIn .4s ease-out}
 .cnv-chat-tooltip::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:#7c3aed;border-right:0}
 @keyframes cnvFadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
-@keyframes cnvPulse{0%,100%{box-shadow:0 6px 22px rgba(124,58,237,.5),0 0 0 0 rgba(139,92,246,.55)}50%{box-shadow:0 8px 28px rgba(124,58,237,.6),0 0 0 12px rgba(139,92,246,0)}}
+@keyframes cnvPulse{0%,100%{box-shadow:0 6px 22px rgba(124,58,237,.5),0 0 0 0 rgba(139,92,246,.55),inset 0 -3px 8px rgba(76,29,149,.35),inset 0 2px 6px rgba(255,255,255,.35)}50%{box-shadow:0 8px 28px rgba(124,58,237,.6),0 0 0 12px rgba(139,92,246,0),inset 0 -3px 8px rgba(76,29,149,.35),inset 0 2px 6px rgba(255,255,255,.35)}}
+@keyframes cnvFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
 @media(prefers-reduced-motion:reduce){.cnv-chat-btn{animation:none}}
 `;
 
