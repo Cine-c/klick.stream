@@ -352,11 +352,11 @@ export default function Chatbot() {
       {/* head */}
       <rect x="4.5" y="5.4" width="15" height="12.6" rx="3.6" fill="#fff" />
       {/* eyes */}
-      <circle cx="9.2" cy="10.9" r="1.75" fill="#7c3aed" />
-      <circle cx="14.8" cy="10.9" r="1.75" fill="#7c3aed" />
+      <circle cx="9.1" cy="11" r="2.25" fill="#3b82f6" />
+      <circle cx="14.9" cy="11" r="2.25" fill="#3b82f6" />
       {/* eye highlights */}
-      <circle cx="9.75" cy="10.35" r="0.55" fill="#c4b5fd" />
-      <circle cx="15.35" cy="10.35" r="0.55" fill="#c4b5fd" />
+      <circle cx="9.8" cy="10.3" r="0.7" fill="#dbeafe" />
+      <circle cx="15.6" cy="10.3" r="0.7" fill="#dbeafe" />
       {/* smile */}
       <path d="M9 14.7q3 2.1 6 0" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
     </svg>
