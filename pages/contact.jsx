@@ -141,15 +141,6 @@ export default function ContactPage() {
                 <li><Link href="/about">About Klick.stream</Link></li>
                 <li><Link href="/privacy">Privacy Policy</Link></li>
                 <li><Link href="/blog">Editorial Blog</Link></li>
-                <li>
-                  <a
-                    href="https://x.com/Klick_stream"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Follow us on X
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
