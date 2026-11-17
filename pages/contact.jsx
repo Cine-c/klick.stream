@@ -34,6 +34,21 @@ export default function ContactPage() {
           directly.
         </p>
 
+        <div className="contact-intro-box">
+          <h2>About Klick.stream</h2>
+          <p>
+            Klick.stream is an independent movie discovery platform built by film enthusiasts
+            who wanted a better way to find great films. Our mission is to cut through the noise
+            of algorithm-driven recommendations and help you discover cinema worth your time —
+            with honest reviews, trusted where-to-watch info, and curated editorial guides.
+          </p>
+          <p>
+            We cover over 50,000 films and TV shows across 40+ streaming platforms, and update
+            our data daily. Everything on Klick.stream is free — we believe movie discovery should
+            be accessible to everyone.
+          </p>
+        </div>
+
         <div className="contact-grid">
           <div className="contact-form-col">
             <form className="contact-form" onSubmit={handleSubmit}>

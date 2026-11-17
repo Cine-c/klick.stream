@@ -13,9 +13,8 @@ const EXPLORE_LINKS = [
 ];
 
 const LIVE_LINKS = [
-  { href: '/worldcup',        label: '⚽ FIFA World Cup 2026', badge: 'Live' },
-  { href: '/love-island-usa', label: '🌴 Love Island USA',     badge: 'Now' },
-  { href: '/tour-de-france',  label: '🚴 Tour de France',      badge: 'Jul 4' },
+  { href: '/discover',    label: '🎬 New Releases',      badge: 'Updated' },
+  { href: '/trailers',    label: '🎞️ Movie Trailers',   badge: 'Fresh' },
 ];
 
 const COMPANY_LINKS = [

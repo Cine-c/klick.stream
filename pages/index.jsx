@@ -7,8 +7,6 @@ import { useLanguage } from '../components/LanguageContext';
 import { useRouter } from 'next/router';
 import AdSlot from '../components/AdSlot';
 import NewsletterSignup from '../components/NewsletterSignup';
-import NewsTicker from '../components/NewsTicker';
-import NewsModal from '../components/NewsModal';
 import MovieCard from '../components/trailers/MovieCard';
 import CelebrityStrip from '../components/CelebrityStrip';
 import celebritiesData from '../data/celebrities.json';
@@ -32,69 +30,41 @@ function eventToMovie(ev) {
 }
 
 const HOME_ARTICLES = [
-
   {
     href: '/articles/new-movies-streaming-this-week',
     category: 'Weekly Roundup',
-    title: 'New Movies Streaming This Week — June 2026',
-    excerpt: 'Every new movie hitting Netflix, Prime Video, Disney+, Apple TV+, and more — honest picks, hidden gems, and where to find each one.',
-    date: 'Jun 16, 2026',
-    author: 'J., Editor-in-Chief',
+    title: 'New Movies Streaming This Week',
+    excerpt: 'Every new movie hitting Netflix, Prime Video, Disney+, Apple TV+, and more. Our editors pick the best new releases and hidden gems — updated weekly.',
+    date: 'Updated weekly',
+    author: 'Editorial Team',
     readTime: '6 min',
   },
   {
     href: '/articles/best-movies-netflix-june-2026',
     category: 'Streaming Guide',
-    title: "Best Movies on Netflix Right Now — June 2026 Editor's Picks",
-    excerpt: 'The Woman in the Yard, Companion, and Presence headline a strong month. Plus 12 catalogue gems our editors recommend watching before they leave.',
-    date: 'Jun 1, 2026',
+    title: 'Best Movies on Netflix — What to Watch Now',
+    excerpt: 'Our editors handpick the best films in Netflix\'s catalogue across all genres. From new releases to hidden gems, with honest ratings and reviews.',
+    date: 'Updated monthly',
     author: 'Editorial Team',
     readTime: '9 min',
   },
   {
     href: '/articles/best-movies-prime-video-june-2026',
     category: 'Streaming Guide',
-    title: "Best on Prime Video — June 2026 Editor's Picks",
-    excerpt: 'Sinners finally arrives on streaming. Plus Conclave, Wolf Man, No Country for Old Men, and Hereditary — all reviewed with honest ratings and streaming context.',
-    date: 'Jun 1, 2026',
+    title: 'Best on Prime Video — Editor\'s Picks',
+    excerpt: 'The finest films on Prime Video, carefully curated and reviewed. Find your next great watch with our honest recommendations and ratings.',
+    date: 'Updated monthly',
     author: 'Editorial Team',
     readTime: '8 min',
   },
   {
-    href: '/articles/best-horror-movies-2026',
-    category: 'Best Of',
-    title: 'Best Horror Movies of 2026 So Far — Ranked & Reviewed',
-    excerpt: 'From Blumhouse slow-burns to franchise revivals: our ranked list of the scariest and best-reviewed horror films of 2026, with where to stream each one.',
-    date: 'May 28, 2026',
+    href: '/blog',
+    category: 'Editorial',
+    title: 'Read the Full Blog',
+    excerpt: 'Explore all our latest articles, reviews, and guides. From deep dives into filmmaking to streaming recommendations, we cover cinema with care.',
+    date: 'Always fresh',
     author: 'Editorial Team',
-    readTime: '7 min',
-  },
-  {
-    href: '/articles/best-thriller-movies-2026',
-    category: 'Best Of',
-    title: 'Best Thriller Movies of 2026 — Our Ranked Guide',
-    excerpt: 'Edge-of-your-seat picks across psychological thrillers, crime dramas, and espionage films from this year\'s strongest releases. With streaming info for each.',
-    date: 'May 14, 2026',
-    author: 'Editorial Team',
-    readTime: '7 min',
-  },
-  {
-    href: '/oscars-2026',
-    category: 'Awards',
-    title: 'Oscars 2026 — All Winners From the 98th Academy Awards',
-    excerpt: 'One Battle After Another won Best Picture and Best Director for Paul Thomas Anderson. Michael B. Jordan made history with 16 nominations. Here are all the winners.',
-    date: 'Mar 15, 2026',
-    author: 'J., Editor-in-Chief',
-    readTime: '12 min',
-  },
-  {
-    href: '/articles/emmy-awards-2026-preview',
-    category: 'Awards',
-    title: 'Emmy Awards 2026 — Predictions for Every Major Category',
-    excerpt: 'The 78th Emmys air in September. Severance is the Drama frontrunner, The Bear dominates Comedy, and Zendaya chases a third prize for Euphoria.',
-    date: 'May 8, 2026',
-    author: 'J., Editor-in-Chief',
-    readTime: '5 min',
+    readTime: 'Varies',
   },
 ];
 
@@ -193,24 +163,6 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
   const [heroTrailerKey, setHeroTrailerKey] = useState(featuredMovie?.trailerKey || null);
   const [showAuth, setShowAuth] = useState(false);
   const [trailerMovie, setTrailerMovie] = useState(null);
-  const [news, setNews] = useState([]);
-  const [newsLoading, setNewsLoading] = useState(true);
-  const [activeNews, setActiveNews] = useState(null);
-
-  useEffect(() => {
-    let active = true;
-    const loadNews = () =>
-      fetch('/api/news?limit=15')
-        .then((r) => r.json())
-        .then((data) => { if (active) setNews(data.articles || []); })
-        .catch(() => {})
-        .finally(() => { if (active) setNewsLoading(false); });
-    loadNews();
-    // Keep the "Live" news genuinely current — refresh every 5 min
-    // (aligned with the API's 10-min edge cache).
-    const id = setInterval(loadNews, 5 * 60 * 1000);
-    return () => { active = false; clearInterval(id); };
-  }, []);
 
   useEffect(() => {
     if (featuredMovie?.id && !featuredMovie?.trailerKey) {
@@ -341,54 +293,13 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
           </div>
           <h2 className="home-blurb-heading">What&rsquo;s Streaming Now</h2>
           <p className="home-blurb-body">
-            One of the biggest recent streaming arrivals is Ryan Coogler&rsquo;s <strong>Sinners</strong>, now on Prime Video after a record-breaking theatrical run. The supernatural thriller stars Michael B. Jordan in a dual role and is among the most acclaimed films of 2026 — essential viewing for anyone who hasn&rsquo;t caught it yet. On Netflix, <strong>The Woman in the Yard</strong> delivers tense domestic horror directed by Roadrunner&rsquo;s Morgan Neville, while <strong>Lilo &amp; Stitch</strong> lands on Disney+ following its record theatrical debut. Apple TV+ adds <strong>The Studio</strong>, Seth Rogen&rsquo;s sharp Hollywood satire and one of the best shows of the year. In theaters, recent blockbusters include <strong>Superman</strong> and <strong>Mission: Impossible &mdash; The Final Reckoning</strong>.
+            Every week brings new films and shows to Netflix, Prime Video, Disney+, Apple TV+, and 40+ other platforms. Our editors handpick the best arrivals—from acclaimed dramas to blockbuster releases—with honest reviews and where-to-watch links. Whether you&rsquo;re looking for your next favorite film or the perfect show to binge this weekend, we&rsquo;ve got recommendations across every genre and platform. Browse by streaming service, filter by genre, and discover something worth your time.
           </p>
           <Link href="/articles/new-movies-streaming-this-week" className="home-blurb-link">
-            Full Streaming Guide →
+            See This Week&rsquo;s Guide →
           </Link>
         </div>
       </section>
-
-      {/* ── LATEST NEWS ── */}
-      {(newsLoading || news.length > 0) && (
-        <section className="home-section">
-          <div className="section-header reveal">
-            <div>
-              <div className="section-tag news-tag">● Live</div>
-              <h2 className="section-title">Latest <em>News</em></h2>
-            </div>
-          </div>
-          {!newsLoading && news.length > 0 && <NewsTicker items={news} onSelect={setActiveNews} />}
-          <div className={`news-grid reveal${newsLoading ? ' news-grid--loading' : ''}`}>
-            {newsLoading
-              ? [...Array(9)].map((_, i) => <div key={i} className="news-skeleton" />)
-              : news.slice(0, 9).map((item, i) => (
-                  <a key={i} href={item.link} onClick={(e) => { e.preventDefault(); setActiveNews(item); }} className="news-card">
-                    {item.image && (
-                      <div className="news-card-thumb">
-                        <img
-                          src={item.image}
-                          alt=""
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
-                          onError={(e) => { e.currentTarget.parentElement.style.display = 'none'; }}
-                        />
-                      </div>
-                    )}
-                    <div className="news-card-title">{item.title}</div>
-                    {item.description && <div className="news-card-desc">{item.description}</div>}
-                    {item.date && (
-                      <div className="news-card-date">
-                        {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </div>
-                    )}
-                  </a>
-                ))}
-          </div>
-        </section>
-      )}
-
-      <NewsModal article={activeNews} onClose={() => setActiveNews(null)} />
 
       {/* ── LATEST ARTICLES ── */}
       <section className="home-section">
@@ -454,7 +365,7 @@ export default function Home({ featuredMovie, nowPlaying, popular, genres, celeb
             <Link href="/discover?sort=primary_release_date.desc" className="see-all">See All →</Link>
           </div>
           <p className="theaters-intro reveal">
-            June&rsquo;s theatrical slate is one of the strongest in recent memory. <strong>Sinners</strong> continues its acclaimed run after six weeks, while new blockbusters including <strong>Superman</strong>, <strong>Mission: Impossible &mdash; The Final Reckoning</strong>, and <strong>Jurassic World Rebirth</strong> are drawing record summer crowds. Here&rsquo;s what&rsquo;s worth catching on the big screen right now.
+            See what's worth experiencing on the big screen. Browse the latest theatrical releases, find showtimes and reviews, and discover award-winning films and blockbusters now playing near you.
           </p>
           <div className="reveal">
             <HScrollRow>
